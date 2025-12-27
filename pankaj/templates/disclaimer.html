@@ -1,0 +1,195 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disclaimer | Anjali Bansal & Associates | Company Secretaries</title>
+    <link rel="stylesheet" href="{% static 'css/disclaimer.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header id="mainHeader">
+        <div class="container">
+            <div class="header-container">
+                <div class="logo">
+                    <h1>ANJALI BANSAL & ASSOCIATES</h1>
+                    <p>COMPANY SECRETARIES</p>
+                </div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <nav class="nav-menu" id="navMenu">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/services">Services</a></li>
+                        <li><a href="/testimonials">Testimonials</a></li>
+                        <li><a href="/#articles">Articles</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                        <li><a href="/privacy-policy">Privacy Policy</a></li>
+                        <li><a href="/terms">Terms</a></li>
+                        <li><a href="/disclaimer" class="active">Disclaimer</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="disclaimer-hero">
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1>Disclaimer</h1>
+                <p>Professional clarity on the purpose and use of information provided on this website.</p>
+                <div class="hero-divider"></div>
+                <div class="breadcrumb">
+                    <a href="/">Home</a> / <span>Disclaimer</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Disclaimer Content -->
+    <section class="disclaimer-body">
+        <div class="container">
+            <div class="disclaimer-card">
+                <!-- Ownership Statement -->
+                <div class="disclaimer-item">
+                    <div class="disclaimer-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <div class="disclaimer-content">
+                        <h2>Website Ownership & Purpose</h2>
+                        <p>This website belongs to <strong>CS Anjali Bansal & Associates</strong>, Practicing Company Secretary, Bengaluru, Karnataka.</p>
+                        <p>This website is not intended to be a source of advertising or solicitation and the contents of the website shall not be construed as legal advice or opinion. The contents of this website are solely for the purpose of guidance and not for commercial use of the reader/user.</p>
+                    </div>
+                </div>
+
+                <!-- No Client Relationship -->
+                <div class="disclaimer-item">
+                    <div class="disclaimer-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="disclaimer-content">
+                        <h2>No Professional-Client Relationship</h2>
+                        <p>Any receipt or use of this website does not constitute or create any client-consultant relationship. Professional services are only established through a formal, written engagement agreement.</p>
+                    </div>
+                </div>
+
+                <!-- Information Accuracy -->
+                <div class="disclaimer-item">
+                    <div class="disclaimer-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="disclaimer-content">
+                        <h2>Information Accuracy & Limitations</h2>
+                        <p>The information provided in our articles is obtained from reliable sources and has been written after due research on our part. The contents of this website are true and best to our knowledge.</p>
+                        <p class="note-box"><i class="fas fa-info-circle"></i> <strong>Note:</strong> We do not guarantee the completeness or absolute accuracy of the information. Laws and regulations are subject to change.</p>
+                    </div>
+                </div>
+
+                <!-- User Responsibility -->
+                <div class="disclaimer-item">
+                    <div class="disclaimer-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div class="disclaimer-content">
+                        <h2>User Responsibility</h2>
+                        <p>The user of this website will be responsible and liable for any action taken by him/her based on the articles or information provided on this website.</p>
+                        <p>We shall not be responsible for any loss or liability incurred by the user of this website in any manner whatsoever. Users are advised to seek formal, situation-specific professional advice before making decisions.</p>
+                    </div>
+                </div>
+
+                <!-- Copyright -->
+                <div class="disclaimer-item">
+                    <div class="disclaimer-icon">
+                        <i class="fas fa-copyright"></i>
+                    </div>
+                    <div class="disclaimer-content">
+                        <h2>Intellectual Property</h2>
+                        <p>The copyright of the articles and all original content published on this website solely belongs to <strong>Anjali Bansal & Associates</strong>.</p>
+                        <p>This content shall not be copied, reproduced, or used for any commercial benefit, whether fully or partially, without prior written consent.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="about-cta">
+        <div class="container">
+            <div class="cta-content">
+                <div class="cta-text">
+                    <h3>Seek Professional Guidance</h3>
+                    <p>For advice specific to your situation, please schedule a formal consultation. We provide tailored solutions for corporate compliance and secretarial matters.</p>
+                    <div class="contact-info">
+                        <p><i class="fas fa-phone"></i> +91 9148973085</p>
+                        <p><i class="fas fa-envelope"></i> info@anjalibansal.in</p>
+                    </div>
+                </div>
+                <div class="cta-buttons">
+                    <a href="/booking/45-min" class="btn-cta btn-primary">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Book a Consultation</span>
+                    </a>
+                    <a href="/contact" class="btn-cta btn-secondary">
+                        <i class="fas fa-envelope"></i>
+                        <span>Contact for Clarification</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+<footer style="background-color: #1a1a1a; color: #ffffff; padding: 40px 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;">
+        
+        <div style="flex: 1; min-width: 250px;">
+            <h3 style="color: #4CAF50; margin-bottom: 15px;">Your Brand Name</h3>
+            <p style="font-size: 14px; line-height: 1.6; color: #cccccc;">
+                Providing quality services with transparency and integrity. Follow us on our journey to excellence.
+            </p>
+        </div>
+
+        <div style="flex: 1; min-width: 150px;">
+            <h4 style="margin-bottom: 15px; font-size: 18px;">Quick Links</h4>
+            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                <li><a href="/" style="color: #cccccc; text-decoration: none;">Home</a></li>
+                <li><a href="/about" style="color: #cccccc; text-decoration: none;">About Us</a></li>
+                <li><a href="/services" style="color: #cccccc; text-decoration: none;">Services</a></li>
+                <li><a href="/contact" style="color: #cccccc; text-decoration: none;">Contact</a></li>
+            </ul>
+        </div>
+
+        <div style="flex: 1; min-width: 150px;">
+            <h4 style="margin-bottom: 15px; font-size: 18px;">Legal Support</h4>
+            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                <li><a href="/privacy-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Privacy Policy</a></li>
+                <li><a href="/terms and conditions" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Terms & Conditions</a></li>
+                <li><a href="/refund-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Refund Policy</a></li>
+                <li><a href="/disclaimer" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Disclaimer</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0;">
+
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 13px; color: #888;">
+        <p>&copy; 2025 Your Brand Name. All Rights Reserved.</p>
+        <div style="display: flex; gap: 15px;">
+            <a href="#" style="color: #888; text-decoration: none;">Twitter</a>
+            <a href="#" style="color: #888; text-decoration: none;">LinkedIn</a>
+            <a href="#" style="color: #888; text-decoration: none;">Instagram</a>
+        </div>
+    </div>
+</footer>
+
+    <!-- JavaScript -->
+    <script src="{% static 'js/disclaimer.js' %}"></script>
+</body>
+</html>

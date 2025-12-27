@@ -1,0 +1,661 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OUR EXPERTISE | Anjali Bansal & Associates | Company Secretaries</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/services.css' %}">
+    
+    <link rel="stylesheet" href="{% static 'css/our_expertise.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap">
+    <style>
+        /* Add background image to Hero Section */
+        .services-hero {
+            background-image: url('https://www.grantthornton.in/globalassets/1.-member-firms/india/new-homepage/media/1.-hero-banners_repeat-visits/1440x600px_hero_banner_m-20191.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Optional: for parallax effect */
+            position: relative;
+        }
+
+        /* Dark overlay for better text readability on hero */
+        .services-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity as needed */
+            z-index: 1;
+        }
+
+        .services-hero .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .services-hero-content {
+            color: #ffffff; /* Ensure text is white for contrast */
+        }
+
+        /* Optional: Add subtle background to service categories for better separation */
+        .service-category {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            margin-bottom: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Alternative background for the entire services-content section (uncomment if you want a full-page subtle bg) */
+        /*
+        .services-content {
+            background-image: url('https://thumbs.dreamstime.com/b/blurred-glass-wall-modern-business-office-building-background-corporate-concept-357015384.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        */
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <h1>ANJALI BANSAL & ASSOCIATES</h1>
+                <p>COMPANY SECRETARIES</p>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav class="nav-menu" id="navMenu">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/services" class="active">Services</a></li>
+                    <li><a href="/#articles">Articles</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Banner with Background Image -->
+    <section class="services-hero">
+        <div class="container">
+            <div class="services-hero-content">
+                <h1 class="page-title">Our Expertise</h1>
+                <p class="page-subtitle">We offer a wide range of corporate secretarial services to meet your business needs</p>
+                <div class="breadcrumb">
+                    <a href="/">Home</a> / <span>Services</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="services-content">
+        <div class="container">
+            <!-- FEMA Services -->
+            <div class="service-category">
+                <div class="service-category-header">
+                    <h2>FEMA</h2>
+                    <p>Expert guidance on Foreign Exchange Management Act regulations</p>
+                </div>
+                
+                <div class="service-items-grid">
+                    <div class="service-item">
+                        <img src="https://graphics.reuters.com/INDIA-FDI/byprlxkqlpe/chart.png" alt="Foreign Direct Investment FDI in India" class="service-image">
+                        <div class="service-item-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <h3>Foreign Investment in India</h3>
+                        <p>Guidance on foreign direct investment (FDI) routes, sectoral caps, pricing guidelines, and reporting to RBI.</p>
+                        <ul class="service-features">
+                            <li>FDI policy interpretation</li>
+                            <li>Investment structuring</li>
+                            <li>RBI reporting compliance</li>
+                            <li>Sectoral cap compliance</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-item">
+                        <img src="https://img1.wsimg.com/isteam/ip/249f00a6-4cfa-4c25-9849-66bf0de5c1e7/ODI.png" alt="Overseas Direct Investment ODI" class="service-image">
+                        <div class="service-item-icon">
+                            <i class="fas fa-globe-americas"></i>
+                        </div>
+                        <h3>Overseas Direct Investment</h3>
+                        <p>Assistance with overseas investments, joint ventures, and setting up wholly owned subsidiaries abroad.</p>
+                        <ul class="service-features">
+                            <li>ODI approval process</li>
+                            <li>Joint venture structuring</li>
+                            <li>Annual performance reporting</li>
+                            <li>Disinvestment procedures</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-item">
+                        <img src="https://www.taxmann.com/post/wp-content/uploads/2023/07/Screenshot-2023-07-21-121239.png" alt="External Commercial Borrowings ECB" class="service-image">
+                        <div class="service-item-icon">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                        <h3>External Commercial Borrowings</h3>
+                        <p>End-to-end assistance in raising ECBs, including approval process, documentation, and compliance.</p>
+                        <ul class="service-features">
+                            <li>ECB approval process</li>
+                            <li>Loan documentation</li>
+                            <li>RBI reporting compliance</li>
+                            <li>Forex risk management</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-item">
+                        <img src="https://ebizfiling.com/wp-content/uploads/2019/09/Fema-Compliance-in-India.png" alt="FEMA Compliance Advisory" class="service-image">
+                        <div class="service-item-icon">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <h3>FEMA Advisory and Compliance</h3>
+                        <p>Regular FEMA advisory services, compliance audits, and representation before regulatory authorities.</p>
+                        <ul class="service-features">
+                            <li>FEMA compliance audits</li>
+                            <li>Advisory on transactions</li>
+                            <li>Representation before RBI</li>
+                            <li>Compounding applications</li>   
+                        </ul>
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+            <!-- SEBI Services -->
+<div class="service-category">
+    <div class="service-category-header">
+        <h2>SEBI</h2>
+        <p>Expert guidance on Securities and Exchange Board of India regulations for listed companies and capital markets</p>
+    </div>
+   
+    <div class="service-items-grid">
+        <div class="service-item">
+            <img src="https://insec.in/wp-content/uploads/2025/07/sebi-lodr-compliance-board-responsibilities-and-risks-rrg.jpg" 
+                 alt="SEBI LODR Compliance Board Meeting" 
+                 class="service-image">
+            <div class="service-item-icon">
+                <i class="fas fa-balance-scale"></i>
+            </div>
+            <h3>SEBI LODR Compliance</h3>
+            <p>Comprehensive compliance with SEBI (Listing Obligations and Disclosure Requirements) Regulations.</p>
+            <ul class="service-features">
+                <li>Corporate governance compliance</li>
+                <li>Periodic disclosure requirements</li>
+                <li>Board composition and committees</li>
+                <li>Related party transactions</li>
+            </ul>
+        </div>
+       
+        <div class="service-item">
+            <img src="https://www.taxmann.com/post/wp-content/uploads/2023/03/2-38-scaled.jpg" 
+                 alt="SEBI Insider Trading Regulations Compliance" 
+                 class="service-image">
+            <div class="service-item-icon">
+                <i class="fas fa-user-shield"></i>
+            </div>
+            <h3>Insider Trading Regulations</h3>
+            <p>Implementation and compliance with SEBI (Prohibition of Insider Trading) Regulations.</p>
+            <ul class="service-features">
+                <li>Code of conduct for PIT</li>
+                <li>Trading window compliance</li>
+                <li>Pre-clearance of trades</li>
+                <li>Disclosure of trading plans</li>
+            </ul>
+        </div>
+       
+        <div class="service-item">
+            <img src="https://media.licdn.com/dms/image/v2/D5612AQEmFmphTac_Fg/article-cover_image-shrink_720_1280/B56Zl7mLVkHMAI-/0/1758715231437?e=2147483647&v=beta&t=KBlFlzY0TXGZQU28VQuhq9ysLpD6MeNDUDagvzNHLCU" 
+                 alt="SEBI Disclosure Requirements Filing" 
+                 class="service-image">
+            <div class="service-item-icon">
+                <i class="fas fa-bullhorn"></i>
+            </div>
+            <h3>Disclosure Requirements</h3>
+            <p>Timely disclosure of material events and information to stock exchanges and investors.</p>
+            <ul class="service-features">
+                <li>Material event disclosures</li>
+                <li>Financial results disclosure</li>
+                <li>Shareholding pattern filings</li>
+                <li>Corporate action announcements</li>
+            </ul>
+        </div>
+       
+        <div class="service-item">
+            <img src="https://blog.ipleaders.in/wp-content/uploads/2021/05/Esha_Barua_Chowdhury_145017Final-Open-Offer-Process-road-map-under-takeover-code_F.png" 
+                 alt="SEBI Takeover Regulations Open Offer" 
+                 class="service-image">
+            <div class="service-item-icon">
+                <i class="fas fa-handshake"></i>
+            </div>
+            <h3>Takeover Regulations</h3>
+            <p>Compliance with SEBI (Substantial Acquisition of Shares and Takeovers) Regulations.</p>
+            <ul class="service-features">
+                <li>Trigger point monitoring</li>
+                <li>Open offer compliance</li>
+                <li>Disclosure of acquisition</li>
+                <li>Exemption applications</li>
+            </ul>
+        </div>
+       
+        <div class="service-item">
+            <img src="https://bj-m.s3.ap-south-1.amazonaws.com/p/2025/05/sebi-pfutp-regulations-2003-a-comprehensive-analysis.png" 
+                 alt="SEBI Prohibition of Fraudulent Practices" 
+                 class="service-image">
+            <div class="service-item-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3>Prohibition of Fraudulent Practices</h3>
+            <p>Compliance with regulations prohibiting fraudulent and unfair trade practices.</p>
+            <ul class="service-features">
+                <li>Market abuse prevention</li>
+                <li>Price manipulation safeguards</li>
+                <li>Compliance monitoring</li>
+                <li>Investor protection measures</li>
+            </ul>
+        </div>
+       
+        <div class="service-item">
+            <img src="https://bj-m.s3.ap-south-1.amazonaws.com/p/2025/05/sebi-debenture-trustees-regulations-1993-safeguarding-debenture-holder-interests.png" 
+                 alt="SEBI Debenture Trustees Compliance" 
+                 class="service-image">
+            <div class="service-item-icon">
+                <i class="fas fa-file-invoice-dollar"></i>
+            </div>
+            <h3>Debenture Trustees Regulations</h3>
+            <p>Compliance with SEBI (Debenture Trustees) Regulations for listed debt securities.</p>
+            <ul class="service-features">
+                <li>Debenture trust deed compliance</li>
+                <li>Security creation monitoring</li>
+                <li>Debenture holder protection</li>
+                <li>Default management procedures</li>
+            </ul>
+        </div>
+       
+        <div class="service-item">
+            <img src="https://carajput.com/blog/wp-content/uploads/2023/12/Buy-Back-of-share-1-rotated.jpg" 
+                 alt="SEBI Buyback Regulations Process" 
+                 class="service-image">
+            <div class="service-item-icon">
+                <i class="fas fa-undo"></i>
+            </div>
+            <h3>Buy-back Regulations</h3>
+            <p>Compliance with SEBI (Buy-back of Securities) Regulations for listed companies.</p>
+            <ul class="service-features">
+                <li>Buy-back process management</li>
+                <li>Regulatory filings</li>
+                <li>Tender offer compliance</li>
+                <li>Post-buy-back compliance</li>
+            </ul>
+        </div>
+       
+        <div class="service-item">
+            <img src="https://www.khaitanco.com/sites/default/files/inline-images/Picture1.png" 
+                 alt="SEBI Delisting Regulations Exit Offer" 
+                 class="service-image">
+            <div class="service-item-icon">
+                <i class="fas fa-sign-out-alt"></i>
+            </div>
+            <h3>Delisting Regulations</h3>
+            <p>Guidance on SEBI (Delisting of Equity Shares) Regulations and process management.</p>
+            <ul class="service-features">
+                <li>Delisting process advisory</li>
+                <li>Reverse book building</li>
+                <li>Exit offer compliance</li>
+                <li>Post-delisting requirements</li>
+            </ul>
+        </div>
+    </div>
+</div>
+            
+            <!-- Private Equity (PE) and Debt Fundraising Services -->
+<div class="service-category">
+    <div class="service-category-header">
+        <h2>Private Equity (PE) & Debt Fundraising</h2>
+        <p>Comprehensive fundraising solutions for growth-stage companies and established businesses</p>
+    </div>
+   
+    <div class="service-items-grid">
+        <div class="service-item">
+            <img src="https://cdn.prod.website-files.com/5a710020b54d350001949426/6900ce00c1cec31bb0c6c405_shutterstock_2063156102.webp" 
+                 alt="Private Equity Fundraising Meeting" 
+                 class="service-image">
+            <div class="service-item-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h3>Private Equity Fundraising</h3>
+            <p>End-to-end support for raising growth capital from private equity funds for expansion and scaling.</p>
+            <ul class="service-features">
+                <li>Term sheet negotiation and review</li>
+                <li>Due diligence coordination</li>
+                <li>Shareholders' agreement drafting</li>
+                <li>Deal structuring and documentation</li>
+            </ul>
+        </div>
+       
+        <div class="service-item">
+            <img src="https://www.debt.org/wp-content/uploads/2018/04/Loan-Agreement.jpg" 
+                 alt="Debt Financing Loan Agreement" 
+                 class="service-image">
+            <div class="service-item-icon">
+                <i class="fas fa-hand-holding-usd"></i>
+            </div>
+            <h3>Debt Fundraising & Financing</h3>
+            <p>Structuring and securing debt financing from banks, NBFCs, and financial institutions.</p>
+            <ul class="service-features">
+                <li>Loan agreement documentation</li>
+                <li>Security creation and perfection</li>
+                <li>Debenture trust deeds</li>
+                <li>Covenant compliance management</li>
+            </ul>
+        </div>
+       
+        <div class="service-item">
+            <img src="https://research-assets.cbinsights.com/2020/10/02192410/Venture-Debt-Milestone-e1601681107121-1024x649.png" 
+                 alt="Venture Debt Financing Growth Chart" 
+                 class="service-image">
+            <div class="service-item-icon">
+                <i class="fas fa-rocket"></i>
+            </div>
+            <h3>Venture Debt Financing</h3>
+            <p>Strategic debt solutions for venture-backed startups to extend runway without dilution.</p>
+            <ul class="service-features">
+                <li>Venture debt term structuring</li>
+                <li>Warrant coverage agreements</li>
+                <li>Inter-creditor agreements</li>
+                <li>Board observation rights</li>
+            </ul>
+        </div>
+       
+        <div class="service-item">
+            <img src="https://images.ctfassets.net/y88td1zx1ufe/2VL4L3oaLwZX2KoF9CELRC/c532f3449bf8334c4330c26748a69d18/What_is_a_term_sheet.png" 
+                 alt="Fundraising Term Sheet Documentation" 
+                 class="service-image">
+            <div class="service-item-icon">
+                <i class="fas fa-file-contract"></i>
+            </div>
+            <h3>Fundraising Documentation</h3>
+            <p>Comprehensive legal documentation for all types of fundraising transactions.</p>
+            <ul class="service-features">
+                <li>Investment agreements</li>
+                <li>Share subscription agreements</li>
+                <li>Debt facility agreements</li>
+                <li>Security documents and charges</li>
+            </ul>
+        </div>
+       
+        <div class="service-item">
+            <img src="https://cdn.prod.website-files.com/5a710020b54d350001949426/68c315e18cea0c58e7e31f1f_shutterstock_2311843587.webp" 
+                 alt="Due Diligence Review Process" 
+                 class="service-image">
+            <div class="service-item-icon">
+                <i class="fas fa-search"></i>
+            </div>
+            <h3>Due Diligence Management</h3>
+            <p>Comprehensive due diligence support for fundraising rounds and investor onboarding.</p>
+            <ul class="service-features">
+                <li>Legal due diligence coordination</li>
+                <li>Data room management</li>
+                <li>Query response management</li>
+                <li>Compliance gap analysis</li>
+            </ul>
+        </div>
+       
+        <div class="service-item">
+            <img src="https://corporate.jp.canon/-/media/Project/Canon/CanonJP/Corporate/sustainability/governance/corporate-governance/image/img-corporate-governance-001-en.jpg?h=648&iar=0&w=1200&sc_lang=en&hash=BEFD16D77BF162964799BD00B19E54DF" 
+                 alt="Post-Investment Board Meeting & Compliance" 
+                 class="service-image">
+            <div class="service-item-icon">
+                <i class="fas fa-clipboard-check"></i>
+            </div>
+            <h3>Post-Investment Compliance</h3>
+            <p>Ongoing compliance management post-fundraising to meet investor requirements.</p>
+            <ul class="service-features">
+                <li>Investor reporting compliance</li>
+                <li>Covenant monitoring</li>
+                <li>Board meeting management</li>
+                <li>Investor communication support</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Corporate Law Services -->
+            <div class="service-category">
+                <div class="service-category-header">
+                    <h2>Corporate Law</h2>
+                    <p>Comprehensive corporate legal and secretarial services</p>
+                </div>
+                
+                <div class="service-items-grid">
+                    <div class="service-item">
+                        <img src="https://clicktoprofessionals.com/wp-content/uploads/2024/10/llp-certificate-sample.png" alt="Company Incorporation in India" class="service-image">
+                        <div class="service-item-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <h3>Company Incorporation</h3>
+                        <p>End-to-end assistance in incorporating companies, LLPs, and other business entities in India.</p>
+                        <ul class="service-features">
+                            <li>Private/public company formation</li>
+                            <li>LLP registration</li>
+                            <li>One Person Company setup</li>
+                            <li>Section 8 company registration</li>
+                        </ul>
+                        
+                    </div>
+                    
+                    <div class="service-item">
+                        <img src="https://www.slideteam.net/media/catalog/product/cache/1280x720/c/o/corporate_governance_model_governance_structure_hierarchy_chart__Slide01.jpg" alt="Corporate Governance Compliance" class="service-image">
+                        <div class="service-item-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Corporate Governance</h3>
+                        <p>Ensuring compliance with corporate governance norms and best practices for listed/unlisted companies.</p>
+                        <ul class="service-features">
+                            <li>Board meeting compliance</li>
+                            <li>Shareholder meeting management</li>
+                            <li>Corporate governance framework</li>
+                            <li>Compliance calendar management</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-item">
+                        <img src="https://cdn.prod.website-files.com/62355cce87033e4cde9d22f3/6334a21d06eeb49e113e98c1_prj-8e1fb1390408460.gif" alt="Fundraising Venture Capital Private Equity" class="service-image">
+                        <div class="service-item-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3>Fundraising Support</h3>
+                        <p>Assistance with fundraising from angel investors, venture capital, and private equity firms.</p>
+                        <ul class="service-features">
+                            <li>Term sheet review</li>
+                            <li>Shareholder agreements</li>
+                            <li>Due diligence support</li>
+                            <li>Closing documentation</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-item">
+                        <img src="https://www.investopedia.com/thmb/vdIR6Mdb9-I4rJGQ4QguQloKgio=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/ESOP_Final_4196964-2e25b96d22ce437497a38754c6c866ff.jpg" alt="ESOP Employee Stock Option Plan" class="service-image">
+                        <div class="service-item-icon">
+                            <i class="fas fa-user-friends"></i>
+                        </div>
+                        <h3>ESOP Management</h3>
+                        <p>Designing and implementing Employee Stock Option Plans for startups and growing companies.</p>
+                        <ul class="service-features">
+                            <li>ESOP scheme design</li>
+                            <li>Trust formation</li>
+                            <li>Regulatory compliance</li>
+                            <li>Vesting management</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-item">
+                        <img src="https://cdn.sanity.io/images/3lljlnf0/production/ff6ea1b3d824c515a77fd88c26d2c1ef14efe446-1280x720.jpg" alt="Ongoing Corporate Compliance Management" class="service-image">
+                        <div class="service-item-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3>Ongoing Compliance</h3>
+                        <p>Regular compliance management to ensure startups remain compliant as they grow.</p>
+                        <ul class="service-features">
+                            <li>Annual compliance management</li>
+                            <li>Statutory filings</li>
+                            <li>Board and shareholder meetings</li>
+                            <li>Regulatory updates</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other Services -->
+            <div class="service-category">
+                <div class="service-category-header">
+                    <h2>Other</h2>
+                    <p>Additional specialized corporate services</p>
+                </div>
+                
+                <div class="service-items-grid">
+                    <div class="service-item">
+                        <img src="https://www.contractlogix.com/wp-content/uploads/2022/11/Image01-1.jpg" alt="Contract Management Drafting Review" class="service-image">
+                        <div class="service-item-icon">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <h3>Contract Management</h3>
+                        <p>Drafting, reviewing, and managing various corporate contracts and agreements.</p>
+                        <ul class="service-features">
+                            <li>Contract drafting and review</li>
+                            <li>Service level agreements</li>
+                            <li>Non-disclosure agreements</li>
+                            <li>Employment contracts</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-item">
+                        <img src="https://static.vecteezy.com/system/resources/previews/021/638/862/non_2x/intellectual-property-banner-web-icon-illustration-concept-for-trademark-with-icon-of-design-patents-invention-authorship-law-copyright-protection-and-brand-vector.jpg" alt="Intellectual Property Trademark Copyright" class="service-image">
+                        <div class="service-item-icon">
+                            <i class="fas fa-copyright"></i>
+                        </div>
+                        <h3>Intellectual Property</h3>
+                        <p>Assistance with intellectual property registration, protection, and management.</p>
+                        <ul class="service-features">
+                            <li>Trademark registration</li>
+                            <li>Copyright protection</li>
+                            <li>IP licensing agreements</li>
+                            <li>IP portfolio management</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-item">
+                        <img src="https://media.licdn.com/dms/image/v2/D5612AQHXuOe0crdQJw/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1727774453321?e=2147483647&v=beta&t=DQk3KXZHeQtdQEC3y1S9IAikS6L1pgL7v0A8zNK6wPE" alt="RBI Compliances Banking Regulation" class="service-image">
+                        <div class="service-item-icon">
+                            <i class="fas fa-landmark"></i>
+                        </div>
+                        <h3>RBI Compliances</h3>
+                        <p>Assistance with various RBI compliances for companies and financial institutions.</p>
+                        <ul class="service-features">
+                            <li>RBI reporting</li>
+                            <li>Master Direction compliance</li>
+                            <li>Foreign exchange management</li>
+                            <li>Compounding applications</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="service-item">
+                        <img src="https://businessconsultingagency.com/wp-content/uploads/2024/02/Benefits-of-Business-Consulting-Services.jpg" alt="Corporate Advisory Services Consultation" class="service-image">
+                        <div class="service-item-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3>Advisory</h3>
+                        <p>Regular advisory services on corporate laws, secretarial practice, and regulatory changes.</p>
+                        <ul class="service-features">
+                            <li>Regulatory updates</li>
+                            <li>Compliance advisory</li>
+                            <li>Risk management</li>
+                            <li>Strategic planning</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="services-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h3>Need Professional Assistance?</h3>
+                <p>Contact us for expert corporate secretarial services tailored to your business needs</p>
+                <div class="cta-buttons">
+                    <a href="/contact" class="btn btn-primary">
+                        <i class="fas fa-phone-alt"></i>
+                        Contact Us
+                    </a>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=pankajbisht@gmail.com&su=Consultation%20Inquiry%20-%20Anjali%20Bansal%20%26%20Associates&body=Dear%20Anjali%20Bansal%20%26%20Associates%2C%0A%0AI%20would%20like%20to%20inquire%20about%20your%20professional%20consultation%20services.%0A%0APlease%20provide%20me%20with%20more%20information.%0A%0AThank%20you%2C%0A%5BYour%20Name%5D" 
+   class="btn btn-secondary" 
+   target="_blank">
+    <i class="fas fa-envelope"></i>
+    Send Email via Gmail
+</a>
+<a href="{% url 'booking' duration='45-min' %}" class="btn btn-primary">Book now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+<footer style="background-color: #1a1a1a; color: #ffffff; padding: 40px 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;">
+        
+        <div style="flex: 1; min-width: 250px;">
+            <h3 style="color: #4CAF50; margin-bottom: 15px;">Your Brand Name</h3>
+            <p style="font-size: 14px; line-height: 1.6; color: #cccccc;">
+                Providing quality services with transparency and integrity. Follow us on our journey to excellence.
+            </p>
+        </div>
+
+        <div style="flex: 1; min-width: 150px;">
+            <h4 style="margin-bottom: 15px; font-size: 18px;">Quick Links</h4>
+            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                <li><a href="/" style="color: #cccccc; text-decoration: none;">Home</a></li>
+                <li><a href="/about" style="color: #cccccc; text-decoration: none;">About Us</a></li>
+                <li><a href="/services" style="color: #cccccc; text-decoration: none;">Services</a></li>
+                <li><a href="/contact" style="color: #cccccc; text-decoration: none;">Contact</a></li>
+            </ul>
+        </div>
+
+        <div style="flex: 1; min-width: 150px;">
+            <h4 style="margin-bottom: 15px; font-size: 18px;">Legal Support</h4>
+            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                <li><a href="/privacy-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Privacy Policy</a></li>
+                <li><a href="/terms and conditions" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Terms & Conditions</a></li>
+                <li><a href="/refund-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Refund Policy</a></li>
+                <li><a href="/disclaimer" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Disclaimer</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0;">
+
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 13px; color: #888;">
+        <p>&copy; 2025 Your Brand Name. All Rights Reserved.</p>
+        <div style="display: flex; gap: 15px;">
+            <a href="#" style="color: #888; text-decoration: none;">Twitter</a>
+            <a href="#" style="color: #888; text-decoration: none;">LinkedIn</a>
+            <a href="#" style="color: #888; text-decoration: none;">Instagram</a>
+        </div>
+    </div>
+</footer>
+
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/services.js' %}"></script>
+</body>
+</html>

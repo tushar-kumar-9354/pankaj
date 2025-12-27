@@ -1,0 +1,468 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Anjali Bansal & Associates | Company Secretaries</title>
+    <link rel="stylesheet" href="{% static 'css/about.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <h1>ANJALI BANSAL & ASSOCIATES</h1>
+                <p>COMPANY SECRETARIES</p>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav class="nav-menu" id="navMenu">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about" class="active">About</a></li>
+                    <li><a href="/our_expertise">Expertise</a></li>
+                    <li><a href="/#articles">Articles</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="about-hero">
+        <div class="container">
+            <div class="about-hero-content">
+                <h1 class="page-title">About Our Firm</h1>
+                <p class="page-subtitle">Pioneering corporate governance and compliance solutions with integrity, expertise, and unwavering commitment to client success</p>
+                <div class="breadcrumb">
+                    <a href="/">Home</a> / <span>About Us</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-shape">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#ffffff" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Company Overview -->
+    <section class="overview-section">
+        <div class="container">
+            <div class="section-intro">
+                <h2>Building Trust Through Excellence</h2>
+                <p class="intro-text">Anjali Bansal & Associates stands as a beacon of trust and expertise in the corporate secretarial landscape. With over 15 years of dedicated service, we have been instrumental in guiding businesses through India's complex regulatory environment, transforming challenges into opportunities for growth and compliance.</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" data-count="15">0</div>
+                    <div class="stat-label">Years of Excellence</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="500">0</div>
+                    <div class="stat-label">Clients Served</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="1000">0</div>
+                    <div class="stat-label">Projects Completed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="50">0</div>
+                    <div class="stat-label">Team Experts</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Vision - Side by Side -->
+    <section class="mission-vision-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Guiding Principles</h2>
+                <p class="section-subtitle">The foundation upon which we build lasting client relationships</p>
+            </div>
+            
+            <div class="mv-container">
+                <div class="mission-card">
+                    <div class="mv-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <div class="mv-content">
+                        <h3>Our Mission</h3>
+                        <p>To empower organizations with comprehensive corporate secretarial solutions that ensure regulatory compliance, mitigate risks, and foster sustainable business growth through strategic partnerships.</p>
+                        <ul class="mission-points">
+                            <li><i class="fas fa-check-circle"></i> Deliver unparalleled compliance expertise</li>
+                            <li><i class="fas fa-check-circle"></i> Provide strategic advisory services</li>
+                            <li><i class="fas fa-check-circle"></i> Foster long-term client relationships</li>
+                            <li><i class="fas fa-check-circle"></i> Drive business excellence through governance</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="vision-card">
+                    <div class="mv-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div class="mv-content">
+                        <h3>Our Vision</h3>
+                        <p>To be recognized as India's most trusted corporate secretarial firm, setting industry benchmarks for excellence in regulatory compliance and becoming the preferred strategic partner for businesses navigating complex governance landscapes.</p>
+                        <ul class="vision-points">
+                            <li><i class="fas fa-star"></i> Industry leadership in compliance solutions</li>
+                            <li><i class="fas fa-star"></i> Nationwide recognition for excellence</li>
+                            <li><i class="fas fa-star"></i> Innovation in corporate governance</li>
+                            <li><i class="fas fa-star"></i> Global standards with local expertise</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What We Stand For -->
+    <section class="stand-for-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>What We Stand For</h2>
+                <p class="section-subtitle">Core values that define our professional ethos and client approach</p>
+            </div>
+            
+            <div class="stand-for-grid">
+                <div class="stand-for-item">
+                    <div class="stand-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h4>Integrity First</h4>
+                    <p>We operate with uncompromising ethical standards, maintaining transparency and honesty in all our client engagements and internal operations.</p>
+                </div>
+                
+                <div class="stand-for-item">
+                    <div class="stand-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h4>Client-Centric Excellence</h4>
+                    <p>Your success is our priority. We tailor our services to meet your specific needs, providing personalized attention and strategic insights.</p>
+                </div>
+                
+                <div class="stand-for-item">
+                    <div class="stand-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h4>Innovative Solutions</h4>
+                    <p>We continuously evolve our methodologies to incorporate cutting-edge practices and regulatory changes, ensuring forward-thinking compliance strategies.</p>
+                </div>
+                
+                <div class="stand-for-item">
+                    <div class="stand-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h4>Collaborative Partnership</h4>
+                    <p>We believe in building lasting relationships based on mutual trust, working alongside you as an extension of your team rather than just a service provider.</p>
+                </div>
+                
+                <div class="stand-for-item">
+                    <div class="stand-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4>Confidentiality Assurance</h4>
+                    <p>Your business information is protected with the highest security measures, ensuring complete confidentiality in all our dealings.</p>
+                </div>
+                
+                <div class="stand-for-item">
+                    <div class="stand-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4>Results-Driven Approach</h4>
+                    <p>We focus on delivering measurable outcomes that contribute to your business growth, efficiency, and compliance objectives.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Founder Section -->
+    <section class="founder-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Leadership & Vision</h2>
+                <p class="section-subtitle">Guiding our firm with expertise and strategic direction</p>
+            </div>
+            
+            <div class="founder-profile">
+                <div class="founder-intro">
+                    <div class="founder-image-main">
+                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Anjali Bansal - Founder">
+                        <div class="founder-badge">
+                            <i class="fas fa-award"></i>
+                            <span>15+ Years Experience</span>
+                        </div>
+                    </div>
+                    <div class="founder-quote">
+                        <blockquote>
+                            <i class="fas fa-quote-left"></i>
+                            <p>"True compliance is not just about following rules; it's about understanding the spirit of regulations to create sustainable business frameworks."</p>
+                            <cite>- Anjali Bansal</cite>
+                        </blockquote>
+                    </div>
+                </div>
+                
+                <div class="founder-details">
+                    <h3>Anjali Bansal</h3>
+                    <p class="designation">Founder & Managing Partner</p>
+                    
+                    <div class="founder-bio">
+                        <p>With over 15 years of specialized experience in corporate law and secretarial practice, Anjali Bansal has established herself as a leading authority in regulatory compliance and corporate governance.</p>
+                        
+                        <p>Her expertise spans across FEMA regulations, SEBI compliance, corporate structuring, and strategic advisory services for both domestic and international businesses.</p>
+                    </div>
+                    
+                    <div class="qualifications-grid">
+                        <div class="qualification-item">
+                            <i class="fas fa-graduation-cap"></i>
+                            <div>
+                                <h5>Fellow Member</h5>
+                                <p>The Institute of Company Secretaries of India</p>
+                            </div>
+                        </div>
+                        <div class="qualification-item">
+                            <i class="fas fa-scale-balanced"></i>
+                            <div>
+                                <h5>LL.B. Honors</h5>
+                                <p>Mumbai University</p>
+                            </div>
+                        </div>
+                        <div class="qualification-item">
+                            <i class="fas fa-certificate"></i>
+                            <div>
+                                <h5>Specializations</h5>
+                                <p>FEMA, SEBI, Corporate Laws</p>
+                            </div>
+                        </div>
+                        <div class="qualification-item">
+                            <i class="fas fa-building"></i>
+                            <div>
+                                <h5>Industry Experience</h5>
+                                <p>Banking, Technology, Manufacturing, Startups</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meet the Team -->
+    <section class="team-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Meet Our Expert Team</h2>
+                <p class="section-subtitle">A dedicated team of professionals committed to your success</p>
+            </div>
+            
+            <div class="team-intro">
+                <p>Our team comprises seasoned professionals, each bringing specialized expertise and a shared commitment to excellence. Together, we provide comprehensive solutions that address your unique compliance challenges.</p>
+            </div>
+            
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Rajesh Kumar">
+                        <div class="member-overlay">
+                            <div class="member-expertise">
+                                <span>SEBI Compliance</span>
+                                <span>Corporate Governance</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <h4>Rajesh Kumar</h4>
+                        <p class="position">Senior Company Secretary</p>
+                        <p class="experience">12+ Years Experience</p>
+                        <p class="member-desc">Expert in SEBI regulations and corporate compliance with extensive experience in listed company governance.</p>
+                        <div class="member-social">
+                            <a href="#" class="linkedin"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="email"><i class="fas fa-envelope"></i></a>
+                            <a href="#" class="profile"><i class="fas fa-user"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Priya Sharma">
+                        <div class="member-overlay">
+                            <div class="member-expertise">
+                                <span>FEMA Regulations</span>
+                                <span>Cross-border Transactions</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <h4>Priya Sharma</h4>
+                        <p class="position">FEMA & International Law Expert</p>
+                        <p class="experience">10+ Years Experience</p>
+                        <p class="member-desc">Specializes in foreign exchange regulations and international business compliance strategies.</p>
+                        <div class="member-social">
+                            <a href="#" class="linkedin"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="email"><i class="fas fa-envelope"></i></a>
+                            <a href="#" class="profile"><i class="fas fa-user"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Neha Patel">
+                        <div class="member-overlay">
+                            <div class="member-expertise">
+                                <span>Startup Advisory</span>
+                                <span>Fundraising</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <h4>Neha Patel</h4>
+                        <p class="position">Startup & Fundraising Specialist</p>
+                        <p class="experience">8+ Years Experience</p>
+                        <p class="member-desc">Focuses on startup ecosystem, fundraising strategies, and early-stage company compliance.</p>
+                        <div class="member-social">
+                            <a href="#" class="linkedin"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="email"><i class="fas fa-envelope"></i></a>
+                            <a href="#" class="profile"><i class="fas fa-user"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="team-cta">
+                <p>Our team collaborates seamlessly to provide integrated solutions. <a href="/contact">Connect with us</a> to discuss how we can support your specific requirements.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Approach -->
+    <section class="approach-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Professional Approach</h2>
+                <p class="section-subtitle">Methodology that ensures precision and effectiveness</p>
+            </div>
+            
+            <div class="approach-steps">
+                <div class="step">
+                    <div class="step-number">01</div>
+                    <div class="step-content">
+                        <h4>Understanding & Analysis</h4>
+                        <p>Comprehensive assessment of your business needs, regulatory requirements, and compliance objectives.</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">02</div>
+                    <div class="step-content">
+                        <h4>Strategic Planning</h4>
+                        <p>Development of customized compliance strategies aligned with your business goals and timelines.</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">03</div>
+                    <div class="step-content">
+                        <h4>Implementation & Execution</h4>
+                        <p>Precise execution of compliance plans with attention to detail and regulatory accuracy.</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">04</div>
+                    <div class="step-content">
+                        <h4>Monitoring & Support</h4>
+                        <p>Ongoing compliance monitoring, regular updates, and proactive support for regulatory changes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="about-cta">
+        <div class="container">
+            <div class="cta-content">
+                <div class="cta-text">
+                    <h3>Partner with Industry Leaders</h3>
+                    <p>Join hundreds of successful businesses who trust us for their compliance needs. Let's discuss how we can contribute to your success story.</p>
+                </div>
+                <div class="cta-buttons">
+                    <a href="/booking/45-min" class="btn btn-primary">
+                        <i class="fas fa-handshake"></i>
+                        Schedule Consultation
+                    </a>
+                    <a href="/services" class="btn btn-secondary">
+                        <i class="fas fa-chart-line"></i>
+                        View Our Services
+                    </a>
+
+                    <a href="/contact" class="btn btn-secondary">
+                        <i class="fas fa-chart-line"></i>
+                        contact us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+<footer style="background-color: #1a1a1a; color: #ffffff; padding: 40px 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;">
+        
+        <div style="flex: 1; min-width: 250px;">
+            <h3 style="color: #4CAF50; margin-bottom: 15px;">Your Brand Name</h3>
+            <p style="font-size: 14px; line-height: 1.6; color: #cccccc;">
+                Providing quality services with transparency and integrity. Follow us on our journey to excellence.
+            </p>
+        </div>
+
+        <div style="flex: 1; min-width: 150px;">
+            <h4 style="margin-bottom: 15px; font-size: 18px;">Quick Links</h4>
+            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                <li><a href="/" style="color: #cccccc; text-decoration: none;">Home</a></li>
+                <li><a href="/about" style="color: #cccccc; text-decoration: none;">About Us</a></li>
+                <li><a href="/services" style="color: #cccccc; text-decoration: none;">Services</a></li>
+                <li><a href="/contact" style="color: #cccccc; text-decoration: none;">Contact</a></li>
+            </ul>
+        </div>
+
+        <div style="flex: 1; min-width: 150px;">
+            <h4 style="margin-bottom: 15px; font-size: 18px;">Legal Support</h4>
+            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                <li><a href="/privacy-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Privacy Policy</a></li>
+                <li><a href="/terms and conditions" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Terms & Conditions</a></li>
+                <li><a href="/refund-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Refund Policy</a></li>
+                <li><a href="/disclaimer" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Disclaimer</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0;">
+
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 13px; color: #888;">
+        <p>&copy; 2025 Your Brand Name. All Rights Reserved.</p>
+        <div style="display: flex; gap: 15px;">
+            <a href="#" style="color: #888; text-decoration: none;">Twitter</a>
+            <a href="#" style="color: #888; text-decoration: none;">LinkedIn</a>
+            <a href="#" style="color: #888; text-decoration: none;">Instagram</a>
+        </div>
+    </div>
+</footer>
+
+    <script src="{% static 'js/about.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

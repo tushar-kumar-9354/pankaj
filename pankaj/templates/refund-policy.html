@@ -1,0 +1,314 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Refund Policy | Anjali Bansal & Associates | Company Secretaries</title>
+    <link rel="stylesheet" href="{% static 'css/refund-policy.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header id="mainHeader">
+        <div class="container">
+            <div class="header-container">
+                <div class="logo">
+                    <h1>ANJALI BANSAL & ASSOCIATES</h1>
+                    <p>COMPANY SECRETARIES</p>
+                </div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <nav class="nav-menu" id="navMenu">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/services">Services</a></li>
+                        <li><a href="/testimonials">Testimonials</a></li>
+                        <li><a href="/#articles">Articles</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                        <li><a href="/privacy-policy">Privacy Policy</a></li>
+                        <li><a href="/terms">Terms</a></li>
+                        <li><a href="/disclaimer">Disclaimer</a></li>
+                        <li><a href="/refund-policy" class="active">Refund Policy</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="refund-hero">
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1>Refund Policy</h1>
+                <p>Clear and transparent guidelines for refund requests on our professional consulting services.</p>
+                <div class="hero-divider"></div>
+                <div class="breadcrumb">
+                    <a href="/">Home</a> / <span>Refund Policy</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section class="policy-intro">
+        <div class="container">
+            <div class="intro-card">
+                <div class="intro-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <div class="intro-content">
+                    <h2>Our Commitment to Fairness</h2>
+                    <p>At Anjali Bansal & Associates, we strive to provide exceptional consulting services that meet your specific needs and expectations. However, we understand that unforeseen circumstances may arise. Therefore, we have established the following refund policy to ensure clarity and fairness in all our engagements.</p>
+                    <div class="intro-note">
+                        <i class="fas fa-info-circle"></i>
+                        <p>This policy applies to all consulting services unless otherwise specified in a signed agreement.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Policy Content -->
+    <section class="policy-body">
+        <div class="container">
+            <div class="policy-card">
+                <!-- General Refund Policy -->
+                <div class="policy-section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <h2>General Refund Policy</h2>
+                    </div>
+                    
+                    <div class="policy-point">
+                        <div class="point-header">
+                            <div class="point-number">01</div>
+                            <h3>No Refunds for General Consulting Services</h3>
+                        </div>
+                        <div class="point-content">
+                            <p>Due to the bespoke nature of our consulting services, which often involve customized solutions, in-depth research, and personalized advice, refunds for general consulting services are generally not provided.</p>
+                            <div class="point-note">
+                                <i class="fas fa-exclamation-circle"></i>
+                                <p>Our services require significant upfront investment of time and expertise in analysis and preparation of customized solutions.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="policy-point">
+                        <div class="point-header">
+                            <div class="point-number">02</div>
+                            <h3>Exceptional Circumstances for Refunds</h3>
+                        </div>
+                        <div class="point-content">
+                            <p>We may consider a partial or full refund in the following exceptional circumstances:</p>
+                            <div class="exceptions-grid">
+                                <div class="exception-item">
+                                    <div class="exception-icon">
+                                        <i class="fas fa-balance-scale"></i>
+                                    </div>
+                                    <div class="exception-content">
+                                        <h4>Significant Breach of Contract</h4>
+                                        <p>If Anjali Bansal & Associates fails to fulfill its obligations as outlined in the signed agreement.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="exception-item">
+                                    <div class="exception-icon">
+                                        <i class="fas fa-cloud-bolt"></i>
+                                    </div>
+                                    <div class="exception-content">
+                                        <h4>Termination Due to Force Majeure</h4>
+                                        <p>If the engagement is terminated due to unforeseen circumstances beyond the control of both parties (e.g., natural disasters, pandemics).</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="exception-item">
+                                    <div class="exception-icon">
+                                        <i class="fas fa-clipboard-check"></i>
+                                    </div>
+                                    <div class="exception-content">
+                                        <h4>Misrepresentation of Services</h4>
+                                        <p>If the services provided significantly differ from the agreed-upon scope of work as outlined in the contract.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Refund Request Procedure -->
+                <div class="policy-section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <h2>Refund Request Procedure</h2>
+                    </div>
+                    
+                    <div class="procedure-steps">
+                        <div class="step">
+                            <div class="step-number">
+                                <span>1</span>
+                            </div>
+                            <div class="step-content">
+                                <h3>Submit Written Request</h3>
+                                <p>All refund requests must be submitted in writing to Anjali Bansal & Associates at <strong>anjalibansalcs@gmail.com</strong> within <strong>10 days</strong> of the termination of services.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">
+                                <span>2</span>
+                            </div>
+                            <div class="step-content">
+                                <h3>Provide Documentation</h3>
+                                <p>The request must clearly state the reason for the refund and include supporting documentation (if applicable).</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <div class="step-number">
+                                <span>3</span>
+                            </div>
+                            <div class="step-content">
+                                <h3>Review Process</h3>
+                                <p>Anjali Bansal & Associates will review the request and respond within <strong>7 to 10 business days</strong>.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="procedure-note">
+                        <i class="fas fa-lightbulb"></i>
+                        <p>For a smooth review process, please include your contract reference number and all relevant correspondence in your refund request.</p>
+                    </div>
+                </div>
+
+                <!-- Policy Disclaimer -->
+                <div class="policy-section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h2>Important Disclaimer</h2>
+                    </div>
+                    
+                    <div class="disclaimer-content">
+                        <p>This refund policy is subject to change at any time without prior notice. Please refer to the most up-to-date version of this policy on our website.</p>
+                        <div class="last-updated">
+                            <i class="fas fa-calendar-alt"></i>
+                            <p><strong>Last Updated:</strong> <span id="policyDate">December 2023</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section class="contact-cta">
+        <div class="container">
+            <div class="cta-card">
+                <div class="cta-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <div class="cta-content">
+                    <h3>Questions About Our Refund Policy?</h3>
+                    <p>If you have questions about our refund policy or need clarification on any point, please don't hesitate to contact us. We're here to ensure complete transparency in all our professional engagements.</p>
+                    <div class="cta-actions">
+                        <a href="mailto:anjalibansalcs@gmail.com" class="btn btn-primary">
+                            <i class="fas fa-envelope"></i>
+                            Email Your Query
+                        </a>
+                        <a href="/contact" class="btn btn-secondary">
+                            <i class="fas fa-phone"></i>
+                            Contact Us Directly
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+<footer style="background-color: #1a1a1a; color: #ffffff; padding: 40px 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;">
+        
+        <div style="flex: 1; min-width: 250px;">
+            <h3 style="color: #4CAF50; margin-bottom: 15px;">Your Brand Name</h3>
+            <p style="font-size: 14px; line-height: 1.6; color: #cccccc;">
+                Providing quality services with transparency and integrity. Follow us on our journey to excellence.
+            </p>
+        </div>
+
+        <div style="flex: 1; min-width: 150px;">
+            <h4 style="margin-bottom: 15px; font-size: 18px;">Quick Links</h4>
+            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                <li><a href="/" style="color: #cccccc; text-decoration: none;">Home</a></li>
+                <li><a href="/about" style="color: #cccccc; text-decoration: none;">About Us</a></li>
+                <li><a href="/services" style="color: #cccccc; text-decoration: none;">Services</a></li>
+                <li><a href="/contact" style="color: #cccccc; text-decoration: none;">Contact</a></li>
+            </ul>
+        </div>
+
+        <div style="flex: 1; min-width: 150px;">
+            <h4 style="margin-bottom: 15px; font-size: 18px;">Legal Support</h4>
+            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                <li><a href="/privacy-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Privacy Policy</a></li>
+                <li><a href="/terms and conditions" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Terms & Conditions</a></li>
+                <li><a href="/refund-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Refund Policy</a></li>
+                <li><a href="/disclaimer" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Disclaimer</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0;">
+
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 13px; color: #888;">
+        <p>&copy; 2025 Your Brand Name. All Rights Reserved.</p>
+        <div style="display: flex; gap: 15px;">
+            <a href="#" style="color: #888; text-decoration: none;">Twitter</a>
+            <a href="#" style="color: #888; text-decoration: none;">LinkedIn</a>
+            <a href="#" style="color: #888; text-decoration: none;">Instagram</a>
+        </div>
+    </div>
+</footer>        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>ANJALI BANSAL & ASSOCIATES</h3>
+                    <p>Expert Corporate Secretarial Services</p>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-map-marker-alt"></i> Practicing Company Secretary, Bengaluru</p>
+                        <p><i class="fas fa-phone"></i> +91 9148973085</p>
+                        <p><i class="fas fa-envelope"></i> anjalibansalcs@gmail.com</p>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <a href="/">Home</a>
+                    <a href="/about">About</a>
+                    <a href="/services">Services</a>
+                    <a href="/testimonials">Testimonials</a>
+                    <a href="/#articles">Articles</a>
+                    <a href="/contact">Contact</a>
+                    <a href="/privacy-policy">Privacy Policy</a>
+                    <a href="/terms">Terms & Conditions</a>
+                    <a href="/disclaimer">Disclaimer</a>
+                    <a href="/refund-policy" class="active">Refund Policy</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear">2025</span> Anjali Bansal & Associates. All rights reserved.</p>
+                <p class="footer-note">Committed to transparency and professional integrity in all our services.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="{% static 'js/refund-policy.js' %}"></script>
+</body>
+</html>

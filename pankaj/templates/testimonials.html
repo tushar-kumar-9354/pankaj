@@ -1,0 +1,508 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testimonials | Anjali Bansal & Associates | Company Secretaries</title>
+    <link rel="stylesheet" href="{% static 'css/testimonials.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <h1>ANJALI BANSAL & ASSOCIATES</h1>
+                <p>COMPANY SECRETARIES</p>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav class="nav-menu" id="navMenu">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/our_expertise">Expertise</a></li>
+                    <li><a href="/#articles">Articles</a></li>
+                    <li><a href="/testimonials" class="active">Testimonials</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="testimonials-hero">
+        <div class="container">
+            <div class="testimonials-hero-content">
+                <h1 class="page-title">Client Testimonials</h1>
+                <p class="page-subtitle">Trusted by businesses across industries. Read what our clients have to say about our corporate secretarial services and partnership.</p>
+                <div class="breadcrumb">
+                    <a href="/">Home</a> / <span>Testimonials</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-shape">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#ffffff" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Testimonials Stats -->
+    <section class="testimonials-stats">
+        <div class="container">
+            <div class="stats-intro">
+                <h2>Trusted By Industry Leaders</h2>
+                <p class="intro-text">Our commitment to excellence has earned us the trust of businesses across sectors. Here's what our clients appreciate about our partnership.</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" data-count="98">0</div>
+                    <div class="stat-label">Client Satisfaction</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="150">0</div>
+                    <div class="stat-label">Repeat Clients</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="95">0</div>
+                    <div class="stat-label">On-Time Delivery</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="4.9">0</div>
+                    <div class="stat-label">Average Rating</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Testimonials Slider -->
+    <section class="featured-testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Featured Testimonials</h2>
+                <p class="section-subtitle">Hear directly from our valued clients about their experience working with us</p>
+            </div>
+            
+            <div class="testimonials-slider swiper">
+                <div class="swiper-wrapper">
+                    <!-- Testimonial 1 -->
+                    <div class="swiper-slide">
+                        <div class="featured-testimonial">
+                            <div class="testimonial-header">
+                                <div class="client-image">
+                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Rohit Mehta">
+                                </div>
+                                <div class="client-info">
+                                    <h4>Rohit Mehta</h4>
+                                    <p class="client-position">CFO, TechNova Solutions</p>
+                                    <p class="client-industry">Technology | Listed Company</p>
+                                </div>
+                                <div class="testimonial-rating">
+                                    <div class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span>5.0</span>
+                                </div>
+                            </div>
+                            <div class="testimonial-content">
+                                <i class="fas fa-quote-left"></i>
+                                <p>"Anjali Bansal & Associates has been instrumental in guiding us through complex SEBI compliance requirements. Their proactive approach and deep understanding of regulatory changes have saved us countless hours and potential penalties. They're not just service providers; they're strategic partners."</p>
+                                <i class="fas fa-quote-right"></i>
+                            </div>
+                            <div class="testimonial-footer">
+                                <div class="service-tags">
+                                    <span>SEBI Compliance</span>
+                                    <span>Corporate Governance</span>
+                                    <span>Board Meetings</span>
+                                </div>
+                                <div class="testimonial-date">March 2023</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 2 -->
+                    <div class="swiper-slide">
+                        <div class="featured-testimonial">
+                            <div class="testimonial-header">
+                                <div class="client-image">
+                                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Priya Sharma">
+                                </div>
+                                <div class="client-info">
+                                    <h4>Priya Sharma</h4>
+                                    <p class="client-position">Founder, GreenEarth Organics</p>
+                                    <p class="client-industry">Manufacturing | SME</p>
+                                </div>
+                                <div class="testimonial-rating">
+                                    <div class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <span>4.5</span>
+                                </div>
+                            </div>
+                            <div class="testimonial-content">
+                                <i class="fas fa-quote-left"></i>
+                                <p>"As a growing SME, we needed reliable compliance partners who could scale with us. Anjali and her team have been exceptional in providing tailored solutions that fit our specific needs. Their responsiveness and attention to detail give us complete peace of mind regarding our regulatory obligations."</p>
+                                <i class="fas fa-quote-right"></i>
+                            </div>
+                            <div class="testimonial-footer">
+                                <div class="service-tags">
+                                    <span>SME Compliance</span>
+                                    <span>ROC Filings</span>
+                                    <span>Annual Returns</span>
+                                </div>
+                                <div class="testimonial-date">January 2023</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 3 -->
+                    <div class="swiper-slide">
+                        <div class="featured-testimonial">
+                            <div class="testimonial-header">
+                                <div class="client-image">
+                                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Arjun Patel">
+                                </div>
+                                <div class="client-info">
+                                    <h4>Arjun Patel</h4>
+                                    <p class="client-position">CEO, FinTech Innovations Ltd.</p>
+                                    <p class="client-industry">FinTech | Startup</p>
+                                </div>
+                                <div class="testimonial-rating">
+                                    <div class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span>5.0</span>
+                                </div>
+                            </div>
+                            <div class="testimonial-content">
+                                <i class="fas fa-quote-left"></i>
+                                <p>"The team's expertise in startup fundraising and FEMA regulations was crucial for our Series B funding round. They navigated complex cross-border investment regulations with precision and helped us structure the deal optimally. Their strategic advice went beyond compliance to actual value creation."</p>
+                                <i class="fas fa-quote-right"></i>
+                            </div>
+                            <div class="testimonial-footer">
+                                <div class="service-tags">
+                                    <span>Startup Advisory</span>
+                                    <span>FEMA Compliance</span>
+                                    <span>Fundraising</span>
+                                </div>
+                                <div class="testimonial-date">November 2022</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 4 -->
+                    <div class="swiper-slide">
+                        <div class="featured-testimonial">
+                            <div class="testimonial-header">
+                                <div class="client-image">
+                                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Neha Gupta">
+                                </div>
+                                <div class="client-info">
+                                    <h4>Neha Gupta</h4>
+                                    <p class="client-position">Director, Global Pharma Inc.</p>
+                                    <p class="client-industry">Pharmaceuticals | MNC</p>
+                                </div>
+                                <div class="testimonial-rating">
+                                    <div class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span>5.0</span>
+                                </div>
+                            </div>
+                            <div class="testimonial-content">
+                                <i class="fas fa-quote-left"></i>
+                                <p>"Managing compliance across multiple jurisdictions was challenging until we partnered with Anjali Bansal & Associates. Their team's ability to handle complex cross-border regulatory requirements while maintaining consistency in reporting has been impressive. They've become an integral part of our governance framework."</p>
+                                <i class="fas fa-quote-right"></i>
+                            </div>
+                            <div class="testimonial-footer">
+                                <div class="service-tags">
+                                    <span>Cross-border Compliance</span>
+                                    <span>MNC Advisory</span>
+                                    <span>Corporate Restructuring</span>
+                                </div>
+                                <div class="testimonial-date">August 2022</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation buttons -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                
+                <!-- Pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Industry Testimonials -->
+    <section class="industry-testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Testimonials by Industry</h2>
+                <p class="section-subtitle">See how we've helped businesses across different sectors achieve compliance excellence</p>
+            </div>
+            
+            <div class="industry-tabs">
+                <div class="tab-buttons">
+                    <button class="tab-button active" data-tab="all">All Industries</button>
+                    <button class="tab-button" data-tab="technology">Technology</button>
+                    <button class="tab-button" data-tab="manufacturing">Manufacturing</button>
+                    <button class="tab-button" data-tab="finance">Finance</button>
+                    <button class="tab-button" data-tab="startups">Startups</button>
+                </div>
+                
+                <div class="tab-content active" id="tab-all">
+                    <div class="testimonials-grid">
+                        <!-- Testimonial items will be populated by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="tab-technology">
+                    <div class="testimonials-grid">
+                        <!-- Technology testimonials -->
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="tab-manufacturing">
+                    <div class="testimonials-grid">
+                        <!-- Manufacturing testimonials -->
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="tab-finance">
+                    <div class="testimonials-grid">
+                        <!-- Finance testimonials -->
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="tab-startups">
+                    <div class="testimonials-grid">
+                        <!-- Startup testimonials -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Testimonials -->
+    <section class="video-testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Video Testimonials</h2>
+                <p class="section-subtitle">Hear our clients share their experiences in their own words</p>
+            </div>
+            
+            <div class="video-grid">
+                <div class="video-item">
+                    <div class="video-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1557862921-37829c790f19?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Video Testimonial">
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="video-overlay">
+                            <p>Hear from our client about SEBI compliance experience</p>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <h4>Rohit Mehta, TechNova Solutions</h4>
+                        <p>Technology Sector | 2:45 min</p>
+                    </div>
+                </div>
+                
+                <div class="video-item">
+                    <div class="video-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Video Testimonial">
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="video-overlay">
+                            <p>Startup founder shares fundraising journey</p>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <h4>Arjun Patel, FinTech Innovations</h4>
+                        <p>FinTech Startup | 3:20 min</p>
+                    </div>
+                </div>
+                
+                <div class="video-item">
+                    <div class="video-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Video Testimonial">
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="video-overlay">
+                            <p>Manufacturing client discusses compliance transformation</p>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <h4>Priya Sharma, GreenEarth Organics</h4>
+                        <p>Manufacturing | 2:15 min</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Client Logos -->
+    <section class="client-logos">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Esteemed Clients</h2>
+                <p class="section-subtitle">Trusted by industry leaders across sectors</p>
+            </div>
+            
+            <div class="logos-grid">
+                <div class="logo-item">
+                    <div class="logo-img">
+                        <i class="fas fa-building"></i>
+                        <span>TechNova Solutions</span>
+                    </div>
+                </div>
+                <div class="logo-item">
+                    <div class="logo-img">
+                        <i class="fas fa-industry"></i>
+                        <span>GreenEarth Organics</span>
+                    </div>
+                </div>
+                <div class="logo-item">
+                    <div class="logo-img">
+                        <i class="fas fa-chart-line"></i>
+                        <span>FinTech Innovations</span>
+                    </div>
+                </div>
+                <div class="logo-item">
+                    <div class="logo-img">
+                        <i class="fas fa-pills"></i>
+                        <span>Global Pharma Inc.</span>
+                    </div>
+                </div>
+                <div class="logo-item">
+                    <div class="logo-img">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>RetailChain India</span>
+                    </div>
+                </div>
+                <div class="logo-item">
+                    <div class="logo-img">
+                        <i class="fas fa-university"></i>
+                        <span>Capital Bank</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="testimonials-cta">
+        <div class="container">
+            <div class="cta-content">
+                <div class="cta-text">
+                    <h3>Ready to Experience Excellence?</h3>
+                    <p>Join our satisfied clients who trust us with their compliance needs. Let's start a conversation about how we can support your business.</p>
+                </div>
+                <div class="cta-buttons">
+                    <a href="/contact" class="btn btn-primary">
+                        <i class="fas fa-handshake"></i>
+                        Schedule Consultation
+                    </a>
+                    <a href="/our_expertise" class="btn btn-secondary">
+                        <i class="fas fa-chart-line"></i>
+                        View Our Services
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+<footer style="background-color: #1a1a1a; color: #ffffff; padding: 40px 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;">
+        
+        <div style="flex: 1; min-width: 250px;">
+            <h3 style="color: #4CAF50; margin-bottom: 15px;">Your Brand Name</h3>
+            <p style="font-size: 14px; line-height: 1.6; color: #cccccc;">
+                Providing quality services with transparency and integrity. Follow us on our journey to excellence.
+            </p>
+        </div>
+
+        <div style="flex: 1; min-width: 150px;">
+            <h4 style="margin-bottom: 15px; font-size: 18px;">Quick Links</h4>
+            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                <li><a href="/" style="color: #cccccc; text-decoration: none;">Home</a></li>
+                <li><a href="/about" style="color: #cccccc; text-decoration: none;">About Us</a></li>
+                <li><a href="/services" style="color: #cccccc; text-decoration: none;">Services</a></li>
+                <li><a href="/contact" style="color: #cccccc; text-decoration: none;">Contact</a></li>
+            </ul>
+        </div>
+
+        <div style="flex: 1; min-width: 150px;">
+            <h4 style="margin-bottom: 15px; font-size: 18px;">Legal Support</h4>
+            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                <li><a href="/privacy-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Privacy Policy</a></li>
+                <li><a href="/terms and conditions" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Terms & Conditions</a></li>
+                <li><a href="/refund-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Refund Policy</a></li>
+                <li><a href="/disclaimer" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Disclaimer</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0;">
+
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 13px; color: #888;">
+        <p>&copy; 2025 Your Brand Name. All Rights Reserved.</p>
+        <div style="display: flex; gap: 15px;">
+            <a href="#" style="color: #888; text-decoration: none;">Twitter</a>
+            <a href="#" style="color: #888; text-decoration: none;">LinkedIn</a>
+            <a href="#" style="color: #888; text-decoration: none;">Instagram</a>
+        </div>
+    </div>
+</footer>
+    <!-- Video Modal -->
+    <div class="video-modal" id="videoModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Client Testimonial</h3>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="video-placeholder">
+                    <i class="fas fa-play-circle"></i>
+                    <p>Video testimonial would play here</p>
+                    <p class="note">In a production environment, this would embed actual client testimonial videos</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script src="{% static 'js/testimonials.js' %}"></script>
+    
+</body>
+</html>

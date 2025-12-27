@@ -1,0 +1,676 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services | Anjali Bansal & Associates | Company Secretaries</title>
+    <link rel="stylesheet" href="{% static 'css/services.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <h1>ANJALI BANSAL & ASSOCIATES</h1>
+                <p>COMPANY SECRETARIES</p>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav class="nav-menu" id="navMenu">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/services" class="active">Our Services</a></li>
+                    <li><a href="/testimonials">Testimonials</a></li>
+                    <li><a href="/#articles">Articles</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="services-hero">
+        <div class="container">
+            <div class="services-hero-content">
+                <h1 class="page-title">Our Professional Services</h1>
+                <p class="page-subtitle">Comprehensive corporate secretarial solutions tailored to meet your business compliance needs and drive sustainable growth</p>
+                <div class="breadcrumb">
+                    <a href="/">Home</a> / <span>Our Services</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-shape">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#ffffff" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Services Overview -->
+    <section class="services-overview">
+        <div class="container">
+            <div class="section-intro">
+                <h2>Comprehensive Corporate Secretarial Solutions</h2>
+                <p class="intro-text">We provide end-to-end corporate compliance and secretarial services designed to help businesses navigate India's complex regulatory landscape with confidence and precision.</p>
+            </div>
+            
+            <div class="services-tabs">
+                <div class="tab-buttons">
+    <div class="main-tabs-group">
+        <button class="tab-button active" data-tab="compliance">
+            <i class="fas fa-file-contract"></i>
+            <span>Corporate Compliance</span>
+        </button>
+        <button class="tab-button" data-tab="sebi">
+            <i class="fas fa-chart-line"></i>
+            <span>SEBI & Listed Cos.</span>
+        </button>
+        <button class="tab-button" data-tab="fema">
+            <i class="fas fa-globe"></i>
+            <span>FEMA & International</span>
+        </button>
+        <button class="tab-button" data-tab="startup">
+            <i class="fas fa-rocket"></i>
+            <span>Startup Advisory</span>
+        </button>
+    </div>
+
+    <!-- Big featured consultations button -->
+    <button class="tab-button consultations-featured" data-tab="consultation">
+        <i class="fas fa-handshake fa-2x"></i>
+        <span>Consultations</span>
+    </button>
+</div>
+                
+                <div class="tab-content active" id="tab-compliance">
+                    <div class="service-detail">
+                        <div class="service-header">
+                            <div class="service-icon">
+                                <i class="fas fa-file-contract"></i>
+                            </div>
+                            <div class="service-title">
+                                <h3>Corporate Compliance & ROC Services</h3>
+                                <p class="service-subtitle">Ensuring regulatory adherence and statutory compliance for businesses</p>
+                            </div>
+                        </div>
+                        
+                        <div class="service-description">
+                            <p>Our comprehensive corporate compliance services ensure your business meets all statutory requirements under the Companies Act, 2013 and other relevant regulations. We handle end-to-end compliance management to keep your business in good standing.</p>
+                        </div>
+                        
+                        <div class="service-features">
+                            <div class="feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h4>Company Incorporation</h4>
+                                    <p>End-to-end incorporation services for Private Limited, Public Limited, LLP, and One Person Companies including name approval, DIN, DSC, and incorporation filing.</p>
+                                </div>
+                            </div>
+                            <div class="feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h4>Annual Compliance</h4>
+                                    <p>Comprehensive annual compliance including board meetings, annual general meetings, financial statement preparation, and annual return filing (Form MGT-7, AOC-4).</p>
+                                </div>
+                            </div>
+                            <div class="feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h4>ROC Filings</h4>
+                                    <p>Timely filing of various forms with the Registrar of Companies including change in directors, registered office, capital, and other statutory changes.</p>
+                                </div>
+                            </div>
+                            <div class="feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h4>Board & Committee Support</h4>
+                                    <p>Comprehensive board meeting support including notice drafting, agenda preparation, minutes recording, and follow-up on action items.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="service-pricing">
+                            <h4>Service Packages</h4>
+                            <div class="pricing-options">
+                                <div class="pricing-option">
+                                    <div class="pricing-header">
+                                        <h5>Basic Compliance</h5>
+                                        <div class="price">Starting at ₹25,000/year</div>
+                                    </div>
+                                    <ul class="pricing-features">
+                                        <li><i class="fas fa-check"></i> Annual ROC Filings</li>
+                                        <li><i class="fas fa-check"></i> Board Meeting Minutes</li>
+                                        <li><i class="fas fa-check"></i> Statutory Register Maintenance</li>
+                                        <li><i class="fas fa-check"></i> Annual General Meeting</li>
+                                    </ul>
+                                </div>
+                                <div class="pricing-option">
+                                    <div class="pricing-header">
+                                        <h5>Comprehensive Compliance</h5>
+                                        <div class="price">Starting at ₹50,000/year</div>
+                                    </div>
+                                    <ul class="pricing-features">
+                                        <li><i class="fas fa-check"></i> All Basic Compliance Features</li>
+                                        <li><i class="fas fa-check"></i> Quarterly Compliance Monitoring</li>
+                                        <li><i class="fas fa-check"></i> Regulatory Updates & Alerts</li>
+                                        <li><i class="fas fa-check"></i> Dedicated Compliance Manager</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="tab-sebi">
+                    <div class="service-detail">
+                        <div class="service-header">
+                            <div class="service-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="service-title">
+                                <h3>SEBI & Listed Company Compliance</h3>
+                                <p class="service-subtitle">Specialized services for listed companies and capital market regulations</p>
+                            </div>
+                        </div>
+                        
+                        <div class="service-description">
+                            <p>Expert guidance and compliance management for companies listed on stock exchanges. We ensure adherence to SEBI regulations, LODR requirements, and other capital market norms.</p>
+                        </div>
+                        
+                        <div class="service-features">
+                            <div class="feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h4>SEBI LODR Compliance</h4>
+                                    <p>Comprehensive compliance with SEBI Listing Obligations and Disclosure Requirements including corporate governance, disclosure norms, and periodic filings.</p>
+                                </div>
+                            </div>
+                            <div class="feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h4>Corporate Governance</h4>
+                                    <p>Implementation and monitoring of corporate governance practices including board composition, committee structures, and governance reporting.</p>
+                                </div>
+                            </div>
+                            <div class="feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h4>Insider Trading Regulations</h4>
+                                    <p>Design and implementation of code of conduct for prevention of insider trading, monitoring of trading windows, and compliance reporting.</p>
+                                </div>
+                            </div>
+                            <div class="feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h4>Disclosure & Reporting</h4>
+                                    <p>Timely disclosure of material events, financial results, shareholding patterns, and other regulatory requirements to stock exchanges.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="tab-fema">
+                    <div class="service-detail">
+                        <div class="service-header">
+                            <div class="service-icon">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                            <div class="service-title">
+                                <h3>FEMA & International Transactions</h3>
+                                <p class="service-subtitle">Expert guidance on cross-border transactions and foreign exchange regulations</p>
+                            </div>
+                        </div>
+                        
+                        <div class="service-description">
+                            <p>Navigating the complexities of Foreign Exchange Management Act (FEMA) regulations for inbound and outbound investments, external commercial borrowings, and other cross-border transactions.</p>
+                        </div>
+                        
+                        <div class="service-features">
+                            <div class="feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h4>Foreign Investments</h4>
+                                    <p>Structuring and compliance for foreign direct investment (FDI), foreign portfolio investment (FPI), and investment by NRIs/PIOs under automatic and approval routes.</p>
+                                </div>
+                            </div>
+                            <div class="feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h4>Overseas Investments</h4>
+                                    <p>Advisory and compliance for overseas direct investments (ODI) by Indian companies, including joint ventures and wholly-owned subsidiaries abroad.</p>
+                                </div>
+                            </div>
+                            <div class="feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h4>External Commercial Borrowings</h4>
+                                    <p>Structuring, documentation, and compliance for ECBs, including foreign currency convertible bonds and foreign currency exchangeable bonds.</p>
+                                </div>
+                            </div>
+                            <div class="feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h4>Branch/Liaison Office</h4>
+                                    <p>Establishment and compliance for branch offices, liaison offices, and project offices of foreign companies in India.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="tab-startup">
+                    <div class="service-detail">
+                        <div class="service-header">
+                            <div class="service-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <div class="service-title">
+                                <h3>Startup Advisory & Fundraising</h3>
+                                <p class="service-subtitle">Specialized services for startups and growing businesses</p>
+                            </div>
+                        </div>
+                        
+                        <div class="service-description">
+                            <p>Comprehensive legal and secretarial support for startups from incorporation to fundraising and beyond. We help startups navigate regulatory requirements while focusing on growth.</p>
+                        </div>
+                        
+                        <div class="service-features">
+                            <div class="feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h4>Startup Incorporation</h4>
+                                    <p>End-to-end startup incorporation with guidance on optimal business structure (Pvt Ltd, LLP, OPC) and startup India registration.</p>
+                                </div>
+                            </div>
+                            <div class="feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h4>Fundraising Support</h4>
+                                    <p>Comprehensive support for fundraising rounds including term sheet review, due diligence, shareholder agreements, and SEBI compliance for angel/VC funding.</p>
+                                </div>
+                            </div>
+                            <div class="feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h4>ESOP Design & Implementation</h4>
+                                    <p>Design and implementation of employee stock option plans (ESOPs) including plan documentation, regulatory compliance, and administration.</p>
+                                </div>
+                            </div>
+                            <div class="feature">
+                                <div class="feature-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h4>Regulatory Compliance</h4>
+                                    <p>Ongoing compliance management tailored for startups, including annual filings, board meetings, and investor reporting.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="tab-consultation">
+                    <div class="service-detail">
+                        <div class="service-header">
+                            <div class="service-icon">
+                                <i class="fas fa-handshake"></i>
+                            </div>
+                            <div class="service-title">
+                                <h3>Professional Consultations</h3>
+                                <p class="service-subtitle">Expert advisory sessions for specific compliance challenges</p>
+                            </div>
+                        </div>
+                        
+                        <div class="service-description">
+                            <p>Book dedicated time with our experts to discuss specific compliance challenges, regulatory queries, or strategic corporate secretarial matters. Our consultation sessions provide tailored advice for your unique business needs.</p>
+                        </div>
+                        
+                        <div class="consultation-options">
+    <h4>Consultation Packages</h4>
+    <div class="pricing-grid">
+        <div class="pricing-card">
+            <div class="pricing-card-header">
+                <h5>Quick Consultation</h5>
+                <div class="price">₹1,000</div>
+                <p class="duration">30 Minutes</p>
+            </div>
+            <div class="pricing-card-body">
+                <ul>
+                    <li><i class="fas fa-check"></i> One specific compliance query</li>
+                    <li><i class="fas fa-check"></i> Basic regulatory guidance</li>
+                    <li><i class="fas fa-check"></i> Document review (up to 5 pages)</li>
+                    <li><i class="fas fa-check"></i> Email follow-up summary</li>
+                </ul>
+                <a href="{% url 'booking' duration='30-min' %}" class="btn btn-primary">
+                        <i class="fas fa-handshake"></i>Book Session</a>
+            </div>
+        </div>
+        
+        <div class="pricing-card recommended">
+            <div class="recommended-badge">Most Popular</div>
+            <div class="pricing-card-header">
+                <h5>Standard Consultation</h5>
+                <div class="price">₹1,500</div>
+                <p class="duration">45 Minutes</p>
+            </div>
+            <div class="pricing-card-body">
+                <ul>
+                    <li><i class="fas fa-check"></i> Multiple related queries</li>
+                    <li><i class="fas fa-check"></i> Detailed regulatory analysis</li>
+                    <li><i class="fas fa-check"></i> Document review (up to 15 pages)</li>
+                    <li><i class="fas fa-check"></i> Written advice summary</li>
+                    <li><i class="fas fa-check"></i> 1-week email support</li>
+                </ul>
+                <a href="{% url 'booking' duration='45-min' %}" class="btn btn-primary">
+                        <i class="fas fa-handshake"></i>Book Session</a>
+            </div>
+        </div>
+        
+        <div class="pricing-card">
+            <div class="pricing-card-header">
+                <h5>Comprehensive Consultation</h5>
+                <div class="price">₹2,000</div>
+                <p class="duration">60 Minutes</p>
+            </div>
+            <div class="pricing-card-body">
+                <ul>
+                    <li><i class="fas fa-check"></i> Complex compliance scenarios</li>
+                    <li><i class="fas fa-check"></i> Strategic planning session</li>
+                    <li><i class="fas fa-check"></i> Document review (up to 30 pages)</li>
+                    <li><i class="fas fa-check"></i> Detailed written recommendations</li>
+                    <li><i class="fas fa-check"></i> 2-week follow-up support</li>
+                </ul>
+                <a href="{% url 'booking' duration='60-min' %}" class="btn btn-primary">
+                        <i class="fas fa-handshake"></i>Book Session</a>
+            </div>
+        </div>
+    </div>
+</div>
+                        
+                        <div class="consultation-cta">
+                            <p>All consultations include a preliminary review of your documents. Sessions can be conducted in-person, via video conference, or phone as per your preference.</p>
+                            <a href="{% url 'booking' duration='45-min' %}" class="btn-primary">
+                                <i class="fas fa-calendar-alt"></i>
+                                Schedule Consultation
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- All Services Grid -->
+    <section class="all-services">
+        <div class="container">
+            <div class="section-title">
+                <h2>All Our Services</h2>
+                <p class="section-subtitle">Comprehensive corporate secretarial and compliance solutions</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-card-icon">
+                        <i class="fas fa-landmark"></i>
+                    </div>
+                    <div class="service-card-content">
+                        <h4>Company Incorporation</h4>
+                        <p>End-to-end incorporation services for various business structures including Private Limited, Public Limited, LLP, and One Person Companies.</p>
+                        <a href="#tab-compliance" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-card-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="service-card-content">
+                        <h4>Annual Compliance</h4>
+                        <p>Comprehensive annual compliance management including board meetings, AGM, financial statements, and annual return filings.</p>
+                        <a href="#tab-compliance" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-card-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <div class="service-card-content">
+                        <h4>SEBI Compliance</h4>
+                        <p>Expert guidance on SEBI regulations, LODR compliance, corporate governance, and disclosure requirements for listed companies.</p>
+                        <a href="#tab-sebi" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-card-icon">
+                        <i class="fas fa-globe-asia"></i>
+                    </div>
+                    <div class="service-card-content">
+                        <h4>FEMA Advisory</h4>
+                        <p>Structuring and compliance for foreign investments, overseas investments, ECB, and cross-border transactions under FEMA regulations.</p>
+                        <a href="#tab-fema" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-card-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="service-card-content">
+                        <h4>Startup Advisory</h4>
+                        <p>Specialized services for startups including incorporation, fundraising support, ESOP design, and regulatory compliance.</p>
+                        <a href="#tab-startup" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-card-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="service-card-content">
+                        <h4>Due Diligence</h4>
+                        <p>Comprehensive legal and secretarial due diligence for mergers, acquisitions, investments, and other corporate transactions.</p>
+                        <a href="#tab-compliance" class="service-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="why-choose">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Choose Our Services</h2>
+                <p class="section-subtitle">What sets us apart in corporate secretarial practice</p>
+            </div>
+            
+            <div class="why-grid">
+                <div class="why-item">
+                    <div class="why-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="why-content">
+                        <h4>Expert Team</h4>
+                        <p>Our team comprises experienced company secretaries, lawyers, and compliance experts with specialized industry knowledge.</p>
+                    </div>
+                </div>
+                
+                <div class="why-item">
+                    <div class="why-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="why-content">
+                        <h4>Timely Compliance</h4>
+                        <p>Proactive monitoring and timely filing to ensure zero delays and penalties in regulatory compliances.</p>
+                    </div>
+                </div>
+                
+                <div class="why-item">
+                    <div class="why-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="why-content">
+                        <h4>Risk Mitigation</h4>
+                        <p>Comprehensive compliance strategies designed to identify and mitigate regulatory risks before they become issues.</p>
+                    </div>
+                </div>
+                
+                <div class="why-item">
+                    <div class="why-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div class="why-content">
+                        <h4>Dedicated Support</h4>
+                        <p>Personalized attention with dedicated relationship managers and 24/7 accessibility for urgent compliance matters.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="services-cta">
+        <div class="container">
+            <div class="cta-content">
+                <div class="cta-text">
+                    <h3>Need Expert Compliance Guidance?</h3>
+                    <p>Discuss your specific requirements with our experts and get tailored solutions for your business compliance needs.</p>
+                </div>
+                <div class="cta-buttons">
+                    <div class="cta-buttons">
+                <div class="cta-buttons">
+                    <a href="{% url 'booking' duration='45-min' %}" class="btn btn-primary">
+                        <i class="fas fa-handshake"></i>
+                        Schedule Consultation
+                    </a>
+                    <a href="/testimonials" class="btn btn-secondary">
+                        <i class="fas fa-comments"></i>
+                        View Testimonials
+                    </a>
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+<footer style="background-color: #1a1a1a; color: #ffffff; padding: 40px 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;">
+        
+        <div style="flex: 1; min-width: 250px;">
+            <h3 style="color: #4CAF50; margin-bottom: 15px;">Your Brand Name</h3>
+            <p style="font-size: 14px; line-height: 1.6; color: #cccccc;">
+                Providing quality services with transparency and integrity. Follow us on our journey to excellence.
+            </p>
+        </div>
+
+        <div style="flex: 1; min-width: 150px;">
+            <h4 style="margin-bottom: 15px; font-size: 18px;">Quick Links</h4>
+            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                <li><a href="/" style="color: #cccccc; text-decoration: none;">Home</a></li>
+                <li><a href="/about" style="color: #cccccc; text-decoration: none;">About Us</a></li>
+                <li><a href="/services" style="color: #cccccc; text-decoration: none;">Services</a></li>
+                <li><a href="/contact" style="color: #cccccc; text-decoration: none;">Contact</a></li>
+            </ul>
+        </div>
+
+        <div style="flex: 1; min-width: 150px;">
+            <h4 style="margin-bottom: 15px; font-size: 18px;">Legal Support</h4>
+            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                <li><a href="/privacy-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Privacy Policy</a></li>
+                <li><a href="/terms and conditions" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Terms & Conditions</a></li>
+                <li><a href="/refund-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Refund Policy</a></li>
+                <li><a href="/disclaimer" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Disclaimer</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0;">
+
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 13px; color: #888;">
+        <p>&copy; 2025 Your Brand Name. All Rights Reserved.</p>
+        <div style="display: flex; gap: 15px;">
+            <a href="#" style="color: #888; text-decoration: none;">Twitter</a>
+            <a href="#" style="color: #888; text-decoration: none;">LinkedIn</a>
+            <a href="#" style="color: #888; text-decoration: none;">Instagram</a>
+        </div>
+    </div>
+</footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('=== Booking Link Debug ===');
+    
+    // Check all booking links
+    const bookingLinks = document.querySelectorAll('.btn-book, .btn-primary[href*="booking"], .btn[href*="booking"]');
+    
+    if (bookingLinks.length === 0) {
+        console.log('No booking links found on page!');
+    } else {
+        bookingLinks.forEach((link, index) => {
+            console.log(`Link ${index + 1}:`, link.outerHTML);
+            console.log('Href:', link.href);
+            console.log('Text:', link.textContent.trim());
+            console.log('---');
+        });
+    }
+    
+    // Check if JavaScript is modifying links after load
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'href') {
+                console.log('Link modified!', mutation.target, 'New href:', mutation.target.href);
+            }
+        });
+    });
+    
+    // Observe all booking links
+    bookingLinks.forEach(link => {
+        observer.observe(link, { attributes: true });
+    });
+});
+</script>
+
+    <script src="{% static 'js/services.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

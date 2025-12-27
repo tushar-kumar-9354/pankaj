@@ -1,0 +1,529 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Consultation | Anjali Bansal & Associates | Company Secretaries</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/booking.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <h1>ANJALI BANSAL & ASSOCIATES</h1>
+                <p>COMPANY SECRETARIES</p>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav class="nav-menu" id="navMenu">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/services">Our Services</a></li>
+                    <li><a href="/testimonials">Testimonials</a></li>
+                    <li><a href="/#articles">Articles</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Booking Hero -->
+    <section class="booking-hero">
+        <div class="container">
+            <div class="booking-hero-content">
+                <h1 class="page-title">Professional Consultation Booking</h1>
+                <p class="page-subtitle">Schedule a tailored {{ duration_minutes }}-minute consultation with our corporate secretarial experts</p>
+                
+            </div>
+        </div>
+        <div class="hero-overlay"></div>
+    </section>
+
+    <!-- Consultation Selection -->
+    <section class="consultation-selection">
+        <div class="container">
+            <div class="section-title">
+                <h3>Select Consultation Package</h3>
+                <p class="section-subtitle">Choose the consultation duration that best fits your needs</p>
+            </div>
+            
+            <div class="consultation-options">
+                <div class="consultation-card {% if duration == '30-min' %}active{% endif %}">
+                    <div class="consultation-card-header">
+                        <h4>Quick Consultation</h4>
+                        <div class="consultation-price">₹1,000</div>
+                    </div>
+                    <div class="consultation-card-body">
+                        <div class="consultation-duration">
+                            <i class="fas fa-clock"></i>
+                            <span>30 Minutes</span>
+                        </div>
+                        <ul class="consultation-features">
+                            <li><i class="fas fa-check"></i> One specific compliance query</li>
+                            <li><i class="fas fa-check"></i> Basic regulatory guidance</li>
+                            <li><i class="fas fa-check"></i> Document review (up to 5 pages)</li>
+                            <li><i class="fas fa-check"></i> Email follow-up summary</li>
+                        </ul>
+                        <a href="{% url 'booking' duration='30-min' %}" class="btn-select {% if duration == '30-min' %}active{% endif %}">
+                            {% if duration == '30-min' %}
+                            <i class="fas fa-check-circle"></i> Currently Selected
+                            {% else %}
+                            Select This Package
+                            {% endif %}
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="consultation-card {% if duration == '45-min' %}active{% endif %} recommended">
+                    <div class="recommended-badge">Most Popular</div>
+                    <div class="consultation-card-header">
+                        <h4>Standard Consultation</h4>
+                        <div class="consultation-price">₹1,500</div>
+                    </div>
+                    <div class="consultation-card-body">
+                        <div class="consultation-duration">
+                            <i class="fas fa-clock"></i>
+                            <span>45 Minutes</span>
+                        </div>
+                        <ul class="consultation-features">
+                            <li><i class="fas fa-check"></i> Multiple related queries</li>
+                            <li><i class="fas fa-check"></i> Detailed regulatory analysis</li>
+                            <li><i class="fas fa-check"></i> Document review (up to 15 pages)</li>
+                            <li><i class="fas fa-check"></i> Written advice summary</li>
+                            <li><i class="fas fa-check"></i> 1-week email support</li>
+                        </ul>
+                        <a href="{% url 'booking' duration='45-min' %}" class="btn-select {% if duration == '45-min' %}active{% endif %}">
+                            {% if duration == '45-min' %}
+                            <i class="fas fa-check-circle"></i> Currently Selected
+                            {% else %}
+                            Select This Package
+                            {% endif %}
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="consultation-card {% if duration == '60-min' %}active{% endif %}">
+                    <div class="consultation-card-header">
+                        <h4>Comprehensive Consultation</h4>
+                        <div class="consultation-price">₹2,000</div>
+                    </div>
+                    <div class="consultation-card-body">
+                        <div class="consultation-duration">
+                            <i class="fas fa-clock"></i>
+                            <span>60 Minutes</span>
+                        </div>
+                        <ul class="consultation-features">
+                            <li><i class="fas fa-check"></i> Complex compliance scenarios</li>
+                            <li><i class="fas fa-check"></i> Strategic planning session</li>
+                            <li><i class="fas fa-check"></i> Document review (up to 30 pages)</li>
+                            <li><i class="fas fa-check"></i> Detailed written recommendations</li>
+                            <li><i class="fas fa-check"></i> 2-week follow-up support</li>
+                        </ul>
+                        <a href="{% url 'booking' duration='60-min' %}" class="btn-select {% if duration == '60-min' %}active{% endif %}">
+                            {% if duration == '60-min' %}
+                            <i class="fas fa-check-circle"></i> Currently Selected
+                            {% else %}
+                            Select This Package
+                            {% endif %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Container -->
+    <section class="booking-container">
+        <div class="container">
+            <div class="current-package-info">
+                <div class="current-package-header">
+                    <h3><i class="fas fa-calendar-check"></i> {{ title }}</h3>
+                    <div class="package-price">{{ price }}</div>
+                </div>
+                <div class="package-details">
+                    <span class="detail-item"><i class="fas fa-clock"></i> {{ duration_minutes }} minutes</span>
+                    <span class="detail-item"><i class="fas fa-check-circle"></i> Professional consultation</span>
+                    <span class="detail-item"><i class="fas fa-file-alt"></i> Detailed summary included</span>
+                </div>
+            </div>
+            
+            <div class="booking-wrapper">
+                <!-- Consultation Details -->
+                <div class="booking-details">
+                    <div class="details-card">
+                        <div class="details-header">
+                            <h4>Consultation Details</h4>
+                            <div class="package-indicator">
+                                <span class="duration-badge">{{ duration_minutes }} min</span>
+                            </div>
+                        </div>
+                        
+                        <div class="benefits-section">
+                            <h5><i class="fas fa-star"></i> Key Benefits</h5>
+                            <div class="benefits-grid">
+                                <div class="benefit">
+                                    <i class="fas fa-user-tie"></i>
+                                    <div>
+                                        <h6>Expert Guidance</h6>
+                                        <p>Direct access to experienced company secretaries</p>
+                                    </div>
+                                </div>
+                                <div class="benefit">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <div>
+                                        <h6>Confidential Session</h6>
+                                        <p>Secure and private consultation</p>
+                                    </div>
+                                </div>
+                                <div class="benefit">
+                                    <i class="fas fa-file-contract"></i>
+                                    <div>
+                                        <h6>Actionable Advice</h6>
+                                        <p>Practical, implementable solutions</p>
+                                    </div>
+                                </div>
+                                <div class="benefit">
+                                    <i class="fas fa-headset"></i>
+                                    <div>
+                                        <h6>Post-Consultation Support</h6>
+                                        <p>Email follow-up as per package</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="features-list">
+                            <h5><i class="fas fa-check-circle"></i> What's Included:</h5>
+                            <ul>
+                                {% for feature in features %}
+                                <li><i class="fas fa-check"></i> {{ feature }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        
+                        <div class="preparation-tips">
+                            <h5><i class="fas fa-lightbulb"></i> Preparation Guidelines:</h5>
+                            <ol>
+                                <li>Prepare specific questions in advance</li>
+                                <li>Gather relevant documents for review</li>
+                                <li>Outline your business context</li>
+                                <li>Note any deadlines or urgent matters</li>
+                                <li>Test your video/audio setup if virtual</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Booking Form -->
+                <div class="booking-form-section">
+                    <div class="form-container">
+                        <div class="form-header">
+                            <h3>Schedule Your Consultation</h3>
+                            <p class="form-subtitle">Complete the form below to book your {{ duration_minutes }}-minute session</p>
+                        </div>
+                        
+                        <!-- Calendar Section -->
+<div class="calendar-section">
+    <h4><i class="fas fa-calendar-alt"></i> Select Date & Time</h4>
+    <div class="calendar-navigation">
+        <button class="calendar-nav-btn prev" type="button">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="current-month">January 2024</div>
+        <button class="calendar-nav-btn next" type="button">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+    
+    <div class="calendar-header">
+        <div class="day-header">Sun</div>
+        <div class="day-header">Mon</div>
+        <div class="day-header">Tue</div>
+        <div class="day-header">Wed</div>
+        <div class="day-header">Thu</div>
+        <div class="day-header">Fri</div>
+        <div class="day-header">Sat</div>
+    </div>
+    
+    <div class="calendar-dates" id="calendarDates">
+        <!-- Calendar dates will be generated by JavaScript -->
+    </div>
+    
+    <div class="time-selection">
+        <h5>Available Time Slots for <span id="selectedDateDisplay">Today</span></h5>
+        <div class="time-slots" id="timeSlots">
+            <!-- Time slots will be generated based on selected date -->
+        </div>
+        <div class="no-slots-message" id="noSlotsMessage" style="display: none;">
+            <i class="fas fa-calendar-times"></i>
+            <p>No available slots for this date. Please select another date.</p>
+        </div>
+    </div>
+</div>
+<!-- Appointment Summary -->
+<div class="appointment-summary" id="appointmentSummary">
+    <div class="summary-header">
+        <h6>Selected Appointment</h6>
+        <button type="button" class="clear-selection" id="clearSelectionBtn">
+            <i class="fas fa-times"></i> Clear
+        </button>
+    </div>
+    <div class="summary-details">
+        <div class="summary-date" id="summaryDate">No date selected</div>
+        <div class="summary-time" id="summaryTime">No time selected</div>
+    </div>
+</div>
+                        <form id="bookingForm" method="POST" action="#">
+                            {% csrf_token %}
+                            <input type="hidden" name="duration" value="{{ duration }}">
+                            <input type="hidden" name="duration_minutes" value="{{ duration_minutes }}">
+                            <input type="hidden" name="price" value="{{ price }}">
+                            <input type="hidden" name="selected_time" id="selectedTime" value="">
+                            <input type="hidden" name="selected_date" id="selectedDate">
+                            <input type="hidden" name="appointment_datetime" id="appointmentDatetime">
+                                                    
+                        <div class="form-section">
+                                <h5><i class="fas fa-user"></i> Personal Information</h5>
+                                
+                                <div class="form-group">
+                                    <label for="name">Full Name *</label>
+                                    <div class="input-with-icon">
+                                        <i class="fas fa-user"></i>
+                                        <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="email">Email Address *</label>
+                                        <div class="input-with-icon">
+                                            <i class="fas fa-envelope"></i>
+                                            <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="phone">Phone Number *</label>
+                                        <div class="input-with-icon">
+                                            <i class="fas fa-phone"></i>
+                                            <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="company">Company / Organization</label>
+                                    <div class="input-with-icon">
+                                        <i class="fas fa-building"></i>
+                                        <input type="text" id="company" name="company" placeholder="Your company name">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="designation">Designation</label>
+                                    <div class="input-with-icon">
+                                        <i class="fas fa-briefcase"></i>
+                                        <input type="text" id="designation" name="designation" placeholder="Your position">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-section">
+                                <h5><i class="fas fa-file-alt"></i> Consultation Details</h5>
+                                
+                                <div class="form-group">
+                                    <label for="topic">Consultation Topic / Query *</label>
+                                    <textarea id="topic" name="topic" rows="4" placeholder="Please describe what you'd like to discuss, specific questions you have, and any relevant background information..." required></textarea>
+                                    <small class="char-count"><span id="charCount">0</span>/500 characters</small>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="mode">Preferred Consultation Mode *</label>
+                                    <div class="mode-options">
+                                        <label class="mode-option">
+                                            <input type="radio" name="mode" value="video" checked>
+                                            <div class="mode-content">
+                                                <i class="fas fa-video"></i>
+                                                <div>
+                                                    <strong>Video Call</strong>
+                                                    <small>Zoom/Google Meet</small>
+                                                </div>
+                                            </div>
+                                        </label>
+                                        <label class="mode-option">
+                                            <input type="radio" name="mode" value="phone">
+                                            <div class="mode-content">
+                                                <i class="fas fa-phone"></i>
+                                                <div>
+                                                    <strong>Phone Call</strong>
+                                                    <small>Audio only</small>
+                                                </div>
+                                            </div>
+                                        </label>
+                                        <label class="mode-option">
+                                            <input type="radio" name="mode" value="in-person">
+                                            <div class="mode-content">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <div>
+                                                    <strong>In-person</strong>
+                                                    <small>At our office</small>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="documents">Upload Documents (Optional)</label>
+                                    <div class="file-upload-area">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        <p>Drop files here or <span class="browse-link">browse</span></p>
+                                        <small>Upload PDF, DOC, DOCX files (Max 5 files, 10MB each)</small>
+                                        <input type="file" id="documents" name="documents" multiple accept=".pdf,.doc,.docx">
+                                    </div>
+                                    <div id="fileList" class="file-list"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group checkbox-group">
+                                <input type="checkbox" id="terms" name="terms" required>
+                                <label for="terms">
+                                    I agree to the <a href="/terms" target="_blank">Terms of Service</a> and <a href="/privacy" target="_blank">Privacy Policy</a>. I understand that this consultation is subject to professional engagement terms and will receive an email confirmation with meeting details.
+                                </label>
+                            </div>
+                            
+                            <div class="form-group checkbox-group">
+                                <input type="checkbox" id="newsletter" name="newsletter">
+                                <label for="newsletter">
+                                    Yes, I'd like to receive regulatory updates, compliance tips, and service announcements from Anjali Bansal & Associates.
+                                </label>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <a href="/services" class="btn-back">
+                                    <i class="fas fa-arrow-left"></i> Back to Services
+                                </a>
+                                <button type="submit" class="btn-submit">
+                                    <i class="fas fa-calendar-check"></i>
+                                    Confirm & Schedule Consultation
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Assurance Section -->
+    <section class="assurance-section">
+        <div class="container">
+            <div class="assurance-content">
+                <div class="assurance-icon">
+                    <i class="fas fa-shield-alt fa-3x"></i>
+                </div>
+                <div class="assurance-text">
+                    <h3>Your Consultation is Secure & Confidential</h3>
+                    <p>All discussions and documents shared during your consultation are protected by strict confidentiality agreements. We adhere to the highest professional standards of data privacy and security.</p>
+                </div>
+                <div class="assurance-badges">
+                    <span class="badge"><i class="fas fa-lock"></i> Secure</span>
+                    <span class="badge"><i class="fas fa-user-shield"></i> Confidential</span>
+                    <span class="badge"><i class="fas fa-certificate"></i> Professional</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+<footer style="background-color: #1a1a1a; color: #ffffff; padding: 40px 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;">
+        
+        <div style="flex: 1; min-width: 250px;">
+            <h3 style="color: #4CAF50; margin-bottom: 15px;">Your Brand Name</h3>
+            <p style="font-size: 14px; line-height: 1.6; color: #cccccc;">
+                Providing quality services with transparency and integrity. Follow us on our journey to excellence.
+            </p>
+        </div>
+
+        <div style="flex: 1; min-width: 150px;">
+            <h4 style="margin-bottom: 15px; font-size: 18px;">Quick Links</h4>
+            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                <li><a href="/" style="color: #cccccc; text-decoration: none;">Home</a></li>
+                <li><a href="/about" style="color: #cccccc; text-decoration: none;">About Us</a></li>
+                <li><a href="/services" style="color: #cccccc; text-decoration: none;">Services</a></li>
+                <li><a href="/contact" style="color: #cccccc; text-decoration: none;">Contact</a></li>
+            </ul>
+        </div>
+
+        <div style="flex: 1; min-width: 150px;">
+            <h4 style="margin-bottom: 15px; font-size: 18px;">Legal Support</h4>
+            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                <li><a href="/privacy-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Privacy Policy</a></li>
+                <li><a href="/terms and conditions" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Terms & Conditions</a></li>
+                <li><a href="/refund-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Refund Policy</a></li>
+                <li><a href="/disclaimer" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Disclaimer</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0;">
+
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 13px; color: #888;">
+        <p>&copy; 2025 Your Brand Name. All Rights Reserved.</p>
+        <div style="display: flex; gap: 15px;">
+            <a href="#" style="color: #888; text-decoration: none;">Twitter</a>
+            <a href="#" style="color: #888; text-decoration: none;">LinkedIn</a>
+            <a href="#" style="color: #888; text-decoration: none;">Instagram</a>
+        </div>
+    </div>
+</footer>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <i class="fas fa-check-circle"></i>
+                <h3>Booking Confirmed!</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Thank you for booking your consultation. Your session details have been scheduled.</p>
+                <div class="booking-summary">
+                    <div class="summary-item">
+                        <strong>Package:</strong>
+                        <span>{{ title }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <strong>Duration:</strong>
+                        <span>{{ duration_minutes }} minutes</span>
+                    </div>
+                    <div class="summary-item">
+                        <strong>Amount:</strong>
+                        <span>{{ price }}</span>
+                    </div>
+                </div>
+                <p class="confirmation-note">
+                    <i class="fas fa-info-circle"></i>
+                    You will receive a confirmation email with meeting details within 15 minutes. Please check your spam folder if you don't see it.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-modal-close">Return to Services</button>
+                <button class="btn-modal-calendar">
+                    <i class="fas fa-calendar-plus"></i> Add to Calendar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/booking.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,371 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogs & Updates | Anjali Bansal & Associates | Company Secretaries</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/blogs.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <h1>ANJALI BANSAL & ASSOCIATES</h1>
+                <p>COMPANY SECRETARIES</p>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav class="nav-menu" id="navMenu">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/services">Services</a></li>
+                    <li><a href="/our_expertise">Expertise</a></li>
+                    <li><a href="/blogs" class="active">Blogs</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="blogs-hero">
+        <div class="container">
+            <div class="blogs-hero-content">
+                <h1 class="page-title">Insights & Updates</h1>
+                <p class="page-subtitle">Expert analysis on corporate law, FEMA, SEBI regulations, and industry trends</p>
+                <div class="breadcrumb">
+                    <a href="/">Home</a> / <span>Blogs & Updates</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-shape">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#ffffff" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Blogs Main Content -->
+    <section class="blogs-main">
+        <div class="container">
+            <div class="blogs-container">
+                <!-- Sidebar -->
+                <aside class="blogs-sidebar">
+                    <div class="sidebar-widget">
+                        <h3>Categories</h3>
+                        <ul class="categories-list">
+                            <li><a href="#" class="active"><i class="fas fa-newspaper"></i> All Posts</a></li>
+                            <li><a href="/fema-service"><i class="fas fa-globe-asia"></i> FEMA</a></li>
+                            <li><a href="#"><i class="fas fa-balance-scale"></i> SEBI</a></li>
+                            <li><a href="#"><i class="fas fa-landmark"></i> Corporate Law</a></li>
+                            <li><a href="#"><i class="fas fa-chart-line"></i> Fundraising</a></li>
+                            <li><a href="#"><i class="fas fa-rocket"></i> Startups</a></li>
+                            <li><a href="#"><i class="fas fa-gavel"></i> Compliance</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="sidebar-widget">
+                        <h3>Search Articles</h3>
+                        <div class="search-box">
+                            <input type="text" placeholder="Search blogs...">
+                            <button><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="sidebar-widget">
+                        <h3>Featured Posts</h3>
+                        <div class="featured-post">
+                            <div class="featured-post-content">
+                                <span class="post-category">SEBI</span>
+                                <h4>Research Analysts: New Guidelines for SEBI Rules</h4>
+                                <p>Updated regulations introduce significant changes affecting how research analysts operate in India.</p>
+                               
+                            </div>
+                        </div>
+                        
+                        <div class="featured-post">
+                            <div class="featured-post-content">
+                                <span class="post-category">FEMA</span>
+                                <h4>Annual Return on Foreign Liabilities</h4>
+                                <p>Understanding FLA compliance requirements under FEMA with the Reserve Bank of India.</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                </aside>
+
+                <!-- Blog Posts -->
+                <div class="blog-posts">
+                    <div class="posts-filter">
+                        <div class="filter-title">
+                            <h2>Latest Articles</h2>
+                            <p>Expert analysis and regulatory updates</p>
+                        </div>
+                        <div class="filter-options">
+                            <select class="sort-select">
+                                <option value="latest">Latest First</option>
+                                <option value="popular">Most Popular</option>
+                                <option value="oldest">Oldest First</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Blog Post Cards -->
+                    <div class="post-card featured-post-card">
+                        <div class="post-card-image">
+                            <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100" alt="SEBI Regulations">
+                            <div class="post-badge">FEATURED</div>
+                        </div>
+                        <div class="post-card-content">
+                            <div class="post-meta">
+                                <span class="post-category">SEBI</span>
+                                <span class="post-date"><i class="far fa-calendar"></i> Jan 12, 2025</span>
+                                <span class="read-time"><i class="far fa-clock"></i> 7 min read</span>
+                            </div>
+                            <h3>Research Analysts: Guidelines for Navigating New SEBI Rules</h3>
+                            <p class="post-excerpt">Attention Research Analysts: SEBI has updated its regulations, introducing some significant changes that will affect how you operate. This comprehensive guide covers the new compliance requirements, documentation changes, and operational adjustments needed to stay compliant.</p>
+                            <div class="post-author">
+                                <div class="author-info">
+                                    <div class="author-avatar">
+                                        <i class="fas fa-user-tie"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Anjali Bansal</h5>
+                                        <p>Managing Partner</p>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="post-card">
+                        <div class="post-card-image">
+                            <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100" alt="Legal Entity Identifier">
+                        </div>
+                        <div class="post-card-content">
+                            <div class="post-meta">
+                                <span class="post-category">Corporate Law</span>
+                                <span class="post-date"><i class="far fa-calendar"></i> Dec 23, 2024</span>
+                                <span class="read-time"><i class="far fa-clock"></i> 2 min read</span>
+                            </div>
+                            <h3>Legal Entity Identifier and Its Applicability</h3>
+                            <p class="post-excerpt">In the era of globalized financial world, when you enter into a transaction with any foreign company it becomes very difficult to track their financial stability. The LEI system provides a unique identifier for every legal entity participating in financial transactions globally.</p>
+                            <div class="post-author">
+                                <div class="author-info">
+                                    <div class="author-avatar">
+                                        <i class="fas fa-user-tie"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Anjali Bansal</h5>
+                                        <p>Managing Partner</p>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="post-card">
+                        <div class="post-card-image">
+                            <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100" alt="Registration Process">
+                        </div>
+                        <div class="post-card-content">
+                            <div class="post-meta">
+                                <span class="post-category">Compliance</span>
+                                <span class="post-date"><i class="far fa-calendar"></i> Dec 23, 2024</span>
+                                <span class="read-time"><i class="far fa-clock"></i> 4 min read</span>
+                            </div>
+                            <h3>Process of Registration under LEI</h3>
+                            <p class="post-excerpt">The Legal Entity Identifier (LEI) system was initiated as a response to the financial crisis and is aimed at improving transparency in financial transactions. Learn about the step-by-step registration process, required documents, and compliance timelines for obtaining an LEI.</p>
+                            <div class="post-author">
+                                <div class="author-info">
+                                    <div class="author-avatar">
+                                        <i class="fas fa-user-tie"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Anjali Bansal</h5>
+                                        <p>Managing Partner</p>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="post-card">
+                        <div class="post-card-content">
+                            <div class="post-meta">
+                                <span class="post-category">FEMA</span>
+                                <span class="post-date"><i class="far fa-calendar"></i> Dec 23, 2024</span>
+                                <span class="read-time"><i class="far fa-clock"></i> 2 min read</span>
+                            </div>
+                            <h3>Concept of Annual Return on Foreign Liabilities and Assets and its Applicability</h3>
+                            <p class="post-excerpt">One of the compliance requirements under FEMA is to file an Annual Return on Foreign Liabilities and Assets (FLA) with the Reserve Bank of India. This article explains who needs to file, deadlines, documentation requirements, and common compliance pitfalls.</p>
+                            <div class="post-author">
+                                <div class="author-info">
+                                    <div class="author-avatar">
+                                        <i class="fas fa-user-tie"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Anjali Bansal</h5>
+                                        <p>Managing Partner</p>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="post-card">
+                        <div class="post-card-image">
+                            <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100" alt="Share Capital">
+                        </div>
+                        <div class="post-card-content">
+                            <div class="post-meta">
+                                <span class="post-category">Corporate Law</span>
+                                <span class="post-date"><i class="far fa-calendar"></i> Dec 23, 2024</span>
+                                <span class="read-time"><i class="far fa-clock"></i> 4 min read</span>
+                            </div>
+                            <h3>All About Further Issue of Share Capital Through Private Placement</h3>
+                            <p class="post-excerpt">A company is required to raise funds for setting up projects, new ventures, expansion of business or for meeting the working capital requirements. This guide covers the complete process of private placement, legal requirements, documentation, and compliance under Companies Act.</p>
+                            <div class="post-author">
+                                <div class="author-info">
+                                    <div class="author-avatar">
+                                        <i class="fas fa-user-tie"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Anjali Bansal</h5>
+                                        <p>Managing Partner</p>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Additional Blog Posts -->
+                    <div class="post-card">
+                        <div class="post-card-content">
+                            <div class="post-meta">
+                                <span class="post-category">SEBI</span>
+                                <span class="post-date"><i class="far fa-calendar"></i> Dec 15, 2024</span>
+                                <span class="read-time"><i class="far fa-clock"></i> 5 min read</span>
+                            </div>
+                            <h3>Recent Changes in AIF Regulations by SEBI</h3>
+                            <p class="post-excerpt">SEBI has introduced new regulations for Alternative Investment Funds affecting investment strategies, reporting requirements, and compliance frameworks for fund managers and investors.</p>
+                            <div class="post-author">
+                                <div class="author-info">
+                                    <div class="author-avatar">
+                                        <i class="fas fa-user-tie"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Anjali Bansal</h5>
+                                        <p>Managing Partner</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="post-card">
+                        <div class="post-card-image">
+                            <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100" alt="Fundraising">
+                        </div>
+                        <div class="post-card-content">
+                            <div class="post-meta">
+                                <span class="post-category">Fundraising</span>
+                                <span class="post-date"><i class="far fa-calendar"></i> Dec 10, 2024</span>
+                                <span class="read-time"><i class="far fa-clock"></i> 6 min read</span>
+                            </div>
+                            <h3>Startup Funding Strategies for 2025</h3>
+                            <p class="post-excerpt">Exploring effective debt and equity financing options for early and mid-stage startups in the current economic climate, including new government initiatives and investor trends.</p>
+                            <div class="post-author">
+                                <div class="author-info">
+                                    <div class="author-avatar">
+                                        <i class="fas fa-user-tie"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Anjali Bansal</h5>
+                                        <p>Managing Partner</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination">
+                        <a href="#" class="page-number active">1</a>
+                        <a href="#" class="page-number">2</a>
+                        <a href="#" class="page-number">3</a>
+                        <a href="#" class="page-number">4</a>
+                        <a href="#" class="next-page">
+                            Next <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    
+
+    <!-- Footer -->
+<footer style="background-color: #1a1a1a; color: #ffffff; padding: 40px 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;">
+        
+        <div style="flex: 1; min-width: 250px;">
+            <h3 style="color: #4CAF50; margin-bottom: 15px;">Your Brand Name</h3>
+            <p style="font-size: 14px; line-height: 1.6; color: #cccccc;">
+                Providing quality services with transparency and integrity. Follow us on our journey to excellence.
+            </p>
+        </div>
+
+        <div style="flex: 1; min-width: 150px;">
+            <h4 style="margin-bottom: 15px; font-size: 18px;">Quick Links</h4>
+            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                <li><a href="/" style="color: #cccccc; text-decoration: none;">Home</a></li>
+                <li><a href="/about" style="color: #cccccc; text-decoration: none;">About Us</a></li>
+                <li><a href="/services" style="color: #cccccc; text-decoration: none;">Services</a></li>
+                <li><a href="/contact" style="color: #cccccc; text-decoration: none;">Contact</a></li>
+            </ul>
+        </div>
+
+        <div style="flex: 1; min-width: 150px;">
+            <h4 style="margin-bottom: 15px; font-size: 18px;">Legal Support</h4>
+            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                <li><a href="/privacy-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Privacy Policy</a></li>
+                <li><a href="/terms and conditions" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Terms & Conditions</a></li>
+                <li><a href="/refund-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Refund Policy</a></li>
+                <li><a href="/disclaimer" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Disclaimer</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0;">
+
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 13px; color: #888;">
+        <p>&copy; 2025 Your Brand Name. All Rights Reserved.</p>
+        <div style="display: flex; gap: 15px;">
+            <a href="#" style="color: #888; text-decoration: none;">Twitter</a>
+            <a href="#" style="color: #888; text-decoration: none;">LinkedIn</a>
+            <a href="#" style="color: #888; text-decoration: none;">Instagram</a>
+        </div>
+    </div>
+</footer>
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/blogs.js' %}"></script>
+</body>
+</html>

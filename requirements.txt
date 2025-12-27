@@ -3,3 +3,7 @@ gunicorn
 psycopg2-binary
 whitenoise
 waitress
+
+whitenoise
+dj-database-url
+psycopg2-binary

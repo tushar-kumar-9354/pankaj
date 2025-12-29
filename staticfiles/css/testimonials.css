@@ -5,7 +5,7 @@
     position: relative;
     padding: 180px 0 120px;
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
-                url('{% static "images/testimonials-bg.jpg" %}') center/cover no-repeat;
+                url(https://plus.unsplash.com/premium_photo-1661775817073-a129c05a9534?q=80&w=1333&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D) center/cover no-repeat;
     color: white;
     text-align: center;
     overflow: hidden;

@@ -62,46 +62,52 @@
                     <div class="sidebar-widget">
                         <h3>Categories</h3>
                         <ul class="categories-list">
-                            <li><a href="#" class="active"><i class="fas fa-newspaper"></i> All Posts</a></li>
-                            <li><a href="/fema-service"><i class="fas fa-globe-asia"></i> FEMA</a></li>
-                            <li><a href="#"><i class="fas fa-balance-scale"></i> SEBI</a></li>
-                            <li><a href="#"><i class="fas fa-landmark"></i> Corporate Law</a></li>
-                            <li><a href="#"><i class="fas fa-chart-line"></i> Fundraising</a></li>
-                            <li><a href="#"><i class="fas fa-rocket"></i> Startups</a></li>
-                            <li><a href="#"><i class="fas fa-gavel"></i> Compliance</a></li>
+                            <li>
+                                <a href="{% url 'blogs' %}" 
+                                   class="{% if not current_category %}active{% endif %}">
+                                    <i class="fas fa-newspaper"></i> All Posts
+                                </a>
+                            </li>
+{% for cat in categories %}
+<li>
+    <a href="?category={{ cat }}"
+       class="{% if current_category == cat %}active{% endif %}">
+        {{ cat }}
+    </a>
+</li>
+{% endfor %}
+
                         </ul>
                     </div>
                     
                     <div class="sidebar-widget">
                         <h3>Search Articles</h3>
                         <div class="search-box">
-                            <input type="text" placeholder="Search blogs...">
-                            <button><i class="fas fa-search"></i></button>
+                            <input type="text" placeholder="Search blogs..." id="searchInput">
+                            <button id="searchButton"><i class="fas fa-search"></i></button>
                         </div>
                     </div>
                     
+                    <!-- DYNAMIC FEATURED POSTS -->
                     <div class="sidebar-widget">
                         <h3>Featured Posts</h3>
-                        <div class="featured-post">
-                            <div class="featured-post-content">
-                                <span class="post-category">SEBI</span>
-                                <h4>Research Analysts: New Guidelines for SEBI Rules</h4>
-                                <p>Updated regulations introduce significant changes affecting how research analysts operate in India.</p>
-                               
+                        {% if featured_posts %}
+                            {% for post in featured_posts %}
+                            <div class="featured-post">
+                                <div class="featured-post-content">
+                                    <span class="post-category">{{ post.category }}</span>
+                                    <h4>{{ post.title|truncatechars:50 }}</h4>
+                                    <p>{{ post.excerpt|truncatechars:100 }}</p>
+                                    <a href="{% url 'blog_detail' post.slug %}" class="read-more">
+                                        Read More <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <div class="featured-post">
-                            <div class="featured-post-content">
-                                <span class="post-category">FEMA</span>
-                                <h4>Annual Return on Foreign Liabilities</h4>
-                                <p>Understanding FLA compliance requirements under FEMA with the Reserve Bank of India.</p>
-                                
-                            </div>
-                        </div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="no-featured">No featured posts yet</p>
+                        {% endif %}
                     </div>
-                    
-                    
                 </aside>
 
                 <!-- Blog Posts -->
@@ -112,208 +118,94 @@
                             <p>Expert analysis and regulatory updates</p>
                         </div>
                         <div class="filter-options">
-                            <select class="sort-select">
-                                <option value="latest">Latest First</option>
-                                <option value="popular">Most Popular</option>
-                                <option value="oldest">Oldest First</option>
-                            </select>
+                            <form method="GET" action="{% url 'blogs' %}" id="sortForm">
+                                {% if current_category %}
+                                <input type="hidden" name="category" value="{{ current_category }}">
+                                {% endif %}
+                                <select class="sort-select" name="sort" id="sortSelect">
+                                    <option value="latest" {% if current_sort == 'latest' %}selected{% endif %}>Latest First</option>
+                                    <option value="oldest" {% if current_sort == 'oldest' %}selected{% endif %}>Oldest First</option>
+                                    <option value="popular" {% if current_sort == 'popular' %}selected{% endif %}>Most Popular</option>
+                                </select>
+                            </form>
                         </div>
                     </div>
 
                     <!-- Blog Post Cards -->
-                    <div class="post-card featured-post-card">
-                        <div class="post-card-image">
-                            <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100" alt="SEBI Regulations">
-                            <div class="post-badge">FEATURED</div>
-                        </div>
-                        <div class="post-card-content">
-                            <div class="post-meta">
-                                <span class="post-category">SEBI</span>
-                                <span class="post-date"><i class="far fa-calendar"></i> Jan 12, 2025</span>
-                                <span class="read-time"><i class="far fa-clock"></i> 7 min read</span>
-                            </div>
-                            <h3>Research Analysts: Guidelines for Navigating New SEBI Rules</h3>
-                            <p class="post-excerpt">Attention Research Analysts: SEBI has updated its regulations, introducing some significant changes that will affect how you operate. This comprehensive guide covers the new compliance requirements, documentation changes, and operational adjustments needed to stay compliant.</p>
-                            <div class="post-author">
-                                <div class="author-info">
-                                    <div class="author-avatar">
-                                        <i class="fas fa-user-tie"></i>
-                                    </div>
-                                    <div>
-                                        <h5>Anjali Bansal</h5>
-                                        <p>Managing Partner</p>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="post-card">
-                        <div class="post-card-image">
-                            <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100" alt="Legal Entity Identifier">
-                        </div>
-                        <div class="post-card-content">
-                            <div class="post-meta">
-                                <span class="post-category">Corporate Law</span>
-                                <span class="post-date"><i class="far fa-calendar"></i> Dec 23, 2024</span>
-                                <span class="read-time"><i class="far fa-clock"></i> 2 min read</span>
-                            </div>
-                            <h3>Legal Entity Identifier and Its Applicability</h3>
-                            <p class="post-excerpt">In the era of globalized financial world, when you enter into a transaction with any foreign company it becomes very difficult to track their financial stability. The LEI system provides a unique identifier for every legal entity participating in financial transactions globally.</p>
-                            <div class="post-author">
-                                <div class="author-info">
-                                    <div class="author-avatar">
-                                        <i class="fas fa-user-tie"></i>
-                                    </div>
-                                    <div>
-                                        <h5>Anjali Bansal</h5>
-                                        <p>Managing Partner</p>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="post-card">
-                        <div class="post-card-image">
-                            <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100" alt="Registration Process">
-                        </div>
-                        <div class="post-card-content">
-                            <div class="post-meta">
-                                <span class="post-category">Compliance</span>
-                                <span class="post-date"><i class="far fa-calendar"></i> Dec 23, 2024</span>
-                                <span class="read-time"><i class="far fa-clock"></i> 4 min read</span>
-                            </div>
-                            <h3>Process of Registration under LEI</h3>
-                            <p class="post-excerpt">The Legal Entity Identifier (LEI) system was initiated as a response to the financial crisis and is aimed at improving transparency in financial transactions. Learn about the step-by-step registration process, required documents, and compliance timelines for obtaining an LEI.</p>
-                            <div class="post-author">
-                                <div class="author-info">
-                                    <div class="author-avatar">
-                                        <i class="fas fa-user-tie"></i>
-                                    </div>
-                                    <div>
-                                        <h5>Anjali Bansal</h5>
-                                        <p>Managing Partner</p>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="post-card">
-                        <div class="post-card-content">
-                            <div class="post-meta">
-                                <span class="post-category">FEMA</span>
-                                <span class="post-date"><i class="far fa-calendar"></i> Dec 23, 2024</span>
-                                <span class="read-time"><i class="far fa-clock"></i> 2 min read</span>
-                            </div>
-                            <h3>Concept of Annual Return on Foreign Liabilities and Assets and its Applicability</h3>
-                            <p class="post-excerpt">One of the compliance requirements under FEMA is to file an Annual Return on Foreign Liabilities and Assets (FLA) with the Reserve Bank of India. This article explains who needs to file, deadlines, documentation requirements, and common compliance pitfalls.</p>
-                            <div class="post-author">
-                                <div class="author-info">
-                                    <div class="author-avatar">
-                                        <i class="fas fa-user-tie"></i>
-                                    </div>
-                                    <div>
-                                        <h5>Anjali Bansal</h5>
-                                        <p>Managing Partner</p>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="post-card">
-                        <div class="post-card-image">
-                            <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100" alt="Share Capital">
-                        </div>
-                        <div class="post-card-content">
-                            <div class="post-meta">
-                                <span class="post-category">Corporate Law</span>
-                                <span class="post-date"><i class="far fa-calendar"></i> Dec 23, 2024</span>
-                                <span class="read-time"><i class="far fa-clock"></i> 4 min read</span>
-                            </div>
-                            <h3>All About Further Issue of Share Capital Through Private Placement</h3>
-                            <p class="post-excerpt">A company is required to raise funds for setting up projects, new ventures, expansion of business or for meeting the working capital requirements. This guide covers the complete process of private placement, legal requirements, documentation, and compliance under Companies Act.</p>
-                            <div class="post-author">
-                                <div class="author-info">
-                                    <div class="author-avatar">
-                                        <i class="fas fa-user-tie"></i>
-                                    </div>
-                                    <div>
-                                        <h5>Anjali Bansal</h5>
-                                        <p>Managing Partner</p>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Additional Blog Posts -->
-                    <div class="post-card">
-                        <div class="post-card-content">
-                            <div class="post-meta">
-                                <span class="post-category">SEBI</span>
-                                <span class="post-date"><i class="far fa-calendar"></i> Dec 15, 2024</span>
-                                <span class="read-time"><i class="far fa-clock"></i> 5 min read</span>
-                            </div>
-                            <h3>Recent Changes in AIF Regulations by SEBI</h3>
-                            <p class="post-excerpt">SEBI has introduced new regulations for Alternative Investment Funds affecting investment strategies, reporting requirements, and compliance frameworks for fund managers and investors.</p>
-                            <div class="post-author">
-                                <div class="author-info">
-                                    <div class="author-avatar">
-                                        <i class="fas fa-user-tie"></i>
-                                    </div>
-                                    <div>
-                                        <h5>Anjali Bansal</h5>
-                                        <p>Managing Partner</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="post-card">
-                        <div class="post-card-image">
-                            <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100" alt="Fundraising">
-                        </div>
-                        <div class="post-card-content">
-                            <div class="post-meta">
-                                <span class="post-category">Fundraising</span>
-                                <span class="post-date"><i class="far fa-calendar"></i> Dec 10, 2024</span>
-                                <span class="read-time"><i class="far fa-clock"></i> 6 min read</span>
-                            </div>
-                            <h3>Startup Funding Strategies for 2025</h3>
-                            <p class="post-excerpt">Exploring effective debt and equity financing options for early and mid-stage startups in the current economic climate, including new government initiatives and investor trends.</p>
-                            <div class="post-author">
-                                <div class="author-info">
-                                    <div class="author-avatar">
-                                        <i class="fas fa-user-tie"></i>
-                                    </div>
-                                    <div>
-                                        <h5>Anjali Bansal</h5>
-                                        <p>Managing Partner</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Pagination -->
+                    {% for blog in blogs %}
+<div class="post-card {% if blog.is_featured %}featured-post-card{% endif %}">
+    
+    {% if blog.featured_image or blog.image_url %}
+    <div class="post-card-image">
+        <img src="{% if blog.featured_image %}{{ blog.featured_image.url }}{% else %}{{ blog.image_url }}{% endif %}" 
+             alt="{{ blog.title }}"
+             onerror="this.parentElement.style.display='none';"> {% if blog.is_featured %}
+        <div class="post-badge">FEATURED</div>
+        {% endif %}
+    </div>
+    {% endif %}
+    
+    <div class="post-card-content">
+        <div class="post-meta">
+            <span class="post-category">{{ blog.category }}</span>
+            <span class="post-date"><i class="far fa-calendar"></i> {{ blog.date_published|date:"M d, Y" }}</span>
+            <span class="read-time"><i class="far fa-clock"></i> {{ blog.read_time }} min read</span>
+        </div>
+        <h3>{{ blog.title }}</h3>
+        <p class="post-excerpt">{{ blog.excerpt }}</p>
+        <div class="post-author">
+            <div class="author-info">
+                <div class="author-avatar">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <div>
+                    <h5>Anjali Bansal</h5>
+                    <p>Managing Partner</p>
+                </div>
+            </div>
+            <a href="{% url 'blog_detail' blog.slug %}" class="read-article-btn">
+                Read Article <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</div>
+{% empty %}
+<div class="no-posts">
+    <p>No blog posts available yet. Check back soon!</p>
+</div>
+{% endfor %}
+                    <!-- DYNAMIC PAGINATION -->
+                    {% if page_obj.paginator.num_pages > 1 %}
                     <div class="pagination">
-                        <a href="#" class="page-number active">1</a>
-                        <a href="#" class="page-number">2</a>
-                        <a href="#" class="page-number">3</a>
-                        <a href="#" class="page-number">4</a>
-                        <a href="#" class="next-page">
+                        {% if page_obj.has_previous %}
+<a href="?page={{ page_obj.previous_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}">
+    Prev
+</a>
+{% endif %}
+
+{% if page_obj.has_next %}
+<a href="?page={{ page_obj.next_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}">
+    Next
+</a>
+{% endif %}
+
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                            <span class="page-number active">{{ num }}</span>
+                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                            <a href="?page={{ num }}{% if current_category %}&category={{ current_category }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}" 
+                               class="page-number">{{ num }}</a>
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}" 
+                           class="next-page">
                             Next <i class="fas fa-chevron-right"></i>
                         </a>
+                        {% endif %}
                     </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -327,9 +219,9 @@
     <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;">
         
         <div style="flex: 1; min-width: 250px;">
-            <h3 style="color: #4CAF50; margin-bottom: 15px;">Your Brand Name</h3>
+            <h3 style="color: #4CAF50; margin-bottom: 15px;">ANJALI BANSAL & ASSOCIATES</h3>
             <p style="font-size: 14px; line-height: 1.6; color: #cccccc;">
-                Providing quality services with transparency and integrity. Follow us on our journey to excellence.
+                Providing quality corporate secretarial services with transparency and integrity.
             </p>
         </div>
 
@@ -347,7 +239,7 @@
             <h4 style="margin-bottom: 15px; font-size: 18px;">Legal Support</h4>
             <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
                 <li><a href="/privacy-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Privacy Policy</a></li>
-                <li><a href="/terms and conditions" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Terms & Conditions</a></li>
+                <li><a href="/terms-and-conditions" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Terms & Conditions</a></li>
                 <li><a href="/refund-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Refund Policy</a></li>
                 <li><a href="/disclaimer" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Disclaimer</a></li>
             </ul>
@@ -357,7 +249,7 @@
     <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0;">
 
     <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 13px; color: #888;">
-        <p>&copy; 2025 Your Brand Name. All Rights Reserved.</p>
+        <p>&copy; 2025 Anjali Bansal & Associates. All Rights Reserved.</p>
         <div style="display: flex; gap: 15px;">
             <a href="#" style="color: #888; text-decoration: none;">Twitter</a>
             <a href="#" style="color: #888; text-decoration: none;">LinkedIn</a>
@@ -365,7 +257,30 @@
         </div>
     </div>
 </footer>
+
     <script src="{% static 'js/script.js' %}"></script>
     <script src="{% static 'js/blogs.js' %}"></script>
+    <script>
+        // Auto-submit sort form when select changes
+        document.getElementById('sortSelect').addEventListener('change', function() {
+            document.getElementById('sortForm').submit();
+        });
+        
+        // Search functionality
+        document.getElementById('searchButton').addEventListener('click', performSearch);
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+        
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value.trim();
+            if (searchTerm) {
+                // Redirect to search results (you'll need to create a search view)
+                window.location.href = `/blogs/search/?q=${encodeURIComponent(searchTerm)}`;
+            }
+        }
+    </script>
 </body>
 </html>

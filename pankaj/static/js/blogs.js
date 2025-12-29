@@ -1,4 +1,4 @@
-// Blogs Page JavaScript
+// Blogs Page JavaScript - UPDATED
 
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize mobile menu
@@ -17,6 +17,66 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 icon.classList.remove('fa-times');
                 icon.classList.add('fa-bars');
+            }
+        });
+    }
+    
+    // Category filtering
+    const categoryLinks = document.querySelectorAll('.categories-list a');
+    
+    categoryLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Get category from data attribute or text
+            const category = this.getAttribute('href').split('=')[1] || '';
+            
+            if (category) {
+                // Redirect to filtered page
+                const urlParams = new URLSearchParams(window.location.search);
+                urlParams.set('category', category);
+                window.location.href = `${window.location.pathname}?${urlParams.toString()}`;
+            } else {
+                // Show all posts
+                window.location.href = window.location.pathname;
+            }
+        });
+    });
+    
+    // Auto-submit sort form
+    const sortSelect = document.querySelector('.sort-select');
+    if (sortSelect) {
+        sortSelect.addEventListener('change', function() {
+            this.form.submit();
+        });
+    }
+    
+    // Search functionality
+    const searchInput = document.querySelector('.search-box input');
+    const searchButton = document.querySelector('.search-box button');
+    
+    function performSearch() {
+        const searchTerm = searchInput.value.trim();
+        
+        if (searchTerm) {
+            // For now, show alert. You can implement AJAX search later
+            alert(`Search functionality will be implemented soon!\nYou searched for: "${searchTerm}"`);
+            
+            // To implement actual search, you'll need:
+            // 1. Create a search view in Django
+            // 2. Make AJAX request or redirect to search results page
+            // window.location.href = `/blogs/search/?q=${encodeURIComponent(searchTerm)}`;
+        }
+    }
+    
+    if (searchButton) {
+        searchButton.addEventListener('click', performSearch);
+    }
+    
+    if (searchInput) {
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
             }
         });
     }
@@ -61,237 +121,23 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Category filtering
-    const categoryLinks = document.querySelectorAll('.categories-list a');
-    const postCards = document.querySelectorAll('.post-card');
-    
-    categoryLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Remove active class from all links
-            categoryLinks.forEach(l => l.classList.remove('active'));
-            
-            // Add active class to clicked link
-            this.classList.add('active');
-            
-            const category = this.textContent.trim();
-            
-            // Filter posts based on category
-            postCards.forEach(card => {
-                const cardCategory = card.querySelector('.post-category').textContent.trim();
-                
-                if (category === 'All Posts' || cardCategory === category) {
-                    card.style.display = 'grid';
-                    setTimeout(() => {
-                        card.style.opacity = '1';
-                        card.style.transform = 'translateY(0)';
-                    }, 100);
-                } else {
-                    card.style.opacity = '0';
-                    card.style.transform = 'translateY(20px)';
-                    setTimeout(() => {
-                        card.style.display = 'none';
-                    }, 300);
-                }
-            });
-        });
-    });
-    
-    // Search functionality
-    const searchInput = document.querySelector('.search-box input');
-    const searchButton = document.querySelector('.search-box button');
-    
-    function performSearch() {
-        const searchTerm = searchInput.value.toLowerCase();
-        
-        if (searchTerm.trim() === '') return;
-        
-        postCards.forEach(card => {
-            const title = card.querySelector('h3').textContent.toLowerCase();
-            const excerpt = card.querySelector('.post-excerpt').textContent.toLowerCase();
-            const category = card.querySelector('.post-category').textContent.toLowerCase();
-            
-            if (title.includes(searchTerm) || excerpt.includes(searchTerm) || category.includes(searchTerm)) {
-                card.style.display = 'grid';
-                card.style.opacity = '1';
-                card.style.transform = 'translateY(0)';
-                
-                // Highlight search term
-                const titleElement = card.querySelector('h3');
-                const excerptElement = card.querySelector('.post-excerpt');
-                
-                const highlightedTitle = highlightText(titleElement.textContent, searchTerm);
-                const highlightedExcerpt = highlightText(excerptElement.textContent, searchTerm);
-                
-                titleElement.innerHTML = highlightedTitle;
-                excerptElement.innerHTML = highlightedExcerpt;
-            } else {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                setTimeout(() => {
-                    card.style.display = 'none';
-                }, 300);
-            }
-        });
-    }
-    
-    function highlightText(text, term) {
-        const regex = new RegExp(`(${term})`, 'gi');
-        return text.replace(regex, '<mark>$1</mark>');
-    }
-    
-    searchButton.addEventListener('click', performSearch);
-    searchInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            performSearch();
-        }
-    });
-    
-    // Sort functionality
-    const sortSelect = document.querySelector('.sort-select');
-    
-    sortSelect.addEventListener('change', function() {
-        const sortValue = this.value;
-        const postsContainer = document.querySelector('.blog-posts');
-        const posts = Array.from(postCards);
-        
-        posts.sort((a, b) => {
-            const dateA = new Date(a.querySelector('.post-date').textContent.split(' ').slice(1).join(' '));
-            const dateB = new Date(b.querySelector('.post-date').textContent.split(' ').slice(1).join(' '));
-            
-            switch(sortValue) {
-                case 'latest':
-                    return dateB - dateA;
-                case 'oldest':
-                    return dateA - dateB;
-                case 'popular':
-                    // For demo, using read time as popularity indicator
-                    const readTimeA = parseInt(a.querySelector('.read-time').textContent);
-                    const readTimeB = parseInt(b.querySelector('.read-time').textContent);
-                    return readTimeB - readTimeA;
-                default:
-                    return 0;
-            }
-        });
-        
-        // Reorder posts in DOM
-        posts.forEach(post => {
-            postsContainer.appendChild(post);
-        });
-    });
-    
-    // Newsletter subscription
-    const newsletterForm = document.querySelector('.newsletter-form .form-group');
-    const newsletterBtn = document.querySelector('.newsletter-btn');
-    
-    newsletterBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        const emailInput = newsletterForm.querySelector('input');
-        const email = emailInput.value.trim();
-        
-        if (validateEmail(email)) {
-            // In a real application, you would send this to your server
-            showNotification('Successfully subscribed to newsletter!', 'success');
-            emailInput.value = '';
-        } else {
-            showNotification('Please enter a valid email address.', 'error');
-        }
-    });
-    
-    function validateEmail(email) {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(email);
-    }
-    
-    function showNotification(message, type) {
-        // Remove existing notification
-        const existingNotification = document.querySelector('.notification');
-        if (existingNotification) {
-            existingNotification.remove();
-        }
-        
-        // Create notification
-        const notification = document.createElement('div');
-        notification.className = `notification ${type}`;
-        notification.textContent = message;
-        
-        // Style notification
-        const style = document.createElement('style');
-        style.textContent = `
-            .notification {
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                padding: 15px 25px;
-                border-radius: 10px;
-                color: white;
-                font-weight: 600;
-                z-index: 10000;
-                animation: slideIn 0.3s ease;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            }
-            
-            .notification.success {
-                background: #000;
-            }
-            
-            .notification.error {
-                background: #dc3545;
-            }
-            
-            @keyframes slideIn {
-                from {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-        
-        document.body.appendChild(notification);
-        
-        // Auto remove after 5 seconds
-        setTimeout(() => {
-            notification.style.animation = 'slideOut 0.3s ease forwards';
-            
-            const slideOutStyle = document.createElement('style');
-            slideOutStyle.textContent = `
-                @keyframes slideOut {
-                    from {
-                        transform: translateX(0);
-                        opacity: 1;
-                    }
-                    to {
-                        transform: translateX(100%);
-                        opacity: 0;
-                    }
-                }
-            `;
-            document.head.appendChild(slideOutStyle);
-            
-            setTimeout(() => {
-                notification.remove();
-            }, 300);
-        }, 5000);
-    }
-    
     // Post card animations
+    const postCards = document.querySelectorAll('.post-card');
     const postCardsObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry, index) => {
             if (entry.isIntersecting) {
                 setTimeout(() => {
-                    entry.target.classList.add('animated');
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
                 }, index * 100);
             }
         });
     }, { threshold: 0.1 });
     
     postCards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
         postCardsObserver.observe(card);
     });
     
@@ -307,94 +153,114 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Active navigation highlighting
-    const currentPage = window.location.pathname;
-    const navLinks = document.querySelectorAll('.nav-menu a');
-    
-    navLinks.forEach(link => {
-        const linkPath = link.getAttribute('href');
-        if (linkPath === currentPage || (linkPath === '/blogs' && currentPage.includes('/blogs'))) {
-            link.classList.add('active');
-        }
-    });
-    
-    // Add CSS animations
+    // Add CSS for no-featured posts
     const style = document.createElement('style');
     style.textContent = `
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .no-featured {
+            color: #666;
+            font-style: italic;
+            text-align: center;
+            padding: 20px;
         }
         
-        .post-card.animated {
-            animation: fadeInUp 0.6s ease forwards;
+        .post-card {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
         }
         
-        mark {
-            background: #ffeb3b;
+        .post-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Pagination improvements */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .page-number, .next-page {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px;
+            height: 40px;
+            padding: 0 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            color: #333;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .page-number:hover,
+        .page-number.active {
+            background: #000;
+            color: white;
+            border-color: #000;
+        }
+        
+        .next-page {
+            gap: 8px;
+        }
+        
+        .next-page:hover {
+            background: #000;
+            color: white;
+            border-color: #000;
+            gap: 12px;
+        }
+        
+        /* Featured posts in sidebar */
+        .featured-post {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .featured-post:hover {
+            background: white;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+        
+        .featured-post-content h4 {
+            font-size: 1.1rem;
             color: #000;
-            padding: 2px 4px;
-            border-radius: 3px;
+            margin-bottom: 10px;
+            line-height: 1.4;
         }
         
-        .read-article-btn i {
-            transition: transform 0.3s ease;
+        .featured-post-content p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 15px;
         }
         
-        .read-article-btn:hover i {
-            transform: translateX(5px);
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #000;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
         }
         
-        .read-more i {
-            transition: transform 0.3s ease;
-        }
-        
-        .read-more:hover i {
-            transform: translateX(5px);
+        .read-more:hover {
+            gap: 12px;
+            color: #333;
         }
     `;
     document.head.appendChild(style);
-    
-    // Lazy loading for images
-    const images = document.querySelectorAll('img:not([loading="lazy"])');
-    images.forEach(img => {
-        img.setAttribute('loading', 'lazy');
-    });
-    
-    // Add loaded class to images
-    window.addEventListener('load', function() {
-        document.querySelectorAll('img').forEach(img => {
-            if (img.complete) {
-                img.classList.add('loaded');
-            } else {
-                img.addEventListener('load', function() {
-                    this.classList.add('loaded');
-                });
-            }
-        });
-    });
-    
-    // Add image fade-in effect
-    const imageStyle = document.createElement('style');
-    imageStyle.textContent = `
-        img {
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        img.loaded {
-            opacity: 1;
-        }
-        
-        .post-card-image img {
-            transition: transform 0.5s ease, opacity 0.3s ease;
-        }
-    `;
-    document.head.appendChild(imageStyle);
 });

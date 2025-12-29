@@ -1,0 +1,603 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Testimonial | Anjali Bansal & Associates</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap">
+    <style>
+        /* Additional styles for testimonial submission page */
+        .testimonial-submission {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 0 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .testimonial-submission::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("{% static 'img/laptop-and-book.jpg' %}") center/cover;
+            opacity: 0.1;
+        }
+        
+        .testimonial-header {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .testimonial-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .testimonial-header .lead {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+        
+        .steps-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .step-item {
+            text-align: center;
+            flex: 1;
+            max-width: 200px;
+        }
+        
+        .step-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .step-icon i {
+            font-size: 2rem;
+        }
+        
+        .form-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin: -60px auto 60px;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            max-width: 900px;
+        }
+        
+        .form-section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .form-section:last-child {
+            border-bottom: none;
+        }
+        
+        .section-title {
+            color: #2c3e50;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i {
+            color: #667eea;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+        
+        .rating-container {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .rating-stars {
+            display: inline-flex;
+            direction: rtl;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .rating-stars input {
+            display: none;
+        }
+        
+        .rating-stars label {
+            color: #ddd;
+            font-size: 3rem;
+            cursor: pointer;
+            transition: color 0.3s, transform 0.2s;
+        }
+        
+        .rating-stars label:hover,
+        .rating-stars label:hover ~ label,
+        .rating-stars input:checked ~ label {
+            color: #ffc107;
+            transform: scale(1.1);
+        }
+        
+        .rating-stars input:checked + label {
+            color: #ffc107;
+        }
+        
+        .rating-text {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-top: 10px;
+        }
+        
+        .btn-submit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0 auto;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            color: white;
+        }
+        
+        .btn-back {
+            background: transparent;
+            border: 2px solid #667eea;
+            color: #667eea;
+            padding: 13px 30px;
+            border-radius: 50px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn-back:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .terms-check {
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+        
+        .character-count {
+            font-size: 0.9rem;
+            color: #6c757d;
+            text-align: right;
+            margin-top: 5px;
+        }
+        
+        .character-count.warning {
+            color: #ffc107;
+        }
+        
+        .character-count.error {
+            color: #dc3545;
+        }
+        
+        @media (max-width: 768px) {
+            .testimonial-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .form-container {
+                padding: 25px;
+                margin: -40px 15px 40px;
+            }
+            
+            .steps-indicator {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+            
+            .step-item {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="testimonial-submission">
+        <div class="container">
+            <div class="testimonial-header">
+                <h1><i class="fas fa-comment-medical"></i> Share Your Experience</h1>
+                <p class="lead">Your honest feedback helps us improve and guides future clients in making informed decisions.</p>
+                
+                <div class="steps-indicator">
+                    <div class="step-item">
+                        <div class="step-icon">
+                            <i class="fas fa-edit text-warning"></i>
+                        </div>
+                        <h4>Write Review</h4>
+                        <p>Share your experience</p>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-icon">
+                            <i class="fas fa-search text-info"></i>
+                        </div>
+                        <h4>Review Process</h4>
+                        <p>We verify your submission</p>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-icon">
+                            <i class="fas fa-check-circle text-success"></i>
+                        </div>
+                        <h4>Get Published</h4>
+                        <p>Featured on our website</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Form -->
+    <div class="container">
+        <div class="form-container">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        <i class="fas fa-{% if message.tags == 'success' %}check-circle{% elif message.tags == 'error' %}exclamation-circle{% else %}info-circle{% endif %} me-2"></i>
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="post" enctype="multipart/form-data" id="testimonialForm" novalidate>
+                {% csrf_token %}
+                
+                <!-- Section 1: Personal Information -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-user-circle"></i> Personal Information
+                    </h3>
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <label class="form-label">Full Name *</label>
+                            <input type="text" name="full_name" class="form-control form-control-lg" 
+                                   value="{{ form.full_name.value|default:'' }}" 
+                                   required
+                                   placeholder="Enter your full name">
+                            <div class="invalid-feedback">Please enter your full name.</div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-4">
+                            <label class="form-label">Email Address *</label>
+                            <input type="email" name="email" class="form-control form-control-lg" 
+                                   value="{{ form.email.value|default:'' }}" 
+                                   required
+                                   placeholder="your.email@example.com">
+                            <div class="invalid-feedback">Please enter a valid email address.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <label class="form-label">Phone Number</label>
+                            <input type="tel" name="phone" class="form-control form-control-lg" 
+                                   value="{{ form.phone.value|default:'' }}"
+                                   placeholder="+91 98765 43210">
+                        </div>
+                        
+                        <div class="col-md-6 mb-4">
+                            <label class="form-label">Profile Photo (Optional)</label>
+                            <input type="file" name="profile_picture" class="form-control" 
+                                   accept="image/*"
+                                   onchange="previewImage(this)">
+                            <small class="text-muted">Recommended: 400x400px, Max 2MB</small>
+                            <div id="imagePreview" class="mt-2" style="display:none;">
+                                <img id="preview" class="rounded-circle" width="80" height="80">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: Professional Information -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-briefcase"></i> Professional Information
+                    </h3>
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <label class="form-label">Company Name *</label>
+                            <input type="text" name="company_name" class="form-control form-control-lg" 
+                                   value="{{ form.company_name.value|default:'' }}" 
+                                   required
+                                   placeholder="Your company/organization">
+                        </div>
+                        
+                        <div class="col-md-6 mb-4">
+                            <label class="form-label">Your Position *</label>
+                            <input type="text" name="position" class="form-control form-control-lg" 
+                                   value="{{ form.position.value|default:'' }}" 
+                                   required
+                                   placeholder="e.g., CEO, Director, Manager">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label">Industry *</label>
+                        <select name="industry" class="form-select form-select-lg" required>
+                            <option value="">Select Your Industry</option>
+                            {% for value, label in industries %}
+                                <option value="{{ value }}" 
+                                        {% if form.industry.value == value %}selected{% endif %}>
+                                    {{ label }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label">Services Used</label>
+                        <input type="text" name="services_used" class="form-control form-control-lg" 
+                               value="{{ form.services_used.value|default:'' }}"
+                               placeholder="e.g., Company Registration, SEBI Compliance, Annual Filing">
+                        <small class="text-muted">Separate multiple services with commas</small>
+                    </div>
+                </div>
+
+                <!-- Section 3: Rating -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-star"></i> Your Rating
+                    </h3>
+                    <div class="rating-container">
+                        <div class="rating-stars">
+                            {% for i in "54321" %}
+                                <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}" 
+                                       {% if form.rating.value == i or i == "5" and not form.rating.value %}checked{% endif %}>
+                                <label for="star{{ i }}" title="{{ i }} star{{ i|pluralize }}">
+                                    <i class="fas fa-star"></i>
+                                </label>
+                            {% endfor %}
+                        </div>
+                        <div class="rating-text">
+                            Click on a star to rate your overall experience (5 = Excellent, 1 = Poor)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 4: Testimonial Content -->
+                <div class="form-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-comment-dots"></i> Your Testimonial
+                    </h3>
+                    <div class="mb-4">
+                        <label class="form-label">Share Your Experience *</label>
+                        <textarea name="testimonial_text" class="form-control" rows="6" required
+                                  placeholder="Please share your experience in detail. What services did you use? How was our communication and support? What results did you achieve? How did our services benefit your business?"
+                                  oninput="updateCharacterCount(this)">{{ form.testimonial_text.value|default:'' }}</textarea>
+                        <div class="character-count" id="charCount">
+                            Minimum 100 characters required
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 5: Terms & Conditions -->
+                <div class="form-section">
+                    <div class="terms-check">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="terms_agreed" id="terms_agreed" required>
+                            <label class="form-check-label" for="terms_agreed">
+                                <strong>I agree to the following terms:</strong><br>
+                                1. I confirm that this testimonial is based on my genuine experience.<br>
+                                2. I authorize Anjali Bansal & Associates to publish this testimonial on their website and marketing materials.<br>
+                                3. I understand that my testimonial may be edited for clarity and length.<br>
+                                4. I can request removal of my testimonial at any time by contacting the company.
+                            </label>
+                            <div class="invalid-feedback">You must agree to the terms and conditions.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Buttons -->
+                <div class="d-flex justify-content-between align-items-center mt-5">
+                    <a href="{% url 'testimonials' %}" class="btn btn-back">
+                        <i class="fas fa-arrow-left me-2"></i>Back to Testimonials
+                    </a>
+                    <button type="submit" class="btn btn-submit">
+                        <i class="fas fa-paper-plane me-2"></i>Submit Testimonial
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Process Timeline -->
+        <div class="row justify-content-center mt-5">
+            <div class="col-lg-10">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h4 class="text-center mb-4">
+                            <i class="fas fa-info-circle text-primary me-2"></i>
+                            What Happens After Submission?
+                        </h4>
+                        <div class="row text-center">
+                            <div class="col-md-3 mb-3">
+                                <div class="p-3 rounded-circle bg-primary bg-opacity-10 d-inline-block mb-3">
+                                    <i class="fas fa-envelope fa-2x text-primary"></i>
+                                </div>
+                                <h5>Email Confirmation</h5>
+                                <p class="text-muted">Instant confirmation sent to your email</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="p-3 rounded-circle bg-warning bg-opacity-10 d-inline-block mb-3">
+                                    <i class="fas fa-search fa-2x text-warning"></i>
+                                </div>
+                                <h5>Quality Review</h5>
+                                <p class="text-muted">Our team reviews within 2-3 business days</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="p-3 rounded-circle bg-info bg-opacity-10 d-inline-block mb-3">
+                                    <i class="fas fa-check-double fa-2x text-info"></i>
+                                </div>
+                                <h5>Approval</h5>
+                                <p class="text-muted">You'll be notified when approved</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="p-3 rounded-circle bg-success bg-opacity-10 d-inline-block mb-3">
+                                    <i class="fas fa-globe-asia fa-2x text-success"></i>
+                                </div>
+                                <h5>Live on Website</h5>
+                                <p class="text-muted">Featured in our testimonials section</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer style="background: #2c3e50; color: white; padding: 40px 0; margin-top: 60px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Anjali Bansal & Associates</h5>
+                    <p class="mb-0">Company Secretaries</p>
+                    <p class="small text-muted mt-3">© 2025 All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="{% url 'index' %}" class="text-white me-3">Home</a>
+                    <a href="{% url 'contact' %}" class="text-white me-3">Contact</a>
+                    <a href="{% url 'privacy_policy' %}" class="text-white">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Form validation
+        (function () {
+            'use strict'
+            
+            var forms = document.querySelectorAll('.needs-validation')
+            
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+        
+        // Character count for testimonial text
+        function updateCharacterCount(textarea) {
+            const charCount = document.getElementById('charCount');
+            const length = textarea.value.length;
+            
+            charCount.textContent = `${length} characters`;
+            
+            if (length < 100) {
+                charCount.className = 'character-count error';
+                charCount.innerHTML += ' - <strong>Minimum 100 characters required</strong>';
+            } else if (length < 200) {
+                charCount.className = 'character-count warning';
+            } else {
+                charCount.className = 'character-count';
+            }
+        }
+        
+        // Image preview
+        function previewImage(input) {
+            const preview = document.getElementById('preview');
+            const previewContainer = document.getElementById('imagePreview');
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    previewContainer.style.display = 'block';
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                previewContainer.style.display = 'none';
+            }
+        }
+        
+        // Initialize character count on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const textarea = document.querySelector('textarea[name="testimonial_text"]');
+            if (textarea) {
+                updateCharacterCount(textarea);
+            }
+            
+            // Add validation to rating
+            const ratingInputs = document.querySelectorAll('input[name="rating"]');
+            ratingInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    this.closest('.rating-container').classList.add('was-validated');
+                });
+            });
+            
+            // Form submission validation
+            document.getElementById('testimonialForm').addEventListener('submit', function(e) {
+                const testimonialText = document.querySelector('textarea[name="testimonial_text"]');
+                if (testimonialText.value.length < 100) {
+                    e.preventDefault();
+                    testimonialText.focus();
+                    testimonialText.classList.add('is-invalid');
+                    return false;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

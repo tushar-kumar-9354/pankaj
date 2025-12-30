@@ -78,49 +78,37 @@ def services(request):
 # ══════════════════════════════════════════════════════════════════════════════
 #                               BLOG VIEWS
 # ══════════════════════════════════════════════════════════════════════════════
-
 def blogs(request):
     """
     Main blog listing page with filtering, sorting, and pagination.
-    
-    Features:
-        - Category filtering
-        - Sorting options (latest, oldest, popular)
-        - Pagination (3 posts per page)
-        - Distinct category list for filters
     """
     # Start with all published blog posts
     all_blogs = BlogPost.objects.filter(is_published=True)
     
+    # Filter out posts with empty or invalid slugs
+    all_blogs = [blog for blog in all_blogs if blog.slug and str(blog.slug).strip() != '']
+    
     # ─── Category Filtering ────────────────────────────────────────────────────
-    # Get category from query parameters (e.g., ?category=FEMA)
     category_filter = request.GET.get('category')
     
     # Apply category filter if specified (exact match)
     if category_filter:
-        all_blogs = all_blogs.filter(category=category_filter)
+        all_blogs = [blog for blog in all_blogs if blog.category == category_filter]
     
     # ─── Get Distinct Categories ───────────────────────────────────────────────
-    # Retrieve all unique categories from published posts for filter dropdown
-    categories = (
-        BlogPost.objects
-        .filter(is_published=True)
-        .values_list('category', flat=True)  # Get only category values
-        .distinct()  # Ensure uniqueness
-        .order_by('category')  # Alphabetical order
-    )
+    categories = list(set([blog.category for blog in BlogPost.objects.filter(is_published=True) if blog.slug and str(blog.slug).strip() != '']))
+    categories.sort()
     
     # ─── Sorting ───────────────────────────────────────────────────────────────
-    # Get sort parameter from query string, default to 'latest'
     sort_by = request.GET.get('sort', 'latest')
     
     # Apply sorting based on user selection
     if sort_by == 'oldest':
-        all_blogs = all_blogs.order_by('date_published')  # Oldest first
+        all_blogs.sort(key=lambda x: x.date_published)
     elif sort_by == 'popular':
-        all_blogs = all_blogs.order_by('-read_time')  # Highest read time first
+        all_blogs.sort(key=lambda x: x.read_time, reverse=True)
     else:  # Default to 'latest'
-        all_blogs = all_blogs.order_by('-date_published')  # Most recent first
+        all_blogs.sort(key=lambda x: x.date_published, reverse=True)
     
     # ─── Pagination ────────────────────────────────────────────────────────────
     # Split results into pages (3 posts per page)
@@ -134,17 +122,17 @@ def blogs(request):
     
     # ─── Prepare Context ───────────────────────────────────────────────────────
     return render(request, "blogs.html", {
-        'blogs': page_obj,  # Current page's blog posts
-        'categories': categories,  # All available categories
-        'current_category': category_filter,  # Currently selected category
-        'current_sort': sort_by,  # Currently selected sort option
-        'page_obj': page_obj,  # Page object for template pagination controls
+        'blogs': page_obj,
+        'categories': categories,
+        'current_category': category_filter,
+        'current_sort': sort_by,
+        'page_obj': page_obj,
     })
 
 
 def blog_detail(request, slug):
     """
-    Individual blog post detail view.
+    Individual blog post detail view with enhanced features.
     
     Args:
         slug: URL-friendly identifier for the blog post
@@ -155,22 +143,27 @@ def blog_detail(request, slug):
     # Get the specific blog post by slug, ensure it's published
     blog = get_object_or_404(BlogPost, slug=slug, is_published=True)
     
+    # Increment view count
+    blog.increment_view_count()
+    
     # Get related posts from the same category (excluding current post)
     related_posts = BlogPost.objects.filter(
         category=blog.category, 
         is_published=True
     ).exclude(id=blog.id)[:3]  # Limit to 3 related posts
     
+    # Get all categories for sidebar
+    categories = BlogPost.CATEGORY_CHOICES
+    
     # Prepare context for template
     context = {
         'blog': blog,  # Main blog post
-        'related_posts': related_posts,  # Related posts for sidebar/related section
+        'related_posts': related_posts,  # Related posts for sidebar
+        'categories': categories,  # All categories
     }
     
     # Render blog detail template
     return render(request, "blog_detail.html", context)
-
-
 # ══════════════════════════════════════════════════════════════════════════════
 #                              TESTIMONIAL VIEWS
 # ══════════════════════════════════════════════════════════════════════════════

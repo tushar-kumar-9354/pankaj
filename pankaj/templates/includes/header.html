@@ -1,0 +1,97 @@
+<!-- Navigation -->
+<nav class="navbar">
+    <div class="container">
+        <div class="nav-container">
+            <!-- Logo -->
+            <div class="logo">
+                <a href="/">
+                    <h2>Anjali Bansal & Associates</h2>
+                </a>
+            </div>
+            
+            <!-- Mobile Menu Toggle -->
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            
+            <!-- Navigation Links -->
+            <div class="nav-links">
+                <ul class="nav-menu">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about/">About Us</a></li>
+                    <li><a href="/services/">Services</a></li>
+                    <li><a href="/blogs/" class="active">Blogs</a></li>
+                    <li><a href="/contact/">Contact</a></li>
+                </ul>
+                
+                <!-- Call to Action -->
+                <div class="nav-cta">
+                    <a href="/contact/" class="btn btn-primary">Get Consultation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu">
+    <div class="mobile-menu-header">
+        <div class="logo">
+            <h2>Anjali Bansal & Associates</h2>
+        </div>
+        <div class="mobile-menu-close">
+            <i class="fas fa-times"></i>
+        </div>
+    </div>
+    <ul class="mobile-nav-menu">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about/">About Us</a></li>
+        <li><a href="/services/">Services</a></li>
+        <li><a href="/blogs/" class="active">Blogs</a></li>
+        <li><a href="/contact/">Contact</a></li>
+    </ul>
+    <div class="mobile-menu-footer">
+        <a href="/contact/" class="btn btn-primary">Get Consultation</a>
+    </div>
+</div>
+
+<script>
+    // Mobile menu functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileMenuClose = document.querySelector('.mobile-menu-close');
+        const body = document.body;
+        
+        if (mobileMenuToggle) {
+            mobileMenuToggle.addEventListener('click', function() {
+                mobileMenu.classList.add('active');
+                body.style.overflow = 'hidden';
+            });
+        }
+        
+        if (mobileMenuClose) {
+            mobileMenuClose.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                body.style.overflow = 'auto';
+            });
+        }
+        
+        // Close mobile menu when clicking on a link
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-menu a');
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenu.classList.remove('active');
+                body.style.overflow = 'auto';
+            });
+        });
+        
+        // Close mobile menu when clicking outside
+        mobileMenu.addEventListener('click', function(e) {
+            if (e.target === mobileMenu) {
+                mobileMenu.classList.remove('active');
+                body.style.overflow = 'auto';
+            }
+        });
+    });
+</script>

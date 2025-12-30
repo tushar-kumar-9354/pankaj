@@ -8,13 +8,13 @@ from datetime import datetime, timedelta  # For date/time manipulation
 from django.core.validators import MinValueValidator, MaxValueValidator  # For field validation
 from django.db import models  # Django's ORM for database models
 from django.utils import timezone  # Timezone-aware datetime handling
-from django.utils.text import slugify  # For creating URL-friendly slugs
+from django.utils.text import slugify
+from jsonschema import ValidationError  # For creating URL-friendly slugs
 
 
 # ══════════════════════════════════════════════════════════════════════════════
 #                              BLOG POST MODEL
 # ══════════════════════════════════════════════════════════════════════════════
-
 class BlogPost(models.Model):
     """
     Represents a blog post/article with various metadata and content.
@@ -49,42 +49,199 @@ class BlogPost(models.Model):
     is_featured = models.BooleanField(default=False)  # Marks featured posts
     
     # ─── Model Methods ──────────────────────────────────────────────────────────
+    meta_title = models.CharField(max_length=200, blank=True, help_text="SEO meta title (optional)")
+    meta_description = models.TextField(max_length=300, blank=True, help_text="SEO meta description (optional)")
+    meta_keywords = models.CharField(max_length=200, blank=True, help_text="SEO keywords (comma-separated)")
+    author = models.ForeignKey(
+        'auth.User', 
+        on_delete=models.SET_NULL, 
+        null=True, 
+        blank=True,
+        help_text="Admin who created this post"
+    )
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_modified = models.DateTimeField(auto_now=True)
+    view_count = models.IntegerField(default=0, editable=False)
+    
+    # Add this method to increment view count
+    def increment_view_count(self):
+        self.view_count += 1
+        self.save(update_fields=['view_count'])
+    
+    def clean(self):
+        """Validation before save"""
+        super().clean()
+        # Ensure title is not empty
+        if not self.title or self.title.strip() == '':
+            from django.core.exceptions import ValidationError
+            raise ValidationError({'title': 'Title cannot be empty'})
     
     def save(self, *args, **kwargs):
         """
-        Override save method to auto-generate slug and excerpt if not provided.
+        Override save method to ALWAYS ensure a valid slug exists
         """
-        # Generate slug from title if not already set
-        if not self.slug:
-            base_slug = slugify(self.title)
+        # IMPORTANT: Handle slug generation BEFORE saving
+        from django.utils.text import slugify
+        import uuid
+        
+        # Clean the slug
+        if self.slug:
+            self.slug = str(self.slug).strip()
+        
+        # If slug is empty, generate it from title
+        if not self.slug or self.slug == '':
+            # Generate from title
+            if self.title and self.title.strip() != '':
+                base_slug = slugify(self.title)
+            else:
+                base_slug = f"blog-{uuid.uuid4().hex[:8]}"
+            
+            # Ensure base slug is not empty
+            if not base_slug or base_slug.strip() == '':
+                base_slug = f"blog-post-{uuid.uuid4().hex[:8]}"
+            
+            # Make unique
             slug = base_slug
             counter = 1
             
-            # Check if slug exists, add counter if it does (ensures uniqueness)
-            while BlogPost.objects.filter(slug=slug).exists():
+            # Check for existing slugs (exclude current object if it has ID)
+            query = BlogPost.objects.filter(slug=slug)
+            if self.pk:
+                query = query.exclude(pk=self.pk)
+            
+            while query.exists():
                 slug = f"{base_slug}-{counter}"
                 counter += 1
+                query = BlogPost.objects.filter(slug=slug)
+                if self.pk:
+                    query = query.exclude(pk=self.pk)
             
             self.slug = slug
         
         # Auto-generate excerpt from content if not provided
         if not self.excerpt and self.content:
-            self.excerpt = self.content[:300] + "..."
+            excerpt_text = self.content.replace('\n', ' ').strip()
+            if len(excerpt_text) > 300:
+                self.excerpt = excerpt_text[:300] + "..."
+            else:
+                self.excerpt = excerpt_text
         
-        # Call parent class save method
+        # If date_published is not set and post is published, set it to now
+        if self.is_published and not self.date_published:
+            self.date_published = timezone.now()
+        
+        # If date_published is in the future, don't publish yet
+        if self.date_published and self.date_published > timezone.now():
+            self.is_published = False
+        
+        # Call parent save
         super().save(*args, **kwargs)
     
+    def get_absolute_url(self):
+        """Always return a valid URL for the blog post"""
+        # Ensure slug is not empty
+        if not self.slug or str(self.slug).strip() == '':
+            # Regenerate slug on the fly if empty
+            self.save(update_fields=['slug'])
+        
+        from django.urls import reverse
+        try:
+            return reverse('blog_detail', kwargs={'slug': self.slug})
+        except:
+            # Emergency fallback
+            return f"/blogs/{self.slug}/"
+    
     def __str__(self):
-        """String representation for admin interface and debugging."""
         return self.title
     
-    # ─── Meta Configuration ─────────────────────────────────────────────────────
     class Meta:
-        ordering = ['-date_published']  # Order by most recent first
-        verbose_name = "Blog Post"  # Singular name for admin
-        verbose_name_plural = "Blog Posts"  # Plural name for admin
-
-
+        ordering = ['-date_published']
+def clean(self):
+    """Validation before save"""
+    super().clean()
+    # Ensure title is not empty
+    if not self.title or self.title.strip() == '':
+        from django.core.exceptions import ValidationError
+        raise ValidationError({'title': 'Title cannot be empty'})
+    
+    # Ensure slug will be generated if empty
+    if not self.slug or str(self.slug).strip() == '':
+        # Don't raise error, just note that slug will be auto-generated
+        pass
+def save(self, *args, **kwargs):
+    """
+    Override save method to ALWAYS ensure a valid slug exists
+    """
+    # Clean the slug
+    if self.slug:
+        self.slug = str(self.slug).strip()
+    
+    # Generate slug if empty
+    if not self.slug or self.slug == '':
+        # Import here to avoid circular imports
+        from django.utils.text import slugify
+        import uuid
+        
+        # Generate from title
+        if self.title and self.title.strip() != '':
+            base_slug = slugify(self.title)
+        else:
+            base_slug = f"blog-{uuid.uuid4().hex[:8]}"
+        
+        # Ensure base slug is not empty
+        if not base_slug or base_slug.strip() == '':
+            base_slug = f"blog-post-{uuid.uuid4().hex[:8]}"
+        
+        # Make unique
+        slug = base_slug
+        counter = 1
+        
+        # First save to get an ID if this is a new object
+        if not self.id:
+            # Temporarily set a placeholder slug
+            temp_slug = f"temp-{uuid.uuid4().hex[:8]}"
+            self.slug = temp_slug
+            # Save to get ID
+            super().save(*args, **kwargs)
+        
+        # Now check for uniqueness with the actual ID
+        while BlogPost.objects.filter(slug=slug).exclude(id=self.id).exists():
+            slug = f"{base_slug}-{counter}"
+            counter += 1
+        
+        self.slug = slug
+    
+    # Auto-generate excerpt from content if not provided
+    if not self.excerpt and self.content:
+        excerpt_text = self.content.replace('\n', ' ').strip()
+        if len(excerpt_text) > 300:
+            self.excerpt = excerpt_text[:300] + "..."
+        else:
+            self.excerpt = excerpt_text
+    
+    # If date_published is not set and post is published, set it to now
+    if self.is_published and not self.date_published:
+        self.date_published = timezone.now()
+    
+    # If date_published is in the future, don't publish yet
+    if self.date_published and self.date_published > timezone.now():
+        self.is_published = False
+    
+    # Call parent save
+    super().save(*args, **kwargs)
+def get_absolute_url(self):
+    """Always return a valid URL for the blog post"""
+    # Ensure slug is not empty
+    if not self.slug or str(self.slug).strip() == '':
+        # Regenerate slug on the fly if empty
+        self.save(update_fields=['slug'])
+    
+    from django.urls import reverse
+    try:
+        return reverse('blog_detail', kwargs={'slug': self.slug})
+    except:
+        # Emergency fallback
+        return f"/blogs/{self.slug}/"
 # ══════════════════════════════════════════════════════════════════════════════
 #                              TESTIMONIAL MODEL
 # ══════════════════════════════════════════════════════════════════════════════

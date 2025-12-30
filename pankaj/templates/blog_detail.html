@@ -1,0 +1,603 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ blog.title }} - Anjali Bansal & Associates</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ===== GLOBAL STYLES ===== */
+        :root {
+            --primary-color: #000;
+            --secondary-color: #333;
+            --accent-color: #007bff;
+            --light-gray: #f8f9fa;
+            --medium-gray: #e9ecef;
+            --dark-gray: #555;
+            --white: #fff;
+            --shadow: 0 5px 20px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: var(--light-gray);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent-color);
+        }
+
+        /* ===== BREADCRUMB ===== */
+        .breadcrumb {
+            padding: 20px 0;
+            background: var(--white);
+            margin-bottom: 30px;
+        }
+
+        .breadcrumb-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--dark-gray);
+        }
+
+        .breadcrumb a:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+
+        /* ===== BLOG CONTENT ===== */
+        .blog-detail {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 40px;
+            padding: 40px 0;
+        }
+
+        .article-header {
+            margin-bottom: 40px;
+        }
+
+        .article-category {
+            display: inline-block;
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .article-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 20px;
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .featured-image {
+            margin-bottom: 40px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .article-content {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .article-content h2,
+        .article-content h3 {
+            font-family: 'Montserrat', sans-serif;
+            margin: 30px 0 15px;
+            color: var(--primary-color);
+        }
+
+        .article-content p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .article-content ul,
+        .article-content ol {
+            margin: 20px 0 20px 30px;
+        }
+
+        .article-content li {
+            margin-bottom: 10px;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            margin-top: 40px;
+        }
+
+        .sidebar-widget {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .sidebar-widget h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--medium-gray);
+        }
+
+        .related-posts {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .related-post {
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+            background: var(--light-gray);
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+
+        .related-post:hover {
+            background: var(--medium-gray);
+        }
+
+        .related-post-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 5px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .related-post-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .related-post-content h4 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+
+        .related-post-content p {
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+        }
+
+        .categories-list {
+            list-style: none;
+        }
+
+        .categories-list li {
+            margin-bottom: 10px;
+        }
+
+        .categories-list a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+
+        .categories-list a:hover {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        /* ===== AUTHOR BOX ===== */
+        .author-box {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .author-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .author-info h4 {
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 60px 0 30px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h4 {
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 992px) {
+            .blog-detail {
+                grid-template-columns: 1fr;
+            }
+            
+            .article-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .article-content {
+                padding: 25px;
+            }
+            
+            .article-meta {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .author-box {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .article-title {
+                font-size: 1.8rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <h1>Anjali Bansal & Associates</h1>
+                </div>
+                <div class="nav-links">
+                    <a href="/">Home</a>
+                    <a href="/about/">About Us</a>
+                    <a href="/services/">Services</a>
+                    <a href="/blogs/">Blogs</a>
+                    <a href="/contact/">Contact</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <a href="/">Home</a>
+                <i class="fas fa-chevron-right"></i>
+                <a href="{% url 'blogs' %}">Blogs</a>
+                <i class="fas fa-chevron-right"></i>
+                <span>{{ blog.title|truncatewords:5 }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="blog-detail">
+            <!-- Main Article -->
+            <main class="article-main">
+                <div class="article-header">
+                    <span class="article-category">{{ blog.category|default:"General" }}</span>
+                    <h1 class="article-title">{{ blog.title|default:"Untitled Post" }}</h1>
+                    <div class="article-meta">
+                        <span><i class="far fa-calendar"></i> {{ blog.date_published|date:"F d, Y"|default:"Date not available" }}</span>
+                        <span><i class="far fa-clock"></i> {{ blog.read_time|default:5 }} min read</span>
+                        {% if blog.author %}
+                        <span><i class="far fa-user"></i> {{ blog.author.get_full_name|default:blog.author.username }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if blog.featured_image %}
+                    <img src="{{ blog.featured_image.url }}" alt="{{ blog.title }}">
+                {% elif blog.image_url %}
+                    <img src="{{ blog.image_url }}" alt="{{ blog.title }}">
+                {% else %}
+                    <img src="{% static 'images/default-blog.jpg' %}" alt="{{ blog.title }}">
+                {% endif %}
+
+                <div class="article-content">
+                    {{ blog.content|safe|linebreaks }}
+                </div>
+
+                <!-- Author Box -->
+                <div class="author-box">
+                    <div class="author-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="author-info">
+                        <h4>About the Author</h4>
+                        <p>
+                            {% if blog.author %}
+                                {{ blog.author.get_full_name|default:blog.author.username }} is an expert in {{ blog.category|default:"corporate law" }} with years of experience helping businesses navigate complex regulatory environments.
+                            {% else %}
+                                Anjali Bansal & Associates is a leading corporate law firm specializing in FEMA, SEBI, fundraising, and startup compliance.
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <!-- Related Posts -->
+                <div class="sidebar-widget">
+                    <h3>Related Articles</h3>
+                    <div class="related-posts">
+                        {% for related in related_posts|slice:":3" %}
+                        <a href="{% url 'blog_detail' related.slug %}" class="related-post">
+                            <div class="related-post-image">
+                                {% if related.featured_image %}
+                                <img src="{{ related.featured_image.url }}" alt="{{ related.title }}">
+                                {% else %}
+                                <div style="background: #f0f0f0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fas fa-newspaper" style="color: #ccc;"></i>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="related-post-content">
+                                <h4>{{ related.title|truncatewords:6 }}</h4>
+                                <p>{{ related.date_published|date:"M d, Y" }}</p>
+                            </div>
+                        </a>
+                        {% empty %}
+                        <p>No related articles found.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Categories -->
+                <div class="sidebar-widget">
+                    <h3>Categories</h3>
+                    <ul class="categories-list">
+                        {% for cat in categories %}
+                        <li>
+                            <a href="{% url 'blogs' %}?category={{ cat.0 }}">
+                                <i class="fas fa-folder"></i>
+                                {{ cat.1 }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <!-- Share Article -->
+                <div class="sidebar-widget">
+                    <h3>Share this Article</h3>
+                    <div style="display: flex; gap: 10px;">
+                        <button onclick="shareOnFacebook()" style="flex: 1; padding: 10px; background: #3b5998; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                            <i class="fab fa-facebook"></i> Facebook
+                        </button>
+                        <button onclick="shareOnLinkedIn()" style="flex: 1; padding: 10px; background: #0077b5; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                            <i class="fab fa-linkedin"></i> LinkedIn
+                        </button>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>Anjali Bansal & Associates</h4>
+                    <p>Expert legal consulting for FEMA, SEBI, Corporate Law, Fundraising, and Startup Compliance.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about/">About Us</a></li>
+                        <li><a href="/services/">Services</a></li>
+                        <li><a href="/blogs/">Blogs</a></li>
+                        <li><a href="/contact/">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Our Services</h4>
+                    <ul class="footer-links">
+                        <li><a href="/services/#fema">FEMA Compliance</a></li>
+                        <li><a href="/services/#sebi">SEBI Regulations</a></li>
+                        <li><a href="/services/#corporate">Corporate Law</a></li>
+                        <li><a href="/services/#fundraising">Fundraising</a></li>
+                        <li><a href="/services/#startups">Startup Advisory</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact Info</h4>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Legal Street, New Delhi</li>
+                        <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+                        <li><i class="fas fa-envelope"></i> contact@example.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Anjali Bansal & Associates. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function shareOnFacebook() {
+            const url = window.location.href;
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+        }
+
+        function shareOnLinkedIn() {
+            const url = window.location.href;
+            window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}`, '_blank');
+        }
+
+        // Increment view count
+        document.addEventListener('DOMContentLoaded', function() {
+            // This would typically be an AJAX call to your backend
+            console.log('Blog post viewed:', '{{ blog.title }}');
+            // You can implement view tracking here
+        });
+    </script>
+</body>
+</html>

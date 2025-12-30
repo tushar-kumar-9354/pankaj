@@ -1,0 +1,81 @@
+/* Admin Blog Styling */
+.field-read_count {
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+.field-is_published {
+    font-weight: bold;
+}
+
+.field-is_published.true {
+    color: #4CAF50;
+}
+
+.field-is_published.false {
+    color: #f44336;
+}
+
+.field-is_featured {
+    font-weight: bold;
+    color: #FF9800;
+}
+
+/* Rich text editor improvements */
+.mce-tinymce {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* Form field improvements */
+.form-row {
+    padding: 10px;
+    margin-bottom: 15px;
+    background: #f9f9f9;
+    border-radius: 4px;
+}
+
+.form-row:hover {
+    background: #f0f0f0;
+}
+
+/* Action buttons */
+.submit-row input.default {
+    background: #000;
+    border-color: #000;
+}
+
+.submit-row input.default:hover {
+    background: #333;
+    border-color: #333;
+}
+
+/* Quick publish buttons */
+.quick-publish {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.quick-publish:hover {
+    background: #45a049;
+}
+
+/* Preview button */
+.preview-btn {
+    background: #2196F3;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.preview-btn:hover {
+    background: #0b7dda;
+}

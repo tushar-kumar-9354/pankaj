@@ -1,0 +1,215 @@
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <!-- Footer Main -->
+            <div class="footer-main">
+                <div class="footer-logo">
+                    <h3>Anjali Bansal & Associates</h3>
+                    <p class="footer-tagline">
+                        Expert legal consulting for FEMA, SEBI, Corporate Law, 
+                        Fundraising, and Startup Compliance.
+                    </p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/about/">About Us</a></li>
+                            <li><a href="/services/">Services</a></li>
+                            <li><a href="/blogs/">Blogs</a></li>
+                            <li><a href="/contact/">Contact</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4>Our Services</h4>
+                        <ul>
+                            <li><a href="/services/#fema">FEMA Compliance</a></li>
+                            <li><a href="/services/#sebi">SEBI Regulations</a></li>
+                            <li><a href="/services/#corporate">Corporate Law</a></li>
+                            <li><a href="/services/#fundraising">Fundraising</a></li>
+                            <li><a href="/services/#startups">Startup Advisory</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4>Contact Info</h4>
+                        <ul class="contact-info">
+                            <li>
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>123 Legal Street, New Delhi, India</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-phone"></i>
+                                <span>+91 98765 43210</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-envelope"></i>
+                                <span>contact@anjalibansal.com</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    <p>&copy; 2024 Anjali Bansal & Associates. All rights reserved.</p>
+                </div>
+                
+                <div class="footer-social">
+                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    /* Footer Styles */
+    .footer {
+        background: #000;
+        color: #fff;
+        padding: 60px 0 30px;
+        margin-top: auto;
+    }
+    
+    .footer-content {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+    
+    .footer-main {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 50px;
+    }
+    
+    .footer-logo h3 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: #fff;
+    }
+    
+    .footer-tagline {
+        font-size: 1rem;
+        line-height: 1.6;
+        color: #ccc;
+        max-width: 300px;
+    }
+    
+    .footer-links {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+    }
+    
+    .footer-column h4 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #fff;
+    }
+    
+    .footer-column ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .footer-column ul li {
+        margin-bottom: 12px;
+    }
+    
+    .footer-column ul li a {
+        color: #ccc;
+        text-decoration: none;
+        transition: color 0.3s ease;
+        font-size: 0.95rem;
+    }
+    
+    .footer-column ul li a:hover {
+        color: #fff;
+    }
+    
+    .contact-info li {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .contact-info i {
+        color: #fff;
+        margin-top: 3px;
+        min-width: 20px;
+    }
+    
+    .footer-bottom {
+        border-top: 1px solid #333;
+        padding-top: 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .footer-copyright p {
+        color: #999;
+        font-size: 0.9rem;
+    }
+    
+    .footer-social {
+        display: flex;
+        gap: 15px;
+    }
+    
+    .social-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: #333;
+        color: #fff;
+        border-radius: 50%;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    
+    .social-link:hover {
+        background: #555;
+        transform: translateY(-3px);
+    }
+    
+    /* Responsive Footer */
+    @media (max-width: 992px) {
+        .footer-main {
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+        
+        .footer-links {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .footer-links {
+            grid-template-columns: 1fr;
+        }
+        
+        .footer-bottom {
+            flex-direction: column;
+            gap: 20px;
+            text-align: center;
+        }
+    }
+</style>

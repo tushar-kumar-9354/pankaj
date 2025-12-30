@@ -4,283 +4,827 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blogs & Updates | Anjali Bansal & Associates | Company Secretaries</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/blogs.css' %}">
+    <title>Insights & Articles - Anjali Bansal & Associates</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ===== GLOBAL STYLES ===== */
+        :root {
+            --primary-color: #000;
+            --secondary-color: #333;
+            --accent-color: #007bff;
+            --light-gray: #f8f9fa;
+            --medium-gray: #e9ecef;
+            --dark-gray: #555;
+            --white: #fff;
+            --shadow: 0 5px 20px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: var(--light-gray);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        /* ===== HEADER STYLES ===== */
+        header {
+            background: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent-color);
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: var(--white);
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .breadcrumb {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 50px;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== BLOG GRID ===== */
+        .blog-grid {
+            padding: 80px 0;
+        }
+
+        .grid-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .grid-header h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+
+        .post-count {
+            color: var(--dark-gray);
+            font-size: 1.1rem;
+        }
+
+        .sort-filter {
+            padding: 10px 15px;
+            border: 2px solid var(--medium-gray);
+            border-radius: 5px;
+            background: var(--white);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+        }
+
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .post-card {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .post-image {
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .post-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .post-card:hover .post-image img {
+            transform: scale(1.05);
+        }
+
+        .post-category {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .post-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .post-content h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            line-height: 1.4;
+        }
+
+        .post-excerpt {
+            color: var(--dark-gray);
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--medium-gray);
+            margin-top: auto;
+        }
+
+        .post-date {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+        }
+
+        .read-more {
+            color: var(--accent-color);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .read-more:hover {
+            gap: 12px;
+        }
+
+        /* ===== PAGINATION ===== */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 50px;
+        }
+
+        .page-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--medium-gray);
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+
+        .page-link:hover {
+            background: var(--primary-color);
+            color: var(--white);
+            border-color: var(--primary-color);
+        }
+
+        .page-link.active {
+            background: var(--primary-color);
+            color: var(--white);
+            border-color: var(--primary-color);
+        }
+
+        .page-link.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .blog-container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 40px;
+        }
+
+        .sidebar {
+            padding-top: 80px;
+        }
+
+        .sidebar-widget {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .sidebar-widget h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--medium-gray);
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            border: 2px solid var(--medium-gray);
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .search-box button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--dark-gray);
+            cursor: pointer;
+        }
+
+        .categories-list {
+            list-style: none;
+        }
+
+        .categories-list li {
+            margin-bottom: 10px;
+        }
+
+        .categories-list a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+
+        .categories-list a:hover,
+        .categories-list a.active {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .featured-post {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .featured-post-item {
+            padding: 15px;
+            background: var(--light-gray);
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+
+        .featured-post-item:hover {
+            background: var(--medium-gray);
+        }
+
+        .featured-post-item h4 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+        }
+
+        .subscribe-form input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 2px solid var(--medium-gray);
+            border-radius: 5px;
+        }
+
+        .subscribe-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .subscribe-btn:hover {
+            background: var(--secondary-color);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h4 {
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* ===== NO POSTS MESSAGE ===== */
+        .no-posts {
+            text-align: center;
+            padding: 60px 20px;
+            background: var(--white);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .no-posts i {
+            font-size: 4rem;
+            color: var(--medium-gray);
+            margin-bottom: 20px;
+        }
+
+        .no-posts h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 992px) {
+            .blog-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                padding-top: 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .posts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .grid-header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
     <header>
-        <div class="container header-container">
-            <div class="logo">
-                <h1>ANJALI BANSAL & ASSOCIATES</h1>
-                <p>COMPANY SECRETARIES</p>
-            </div>
-            <button class="mobile-menu-btn" id="mobileMenuBtn">
-                <i class="fas fa-bars"></i>
-            </button>
-            <nav class="nav-menu" id="navMenu">
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/about">About</a></li>
-                    <li><a href="/services">Services</a></li>
-                    <li><a href="/our_expertise">Expertise</a></li>
-                    <li><a href="/blogs" class="active">Blogs</a></li>
-                    <li><a href="/contact">Contact</a></li>
-                </ul>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <h1>Anjali Bansal & Associates</h1>
+                </div>
+                <div class="nav-links">
+                    <a href="/">Home</a>
+                    <a href="/about/">About Us</a>
+                    <a href="/services/">Services</a>
+                    <a href="/blogs/" class="active">Blogs</a>
+                    <a href="/contact/">Contact</a>
+                </div>
             </nav>
         </div>
     </header>
 
-    <!-- Hero Banner -->
-    <section class="blogs-hero">
+    <!-- Hero Section -->
+    <section class="hero">
         <div class="container">
-            <div class="blogs-hero-content">
-                <h1 class="page-title">Insights & Updates</h1>
-                <p class="page-subtitle">Expert analysis on corporate law, FEMA, SEBI regulations, and industry trends</p>
+            <div class="hero-content">
+                <h1>Insights & Articles</h1>
+                <p>Stay informed with our latest articles on FEMA, SEBI, Corporate Law, Fundraising, Startups, and Compliance matters from industry experts.</p>
                 <div class="breadcrumb">
-                    <a href="/">Home</a> / <span>Blogs & Updates</span>
+                    <a href="/">Home</a>
+                    <i class="fas fa-chevron-right"></i>
+                    <span>Blogs</span>
                 </div>
             </div>
         </div>
-        <div class="hero-overlay"></div>
-        <div class="hero-shape">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-                <path fill="#ffffff" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-            </svg>
-        </div>
     </section>
 
-    <!-- Blogs Main Content -->
-    <section class="blogs-main">
+    <!-- Main Content -->
+    <section class="blog-grid">
         <div class="container">
-            <div class="blogs-container">
-                <!-- Sidebar -->
-                <aside class="blogs-sidebar">
-                    <div class="sidebar-widget">
-                        <h3>Categories</h3>
-                        <ul class="categories-list">
-                            <li>
-                                <a href="{% url 'blogs' %}" 
-                                   class="{% if not current_category %}active{% endif %}">
-                                    <i class="fas fa-newspaper"></i> All Posts
-                                </a>
-                            </li>
-{% for cat in categories %}
-<li>
-    <a href="?category={{ cat }}"
-       class="{% if current_category == cat %}active{% endif %}">
-        {{ cat }}
-    </a>
-</li>
-{% endfor %}
-
-                        </ul>
-                    </div>
-                    
-                    <div class="sidebar-widget">
-                        <h3>Search Articles</h3>
-                        <div class="search-box">
-                            <input type="text" placeholder="Search blogs..." id="searchInput">
-                            <button id="searchButton"><i class="fas fa-search"></i></button>
+            <div class="blog-container">
+                <!-- Main Content -->
+                <main class="main-content">
+                    <div class="grid-header">
+                        <div>
+                            <h2>
+                                {% if current_category %}
+                                    {{ current_category }}
+                                {% else %}
+                                    All Articles
+                                {% endif %}
+                            </h2>
+                            <p class="post-count">{{ blogs.paginator.count }} articles found</p>
                         </div>
+                        <form method="get" id="sortForm">
+                            <select name="sort" class="sort-filter" onchange="this.form.submit()">
+                                <option value="latest" {% if current_sort == 'latest' %}selected{% endif %}>Latest First</option>
+                                <option value="oldest" {% if current_sort == 'oldest' %}selected{% endif %}>Oldest First</option>
+                                <option value="popular" {% if current_sort == 'popular' %}selected{% endif %}>Most Read</option>
+                            </select>
+                            {% if current_category %}
+                                <input type="hidden" name="category" value="{{ current_category }}">
+                            {% endif %}
+                        </form>
                     </div>
-                    
-                    <!-- DYNAMIC FEATURED POSTS -->
-                    <div class="sidebar-widget">
-                        <h3>Featured Posts</h3>
-                        {% if featured_posts %}
-                            {% for post in featured_posts %}
-                            <div class="featured-post">
-                                <div class="featured-post-content">
-                                    <span class="post-category">{{ post.category }}</span>
-                                    <h4>{{ post.title|truncatechars:50 }}</h4>
-                                    <p>{{ post.excerpt|truncatechars:100 }}</p>
-                                    <a href="{% url 'blog_detail' post.slug %}" class="read-more">
+
+                    {% if blogs %}
+                    <div class="posts-grid">
+                        {% for blog in blogs %}
+                        <article class="post-card">
+                            <div class="post-image">
+                                {% if blog.featured_image %}
+    <img src="{{ blog.featured_image.url }}" alt="{{ blog.title }}">
+{% elif blog.image_url %}
+    <img src="{{ blog.image_url }}" alt="{{ blog.title }}">
+{% else %}
+    <img src="{% static 'images/default-blog.jpg' %}" alt="{{ blog.title }}">
+{% endif %}
+                                <span class="post-category">{{ blog.category|default:"General" }}</span>
+                            </div>
+                            <div class="post-content">
+                                <h3>{{ blog.title|default:"Untitled Post" }}</h3>
+                                <p class="post-excerpt">{{ blog.excerpt|default:"No excerpt available"|truncatewords:30 }}</p>
+                                <div class="post-meta">
+                                    <span class="post-date">
+                                        <i class="far fa-calendar"></i>
+                                        {{ blog.date_published|date:"M d, Y"|default:"Date not available" }}
+                                    </span>
+                                    <a href="{% url 'blog_detail' blog.slug %}" class="read-more">
                                         Read More <i class="fas fa-arrow-right"></i>
                                     </a>
                                 </div>
                             </div>
-                            {% endfor %}
-                        {% else %}
-                            <p class="no-featured">No featured posts yet</p>
-                        {% endif %}
-                    </div>
-                </aside>
-
-                <!-- Blog Posts -->
-                <div class="blog-posts">
-                    <div class="posts-filter">
-                        <div class="filter-title">
-                            <h2>Latest Articles</h2>
-                            <p>Expert analysis and regulatory updates</p>
-                        </div>
-                        <div class="filter-options">
-                            <form method="GET" action="{% url 'blogs' %}" id="sortForm">
-                                {% if current_category %}
-                                <input type="hidden" name="category" value="{{ current_category }}">
-                                {% endif %}
-                                <select class="sort-select" name="sort" id="sortSelect">
-                                    <option value="latest" {% if current_sort == 'latest' %}selected{% endif %}>Latest First</option>
-                                    <option value="oldest" {% if current_sort == 'oldest' %}selected{% endif %}>Oldest First</option>
-                                    <option value="popular" {% if current_sort == 'popular' %}selected{% endif %}>Most Popular</option>
-                                </select>
-                            </form>
-                        </div>
+                        </article>
+                        {% endfor %}
                     </div>
 
-                    <!-- Blog Post Cards -->
-                    {% for blog in blogs %}
-<div class="post-card {% if blog.is_featured %}featured-post-card{% endif %}">
-    
-    {% if blog.featured_image or blog.image_url %}
-    <div class="post-card-image">
-        <img src="{% if blog.featured_image %}{{ blog.featured_image.url }}{% else %}{{ blog.image_url }}{% endif %}" 
-             alt="{{ blog.title }}"
-             onerror="this.parentElement.style.display='none';"> {% if blog.is_featured %}
-        <div class="post-badge">FEATURED</div>
-        {% endif %}
-    </div>
-    {% endif %}
-    
-    <div class="post-card-content">
-        <div class="post-meta">
-            <span class="post-category">{{ blog.category }}</span>
-            <span class="post-date"><i class="far fa-calendar"></i> {{ blog.date_published|date:"M d, Y" }}</span>
-            <span class="read-time"><i class="far fa-clock"></i> {{ blog.read_time }} min read</span>
-        </div>
-        <h3>{{ blog.title }}</h3>
-        <p class="post-excerpt">{{ blog.excerpt }}</p>
-        <div class="post-author">
-            <div class="author-info">
-                <div class="author-avatar">
-                    <i class="fas fa-user-tie"></i>
-                </div>
-                <div>
-                    <h5>Anjali Bansal</h5>
-                    <p>Managing Partner</p>
-                </div>
-            </div>
-            <a href="{% url 'blog_detail' blog.slug %}" class="read-article-btn">
-                Read Article <i class="fas fa-arrow-right"></i>
-            </a>
-        </div>
-    </div>
-</div>
-{% empty %}
-<div class="no-posts">
-    <p>No blog posts available yet. Check back soon!</p>
-</div>
-{% endfor %}
-                    <!-- DYNAMIC PAGINATION -->
-                    {% if page_obj.paginator.num_pages > 1 %}
+                    <!-- Pagination -->
+                    {% if blogs.has_other_pages %}
                     <div class="pagination">
-                        {% if page_obj.has_previous %}
-<a href="?page={{ page_obj.previous_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}">
-    Prev
-</a>
-{% endif %}
+                        {% if blogs.has_previous %}
+                        <a href="?page={{ blogs.previous_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}" class="page-link">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                        {% endif %}
 
-{% if page_obj.has_next %}
-<a href="?page={{ page_obj.next_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}">
-    Next
-</a>
-{% endif %}
-
-                        {% for num in page_obj.paginator.page_range %}
-                            {% if page_obj.number == num %}
-                            <span class="page-number active">{{ num }}</span>
-                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                            <a href="?page={{ num }}{% if current_category %}&category={{ current_category }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}" 
-                               class="page-number">{{ num }}</a>
+                        {% for num in blogs.paginator.page_range %}
+                            {% if blogs.number == num %}
+                            <span class="page-link active">{{ num }}</span>
+                            {% elif num > blogs.number|add:'-3' and num < blogs.number|add:'3' %}
+                            <a href="?page={{ num }}{% if current_category %}&category={{ current_category }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}" class="page-link">{{ num }}</a>
                             {% endif %}
                         {% endfor %}
-                        
-                        {% if page_obj.has_next %}
-                        <a href="?page={{ page_obj.next_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}" 
-                           class="next-page">
-                            Next <i class="fas fa-chevron-right"></i>
+
+                        {% if blogs.has_next %}
+                        <a href="?page={{ blogs.next_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}" class="page-link">
+                            <i class="fas fa-chevron-right"></i>
                         </a>
                         {% endif %}
                     </div>
                     {% endif %}
-                </div>
+                    
+                    {% else %}
+                    <div class="no-posts">
+                        <i class="fas fa-newspaper"></i>
+                        <h3>No articles found</h3>
+                        <p>
+                            {% if current_category %}
+                                No articles in "{{ current_category }}" category yet. Check back soon!
+                            {% else %}
+                                No articles published yet. Check back soon for updates!
+                            {% endif %}
+                        </p>
+                    </div>
+                    {% endif %}
+                </main>
+
+                <!-- Sidebar -->
+                <aside class="sidebar">
+                    <!-- Search Widget -->
+                    <div class="sidebar-widget">
+                        <h3>Search Articles</h3>
+                        <div class="search-box">
+                            <input type="text" placeholder="Search articles..." id="searchInput">
+                            <button type="button"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Categories Widget -->
+                    <div class="sidebar-widget">
+                        <h3>Categories</h3>
+                        <ul class="categories-list">
+                            <li>
+                                <a href="{% url 'blogs' %}" {% if not current_category %}class="active"{% endif %}>
+                                    <i class="fas fa-th-list"></i>
+                                    All Categories
+                                </a>
+                            </li>
+                            {% for cat in categories %}
+                            <li>
+                                <a href="{% url 'blogs' %}?category={{ cat }}" 
+                                   {% if current_category == cat %}class="active"{% endif %}>
+                                    <i class="fas fa-folder"></i>
+                                    {{ cat }}
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <!-- Featured Posts Widget -->
+                    <div class="sidebar-widget">
+                        <h3>Featured Articles</h3>
+                        <div class="featured-post">
+                            {% if blogs %}
+                                {% for blog in blogs|slice:":3" %}
+                                    {% if blog.is_featured %}
+                                    <div class="featured-post-item">
+                                        <h4>{{ blog.title|truncatewords:8 }}</h4>
+                                        <a href="{% url 'blog_detail' blog.slug %}">Read More →</a>
+                                    </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <p>No featured articles yet.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Subscribe Widget -->
+                    <div class="sidebar-widget">
+                        <h3>Subscribe</h3>
+                        <p>Get the latest articles delivered to your inbox.</p>
+                        <form class="subscribe-form" id="subscribeForm">
+                            <input type="email" placeholder="Your email address" required>
+                            <button type="submit" class="subscribe-btn">Subscribe</button>
+                        </form>
+                    </div>
+                </aside>
             </div>
         </div>
     </section>
 
-    <!-- Newsletter Section -->
-    
-
     <!-- Footer -->
-<footer style="background-color: #1a1a1a; color: #ffffff; padding: 40px 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;">
-        
-        <div style="flex: 1; min-width: 250px;">
-            <h3 style="color: #4CAF50; margin-bottom: 15px;">ANJALI BANSAL & ASSOCIATES</h3>
-            <p style="font-size: 14px; line-height: 1.6; color: #cccccc;">
-                Providing quality corporate secretarial services with transparency and integrity.
-            </p>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>Anjali Bansal & Associates</h4>
+                    <p>Expert legal consulting for FEMA, SEBI, Corporate Law, Fundraising, and Startup Compliance.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about/">About Us</a></li>
+                        <li><a href="/services/">Services</a></li>
+                        <li><a href="/blogs/">Blogs</a></li>
+                        <li><a href="/contact/">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Our Services</h4>
+                    <ul class="footer-links">
+                        <li><a href="/services/#fema">FEMA Compliance</a></li>
+                        <li><a href="/services/#sebi">SEBI Regulations</a></li>
+                        <li><a href="/services/#corporate">Corporate Law</a></li>
+                        <li><a href="/services/#fundraising">Fundraising</a></li>
+                        <li><a href="/services/#startups">Startup Advisory</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact Info</h4>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Legal Street, New Delhi</li>
+                        <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+                        <li><i class="fas fa-envelope"></i> contact@example.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Anjali Bansal & Associates. All rights reserved.</p>
+            </div>
         </div>
+    </footer>
 
-        <div style="flex: 1; min-width: 150px;">
-            <h4 style="margin-bottom: 15px; font-size: 18px;">Quick Links</h4>
-            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
-                <li><a href="/" style="color: #cccccc; text-decoration: none;">Home</a></li>
-                <li><a href="/about" style="color: #cccccc; text-decoration: none;">About Us</a></li>
-                <li><a href="/services" style="color: #cccccc; text-decoration: none;">Services</a></li>
-                <li><a href="/contact" style="color: #cccccc; text-decoration: none;">Contact</a></li>
-            </ul>
-        </div>
-
-        <div style="flex: 1; min-width: 150px;">
-            <h4 style="margin-bottom: 15px; font-size: 18px;">Legal Support</h4>
-            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
-                <li><a href="/privacy-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Privacy Policy</a></li>
-                <li><a href="/terms-and-conditions" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Terms & Conditions</a></li>
-                <li><a href="/refund-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Refund Policy</a></li>
-                <li><a href="/disclaimer" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Disclaimer</a></li>
-            </ul>
-        </div>
-    </div>
-
-    <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0;">
-
-    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 13px; color: #888;">
-        <p>&copy; 2025 Anjali Bansal & Associates. All Rights Reserved.</p>
-        <div style="display: flex; gap: 15px;">
-            <a href="#" style="color: #888; text-decoration: none;">Twitter</a>
-            <a href="#" style="color: #888; text-decoration: none;">LinkedIn</a>
-            <a href="#" style="color: #888; text-decoration: none;">Instagram</a>
-        </div>
-    </div>
-</footer>
-
-    <script src="{% static 'js/script.js' %}"></script>
-    <script src="{% static 'js/blogs.js' %}"></script>
     <script>
-        // Auto-submit sort form when select changes
-        document.getElementById('sortSelect').addEventListener('change', function() {
-            document.getElementById('sortForm').submit();
+        // Simple search functionality
+        document.getElementById('searchInput').addEventListener('keyup', function(e) {
+            const searchTerm = this.value.toLowerCase();
+            const articles = document.querySelectorAll('.post-card');
+            
+            articles.forEach(article => {
+                const title = article.querySelector('h3').textContent.toLowerCase();
+                const excerpt = article.querySelector('.post-excerpt').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || excerpt.includes(searchTerm)) {
+                    article.style.display = 'block';
+                } else {
+                    article.style.display = 'none';
+                }
+            });
         });
-        
-        // Search functionality
-        document.getElementById('searchButton').addEventListener('click', performSearch);
-        document.getElementById('searchInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                performSearch();
-            }
+
+        // Subscribe form handling
+        document.getElementById('subscribeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            alert(`Thank you for subscribing with ${email}! You'll receive our updates soon.`);
+            this.reset();
         });
-        
-        function performSearch() {
-            const searchTerm = document.getElementById('searchInput').value.trim();
-            if (searchTerm) {
-                // Redirect to search results (you'll need to create a search view)
-                window.location.href = `/blogs/search/?q=${encodeURIComponent(searchTerm)}`;
-            }
-        }
     </script>
 </body>
 </html>

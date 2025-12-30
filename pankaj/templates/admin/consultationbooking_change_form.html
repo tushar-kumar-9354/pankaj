@@ -1,0 +1,91 @@
+<!-- Update consultationbooking_change_form.html -->
+{% extends "admin/change_form.html" %}
+
+{% block content %}
+{{ block.super }}
+
+<div style="margin: 20px 0;">
+    {% if original %}
+    <div class="module" style="border: 1px solid #ddd;">
+        <h2>📊 Status Timeline</h2>
+        <div style="padding: 15px;">
+            <table style="width: 100%;">
+                <tr>
+                    <td style="width: 150px; font-weight: bold;">Created:</td>
+                    <td>{{ original.created_at|date:"F j, Y, g:i a" }}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold;">Pending:</td>
+                    <td>
+                        {% if original.pending_at %}
+                        {{ original.pending_at|date:"F j, Y, g:i a" }}
+                        {% else %}
+                        <span style="color: #6c757d;">-</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold;">Confirmed:</td>
+                    <td>
+                        {% if original.confirmed_at %}
+                        {{ original.confirmed_at|date:"F j, Y, g:i a" }}
+                        {% else %}
+                        <span style="color: #6c757d;">-</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold;">Completed:</td>
+                    <td>
+                        {% if original.completed_at %}
+                        {{ original.completed_at|date:"F j, Y, g:i a" }}
+                        {% else %}
+                        <span style="color: #6c757d;">-</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold;">Cancelled:</td>
+                    <td>
+                        {% if original.cancelled_at %}
+                        {{ original.cancelled_at|date:"F j, Y, g:i a" }}
+                        {% else %}
+                        <span style="color: #6c757d;">-</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+{% if original and original.status != 'cancelled' %}
+<div style="margin: 20px 0; padding: 15px; background: #fff3cd; border-left: 4px solid #ffc107;">
+    <h3 style="margin-top: 0; color: #856404;">⚠️ Status Change Notifications</h3>
+    <p style="color: #856404;">
+        When you change the status, notification emails will be automatically sent:
+    </p>
+    <ul style="color: #856404;">
+        <li><strong>Pending:</strong> Notification sent when marked as pending</li>
+        <li><strong>Confirmed:</strong> Confirmation email sent with appointment details</li>
+        <li><strong>Completed:</strong> Completion notification sent with feedback request</li>
+        <li><strong>Cancelled:</strong> Cancellation email sent with reason (if provided)</li>
+    </ul>
+</div>
+{% endif %}
+
+{% if original and original.status == 'cancelled' %}
+<div style="margin: 20px 0; padding: 15px; background: #d4edda; border-left: 4px solid #28a745;">
+    <h3 style="margin-top: 0; color: #155724;">✅ Booking Cancelled</h3>
+    <p style="color: #155724;">
+        This booking was cancelled on {{ original.cancelled_at|date:"F j, Y, g:i a" }}
+    </p>
+    {% if original.cancellation_reason %}
+    <p style="color: #155724;">
+        <strong>Reason:</strong> {{ original.cancellation_reason }}
+    </p>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

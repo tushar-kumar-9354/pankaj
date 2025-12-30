@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background-color: #2c3e50; color: white; padding: 20px; text-align: center; }
+        .content { padding: 30px; background-color: #f9f9f9; }
+        .details { background-color: white; padding: 20px; border-radius: 5px; margin: 20px 0; border-left: 4px solid #2c3e50; }
+        .detail-row { display: flex; margin-bottom: 10px; }
+        .detail-label { font-weight: bold; width: 150px; }
+        .detail-value { flex: 1; }
+        .footer { text-align: center; padding: 20px; color: #666; font-size: 12px; }
+        .important { background-color: #fff3cd; padding: 15px; border-radius: 5px; margin: 15px 0; border: 1px solid #ffeaa7; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Anjali Bansal & Associates</h1>
+            <p>Company Secretaries</p>
+        </div>
+        
+        <div class="content">
+            <h2>Consultation Booking Confirmed! ✅</h2>
+            
+            <p>Dear <strong>{{ booking.name }}</strong>,</p>
+            
+            <p>Thank you for booking a consultation with us. Your appointment has been scheduled successfully.</p>
+            
+            <div class="details">
+                <h3>📅 Appointment Details</h3>
+                <div class="detail-row">
+                    <div class="detail-label">Booking ID:</div>
+                    <div class="detail-value"><strong>{{ booking.booking_id }}</strong></div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Date:</div>
+                    <div class="detail-value">{{ booking.appointment_date|date:"F j, Y" }} ({{ booking.appointment_date|date:"l" }})</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Time:</div>
+                    <div class="detail-value">{{ booking.appointment_time|time:"g:i A" }}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Duration:</div>
+                    <div class="detail-value">{{ booking.get_duration_display }}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Mode:</div>
+                    <div class="detail-value">{{ booking.get_mode_display }}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Amount:</div>
+                    <div class="detail-value">₹{{ booking.price }}</div>
+                </div>
+                
+                <div class="detail-row">
+                    <div class="detail-label">Consultation Topic:</div>
+                    <div class="detail-value">{{ booking.topic|truncatechars:100 }}</div>
+                </div>
+                
+                {% if booking.mode == 'video' %}
+                <div class="important">
+                    <h4>🔗 Virtual Meeting Details:</h4>
+                    <p>Meeting link will be sent to you 1 hour before the scheduled time.</p>
+                    <p>Please ensure you have Zoom/Google Meet installed and test your audio/video beforehand.</p>
+                </div>
+                {% elif booking.mode == 'in_person' %}
+                <div class="important">
+                    <h4>📍 Office Address:</h4>
+                    <p><strong>Anjali Bansal & Associates</strong><br>
+                    [Your Office Address Here]<br>
+                    [City, State, PIN Code]</p>
+                    <p>Please arrive 10 minutes before your scheduled time.</p>
+                </div>
+                {% else %}
+                <div class="important">
+                    <h4>📞 Phone Consultation:</h4>
+                    <p>We will call you at {{ booking.phone }} at the scheduled time.</p>
+                    <p>Please ensure you're available and in a quiet environment.</p>
+                </div>
+                {% endif %}
+            </div>
+            
+            <h3>📋 Preparation Guidelines</h3>
+            <ul>
+                <li>Prepare specific questions in advance</li>
+                <li>Have relevant documents ready for review</li>
+                <li>Test your audio/video setup if virtual consultation</li>
+                <li>Join/arrive 5-10 minutes early</li>
+                <li>Make note of any deadlines or urgent matters</li>
+            </ul>
+            
+            <div class="important">
+                <h4>⚠️ Important Notes:</h4>
+                <ul>
+                    <li>This consultation is subject to professional engagement terms</li>
+                    <li>Payment link will be sent separately for confirmation</li>
+                    <li>All discussions are confidential and protected</li>
+                    <li>Cancellation/rescheduling policy: 24 hours notice required</li>
+                </ul>
+            </div>
+            
+            <p><strong>Need to reschedule?</strong> Contact us at +91-XXXXXXXXXX or email <a href="mailto:contact@anjali-bansal.com">contact@anjali-bansal.com</a></p>
+            
+            <p>We look forward to assisting you with your compliance needs!</p>
+            
+            <p>Best regards,<br>
+            <strong>Anjali Bansal & Associates</strong><br>
+            Company Secretaries</p>
+        </div>
+        
+        <div class="footer">
+            <p>© {% now "Y" %} Anjali Bansal & Associates. All rights reserved.</p>
+            <p>This is an automated email, please do not reply directly.</p>
+            <p><small>Confidentiality Notice: This email and any attachments are confidential and intended solely for the use of the individual to whom they are addressed.</small></p>
+        </div>
+    </div>
+</body>
+</html>

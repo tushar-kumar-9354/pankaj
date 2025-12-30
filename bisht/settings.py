@@ -142,3 +142,16 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+# Add these to your settings.py
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'jangratushar348@gmail.com'
+EMAIL_HOST_PASSWORD = 'vzur pucj ghoi bwdy'
+DEFAULT_FROM_EMAIL = 'noreply@anjali-bansal.com'
+ADMIN_EMAIL = 'jangratushar348@gmail.com'
+# For testing, you can use console backend temporarily:
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

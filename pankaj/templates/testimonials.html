@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +10,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
-
 </head>
 <body>
     <!-- Header -->
@@ -26,12 +24,12 @@
             </button>
             <nav class="nav-menu" id="navMenu">
                 <ul>
-                    <li><a href="{% url 'index' %}">Home</a></li>
-                    <li><a href="{% url 'about' %}">About</a></li>
-                    <li><a href="{% url 'our_expertise' %}">Expertise</a></li>
-                    <li><a href="{% url 'blogs' %}">Articles</a></li>
-                    <li><a href="{% url 'testimonials' %}" class="active">Testimonials</a></li>
-                    <li><a href="{% url 'contact' %}">Contact</a></li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/our_expertise">Expertise</a></li>
+                    <li><a href="/#articles">Articles</a></li>
+                    <li><a href="/testimonials" class="active">Testimonials</a></li>
+                    <li><a href="/contact">Contact</a></li>
                 </ul>
             </nav>
         </div>
@@ -44,7 +42,7 @@
                 <h1 class="page-title">Client Testimonials</h1>
                 <p class="page-subtitle">Trusted by businesses across industries. Read what our clients have to say about our corporate secretarial services and partnership.</p>
                 <div class="breadcrumb">
-                    <a href="{% url 'index' %}">Home</a> / <span>Testimonials</span>
+                    <a href="/">Home</a> / <span>Testimonials</span>
                 </div>
             </div>
         </div>
@@ -55,7 +53,7 @@
             </svg>
         </div>
     </section>
-
+    
     <!-- Debug Section (Keep this - you can remove later) -->
     <section class="debug-section">
         <div class="container">
@@ -112,123 +110,102 @@
             </div>
         </div>
     </section>
-
     <!-- Testimonials Stats -->
     <section class="testimonials-stats">
         <div class="container">
-            <div class="stats-intro text-center mb-5">
-                <h2 class="mb-3">Trusted By Industry Leaders</h2>
-                <p class="intro-text">
-                    Our commitment to excellence has earned us the trust of businesses across sectors. Here's what our clients appreciate about our partnership.
-                </p>
+            <div class="stats-intro">
+                <h2>Trusted By Industry Leaders</h2>
+                <p class="intro-text">Our commitment to excellence has earned us the trust of businesses across sectors. Here's what our clients appreciate about our partnership.</p>
             </div>
             
             <div class="stats-grid">
-                <div class="stat-item text-center">
-                    <div class="stat-number" data-count="{{ stats.total_clients }}">0</div>
-                    <div class="stat-label">Happy Clients</div>
-                </div>
-                <div class="stat-item text-center">
-                    <div class="stat-number" data-count="{{ stats.avg_rating }}">0</div>
-                    <div class="stat-label">Average Rating</div>
-                </div>
-                <div class="stat-item text-center">
-                    <div class="stat-number" data-count="{{ stats.industries_served }}">0</div>
-                    <div class="stat-label">Industries Served</div>
-                </div>
-                <div class="stat-item text-center">
-                    <div class="stat-number" data-count="98">0</div>
-                    <div class="stat-label">Client Satisfaction %</div>
-                </div>
-            </div>
-        </div>
+    <div class="stat-item">
+        <div class="stat-number" data-count="{{ stats.total_clients }}">0</div>
+        <div class="stat-label">Happy Clients</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number" data-count="{{ stats.avg_rating }}">0</div>
+        <div class="stat-label">Average Rating</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number" data-count="{{ stats.industries_served }}">0</div>
+        <div class="stat-label">Industries Served</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number" data-count="98">0</div>
+        <div class="stat-label">Client Satisfaction %</div>
+    </div>
+</div>
     </section>
 
     <!-- Featured Testimonials Slider -->
-    <section class="featured-testimonials py-5">
+    <section class="featured-testimonials">
         <div class="container">
             <div class="section-title">
                 <h2>Featured Testimonials</h2>
-                <p class="section-subtitle">
-                    Hear directly from our valued clients about their experience working with us.
-                    <span class="d-block mt-2 text-accent" style="color: var(--accent-color); font-weight: 600;">
-                        Showing {{ featured_testimonials|length }} featured testimonials
-                    </span>
-                </p>
+                <p class="section-subtitle">Hear directly from our valued clients about their experience working with us</p>
             </div>
             
             <div class="testimonials-slider swiper">
                 <div class="swiper-wrapper">
-                    {% for testimonial in featured_testimonials %}
-                    <div class="swiper-slide">
-                        <div class="featured-testimonial">
-                            <div class="testimonial-header">
-                                {% if testimonial.client_image or testimonial.image_url %}
-                                <div class="client-image">
-                                    <img src="{% if testimonial.client_image %}{{ testimonial.client_image.url }}{% else %}{{ testimonial.image_url }}{% endif %}" alt="{{ testimonial.client_name }}">
-                                </div>
-                                {% else %}
-                                <div class="client-image">
-                                    <i class="fas fa-user"></i>
-                                </div>
-                                {% endif %}
-                                <div class="client-info">
-                                    <h4>{{ testimonial.client_name }}</h4>
-                                    <p class="client-position">{{ testimonial.position }}{% if testimonial.company %}, {{ testimonial.company }}{% endif %}</p>
-                                    <p class="client-industry">{{ testimonial.industry }}</p>
-                                </div>
-                                <div class="testimonial-rating">
-                                    <div class="stars">
-                                        {% with ''|center:testimonial.rating as range %}
-                                        {% for _ in range %}
-                                            <i class="fas fa-star"></i>
-                                        {% endfor %}
-                                        {% endwith %}
-                                    </div>
-                                    <span>{{ testimonial.rating }}.0</span>
-                                </div>
-                            </div>
-                            <div class="testimonial-content">
-                                <i class="fas fa-quote-left"></i>
-                                <p>"{{ testimonial.content|truncatewords:60 }}"</p>
-                            </div>
-                            <div class="testimonial-footer">
-                                {% if testimonial.services %}
-                                <div class="service-tags">
-                                    {% if testimonial.services %}
-                                        {% for service in testimonial.services.split|slice:":3" %}
-                                        <span>{{ service }}</span>
-                                        {% endfor %}
-                                    {% endif %}
-                                </div>
-                                {% endif %}
-                                <div class="testimonial-date">{{ testimonial.date_added|date:"F Y" }}</div>
-                            </div>
-                        </div>
+                    <!-- Testimonial 1 -->
+                    <div class="testimonials-slider swiper">
+    <div class="swiper-wrapper">
+        {% for testimonial in featured_testimonials %}
+        <div class="swiper-slide">
+            <div class="featured-testimonial">
+                <div class="testimonial-header">
+                    {% if testimonial.client_image or testimonial.image_url %}
+                    <div class="client-image">
+                        <img src="{% if testimonial.client_image %}{{ testimonial.client_image.url }}{% else %}{{ testimonial.image_url }}{% endif %}" alt="{{ testimonial.client_name }}">
                     </div>
-                    {% empty %}
-                    <div class="swiper-slide">
-                        <div class="featured-testimonial text-center py-5" style="background: var(--light-bg);">
-                            <i class="fas fa-comments fa-3x mb-3" style="color: var(--light-text); opacity: 0.5;"></i>
-                            <h4 style="color: var(--primary-color);">No Featured Testimonials Yet</h4>
-                            <p style="color: var(--light-text);">Be the first to share your experience!</p>
-                            <a href="{% url 'submit_testimonial' %}" class="btn-primary mt-3">
-                                <i class="fas fa-plus-circle me-2"></i>Submit Your Testimonial
-                            </a>
-                        </div>
+                    {% endif %}
+                    <div class="client-info">
+                        <h4>{{ testimonial.client_name }}</h4>
+                        <p class="client-position">{{ testimonial.position }}, {{ testimonial.company }}</p>
+                        <p class="client-industry">{{ testimonial.industry }}</p>
                     </div>
-                    {% endfor %}
+                    <div class="testimonial-rating">
+                        <div class="stars">
+                            {% with ''|center:testimonial.rating as range %}
+                            {% for _ in range %}
+                                <i class="fas fa-star"></i>
+                            {% endfor %}
+                            {% endwith %}
+                        </div>
+                        <span>{{ testimonial.rating }}.0</span>
+                    </div>
                 </div>
-                
-                <!-- Navigation buttons -->
-                <div class="swiper-button-next" style="color: var(--primary-color);"></div>
-                <div class="swiper-button-prev" style="color: var(--primary-color);"></div>
+                <div class="testimonial-content">
+                    <i class="fas fa-quote-left"></i>
+                    <p>"{{ testimonial.content }}"</p>
+                    <i class="fas fa-quote-right"></i>
+                </div>
+                <div class="testimonial-footer">
+                    <div class="service-tags">
+                        {% for tag in testimonial.get_service_tags %}
+                        <span>{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="testimonial-date">{{ testimonial.date_added|date:"F Y" }}</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Navigation buttons -->
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-pagination"></div>
+</div>
+                <!-- Pagination -->
                 <div class="swiper-pagination"></div>
             </div>
         </div>
     </section>
 
-    <!-- Industry Testimonials Section -->
+    <!-- Industry Testimonials -->
     <section class="industry-testimonials py-5" style="background: var(--light-bg);">
         <div class="container">
             <div class="section-title">
@@ -237,6 +214,7 @@
             </div>
             
             <div class="industry-tabs">
+                <!-- Dynamic Industry Tabs -->
                 <div class="tab-buttons">
                     <button class="tab-button active" data-tab="all">All Industries</button>
                     {% for industry_item in industry_data %}
@@ -248,9 +226,9 @@
                 <div class="tab-content active" id="tab-all">
                     <div class="testimonials-grid">
                         {% for testimonial in all_testimonials %}
-                        <div class="testimonial-card {% if testimonial.is_featured %}featured-border{% endif %}">
+                        <div class="testimonial-card">
                             {% if testimonial.is_featured %}
-                            <div class="featured-badge" style="position: absolute; top: 15px; right: 15px; background: var(--accent-color); color: white; padding: 3px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 700;">
+                            <div class="featured-badge">
                                 <i class="fas fa-star me-1"></i>FEATURED
                             </div>
                             {% endif %}
@@ -281,16 +259,14 @@
                             </div>
                             <div class="testimonial-content">
                                 <i class="fas fa-quote-left"></i>
-                                <p>"{{ testimonial.content|truncatewords:45 }}"</p>
+                                <p>"{{ testimonial.content|truncatewords:30 }}"</p>
                             </div>
                             <div class="testimonial-footer">
                                 {% if testimonial.services %}
                                 <div class="service-tags">
-                                    {% if testimonial.services %}
-                                        {% for service in testimonial.services.split|slice:":2" %}
-                                        <span>{{ service }}</span>
-                                        {% endfor %}
-                                    {% endif %}
+                                    {% for service in testimonial.get_service_tags|slice:":2" %}
+                                    <span>{{ service }}</span>
+                                    {% endfor %}
                                 </div>
                                 {% endif %}
                                 <div class="testimonial-date">{{ testimonial.date_added|date:"M Y" }}</div>
@@ -309,7 +285,7 @@
                     </div>
                 </div>
                 
-                <!-- Industry-specific Tabs -->
+                <!-- Industry-specific Tabs - DYNAMIC -->
                 {% for industry_item in industry_data %}
                 <div class="tab-content" id="tab-{{ industry_item.slug }}">
                     <div class="testimonials-grid">
@@ -327,7 +303,7 @@
                                 {% endif %}
                                 <div class="client-info">
                                     <h4>{{ testimonial.client_name }}</h4>
-                                    <p class="client-position">{{ testimonial.position }}, {{ testimonial.company }}</p>
+                                    <p class="client-position">{{ testimonial.position }}{% if testimonial.company %}, {{ testimonial.company }}{% endif %}</p>
                                     <span class="client-industry">{{ testimonial.industry }}</span>
                                 </div>
                                 <div class="testimonial-rating">
@@ -342,12 +318,12 @@
                             </div>
                             <div class="testimonial-content">
                                 <i class="fas fa-quote-left"></i>
-                                <p>"{{ testimonial.content|truncatewords:40 }}"</p>
+                                <p>"{{ testimonial.content|truncatewords:30 }}"</p>
                             </div>
                             <div class="testimonial-footer">
                                 {% if testimonial.services %}
                                 <div class="service-tags">
-                                    {% for service in testimonial.services.split|slice:":2" %}
+                                    {% for service in testimonial.get_service_tags|slice:":2" %}
                                     <span>{{ service }}</span>
                                     {% endfor %}
                                 </div>
@@ -371,46 +347,51 @@
             </div>
         </div>
     </section>
-
     <!-- Video Testimonials -->
-    <section class="video-testimonials py-5">
-        <div class="container">
-            <div class="section-title">
-                <h2>Video Testimonials</h2>
-                <p class="section-subtitle">Hear our clients share their experiences in their own words</p>
-            </div>
-
-            <div class="video-grid">
-                {% for testimonial in video_testimonials %}
-                <div class="video-item">
-                    <div class="video-thumbnail" data-video="{{ testimonial.get_video_source }}" data-title="{{ testimonial.client_name }}, {{ testimonial.company }}">
-                        {% if testimonial.video_thumbnail %}
-                            <img src="{{ testimonial.video_thumbnail.url }}" alt="" style="width: 100%; height: 250px; object-fit: cover;">
-                        {% else %}
-                            <img src="{% static 'img/video-placeholder.jpg' %}" alt="" style="width: 100%; height: 250px; object-fit: cover;">
-                        {% endif %}
-                        <div class="play-button">
-                            <i class="fas fa-play"></i>
-                        </div>
-                        <div class="video-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(26, 58, 95, 0.8); color: white; padding: 15px;">
-                            <p style="margin: 0; font-size: 0.9rem;">{{ testimonial.content|truncatewords:15 }}</p>
-                        </div>
-                    </div>
-                    <div class="video-info">
-                        <h4>{{ testimonial.client_name }}, {{ testimonial.company }}</h4>
-                        <p>{{ testimonial.industry }}</p>
-                    </div>
-                </div>
-                {% empty %}
-                <div class="empty-testimonial" style="grid-column: 1 / -1;">
-                    <i class="fas fa-video"></i>
-                    <h4>No Video Testimonials Yet</h4>
-                    <p>Check back soon for video testimonials from our clients!</p>
-                </div>
-                {% endfor %}
-            </div>
+    <section class="video-testimonials">
+    <div class="container">
+        <div class="section-title">
+            <h2>Video Testimonials</h2>
+            <p class="section-subtitle">
+                Hear our clients share their experiences in their own words
+            </p>
         </div>
-    </section>
+
+        <div class="video-grid">
+            {% for testimonial in video_testimonials %}
+            <div class="video-item">
+                <div class="video-thumbnail"
+     data-video="{{ testimonial.get_video_source }}"
+     data-title="{{ testimonial.client_name }}, {{ testimonial.company }}">
+
+    {% if testimonial.video_thumbnail %}
+        <img src="{{ testimonial.video_thumbnail.url }}" alt="">
+    {% else %}
+        <img src="{% static 'img/video-placeholder.jpg' %}" alt="">
+    {% endif %}
+
+    <div class="play-button">
+        <i class="fas fa-play"></i>
+    </div>
+</div>
+
+                    <div class="video-overlay">
+                        <p>{{ testimonial.content|truncatewords:15 }}</p>
+                    </div>
+                </div>
+
+                <div class="video-info">
+                    <h4>{{ testimonial.client_name }}, {{ testimonial.company }}</h4>
+                    <p>{{ testimonial.industry }}</p>
+                </div>
+            </div>
+            {% empty %}
+            <p style="text-align:center;">No video testimonials available.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
 
     <!-- Client Logos -->
     <section class="client-logos">
@@ -421,37 +402,37 @@
             </div>
             
             <div class="logos-grid">
-                <div class="logo-item text-center">
+                <div class="logo-item">
                     <div class="logo-img">
                         <i class="fas fa-building"></i>
                         <span>TechNova Solutions</span>
                     </div>
                 </div>
-                <div class="logo-item text-center">
+                <div class="logo-item">
                     <div class="logo-img">
                         <i class="fas fa-industry"></i>
                         <span>GreenEarth Organics</span>
                     </div>
                 </div>
-                <div class="logo-item text-center">
+                <div class="logo-item">
                     <div class="logo-img">
                         <i class="fas fa-chart-line"></i>
                         <span>FinTech Innovations</span>
                     </div>
                 </div>
-                <div class="logo-item text-center">
+                <div class="logo-item">
                     <div class="logo-img">
                         <i class="fas fa-pills"></i>
                         <span>Global Pharma Inc.</span>
                     </div>
                 </div>
-                <div class="logo-item text-center">
+                <div class="logo-item">
                     <div class="logo-img">
                         <i class="fas fa-shopping-cart"></i>
                         <span>RetailChain India</span>
                     </div>
                 </div>
-                <div class="logo-item text-center">
+                <div class="logo-item">
                     <div class="logo-img">
                         <i class="fas fa-university"></i>
                         <span>Capital Bank</span>
@@ -464,19 +445,19 @@
     <!-- CTA Section -->
     <section class="testimonials-cta">
         <div class="container">
-            <div class="cta-content text-center">
-                <div class="cta-text mb-4">
+            <div class="cta-content">
+                <div class="cta-text">
                     <h3>Ready to Experience Excellence?</h3>
-                    <p>
-                        Join our satisfied clients who trust us with their compliance needs. Let's start a conversation about how we can support your business.
-                    </p>
+                    <p>Join our satisfied clients who trust us with their compliance needs. Let's start a conversation about how we can support your business.</p>
                 </div>
                 <div class="cta-buttons">
-                    <a href="{% url 'contact' %}" class="btn-primary me-3">
-                        <i class="fas fa-handshake me-2"></i>Schedule Consultation
+                    <a href="/contact" class="btn btn-primary">
+                        <i class="fas fa-handshake"></i>
+                        Schedule Consultation
                     </a>
-                    <a href="{% url 'our_expertise' %}" class="btn-secondary">
-                        <i class="fas fa-chart-line me-2"></i>View Our Services
+                    <a href="/our_expertise" class="btn btn-secondary">
+                        <i class="fas fa-chart-line"></i>
+                        View Our Services
                     </a>
                 </div>
             </div>
@@ -484,49 +465,48 @@
     </section>
 
     <!-- Footer -->
-    <footer>
-        <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px;">
-            
-            <div style="flex: 1; min-width: 250px;">
-                <h3>ANJALI BANSAL & ASSOCIATES</h3>
-                <p>
-                    Providing quality services with transparency and integrity. Follow us on our journey to excellence.
-                </p>
-            </div>
-
-            <div style="flex: 1; min-width: 150px;">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="{% url 'index' %}">Home</a></li>
-                    <li><a href="{% url 'about' %}">About Us</a></li>
-                    <li><a href="{% url 'our_expertise' %}">Services</a></li>
-                    <li><a href="{% url 'contact' %}">Contact</a></li>
-                </ul>
-            </div>
-
-            <div style="flex: 1; min-width: 150px;">
-                <h4>Legal Support</h4>
-                <ul>
-                    <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
-                    <li><a href="{% url 'terms_and_conditions' %}">Terms & Conditions</a></li>
-                    <li><a href="{% url 'refund_policy' %}">Refund Policy</a></li>
-                    <li><a href="{% url 'disclaimer' %}">Disclaimer</a></li>
-                </ul>
-            </div>
+<footer style="background-color: #1a1a1a; color: #ffffff; padding: 40px 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;">
+        
+        <div style="flex: 1; min-width: 250px;">
+            <h3 style="color: #4CAF50; margin-bottom: 15px;">Your Brand Name</h3>
+            <p style="font-size: 14px; line-height: 1.6; color: #cccccc;">
+                Providing quality services with transparency and integrity. Follow us on our journey to excellence.
+            </p>
         </div>
 
-        <hr>
-
-        <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 14px; color: #8a94a6;">
-            <p>&copy; 2025 Anjali Bansal & Associates. All Rights Reserved.</p>
-            <div style="display: flex; gap: 20px;">
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-linkedin"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-            </div>
+        <div style="flex: 1; min-width: 150px;">
+            <h4 style="margin-bottom: 15px; font-size: 18px;">Quick Links</h4>
+            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                <li><a href="/" style="color: #cccccc; text-decoration: none;">Home</a></li>
+                <li><a href="/about" style="color: #cccccc; text-decoration: none;">About Us</a></li>
+                <li><a href="/services" style="color: #cccccc; text-decoration: none;">Services</a></li>
+                <li><a href="/contact" style="color: #cccccc; text-decoration: none;">Contact</a></li>
+            </ul>
         </div>
-    </footer>
 
+        <div style="flex: 1; min-width: 150px;">
+            <h4 style="margin-bottom: 15px; font-size: 18px;">Legal Support</h4>
+            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                <li><a href="/privacy-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Privacy Policy</a></li>
+                <li><a href="/terms and conditions" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Terms & Conditions</a></li>
+                <li><a href="/refund-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Refund Policy</a></li>
+                <li><a href="/disclaimer" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Disclaimer</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0;">
+
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 13px; color: #888;">
+        <p>&copy; 2025 Your Brand Name. All Rights Reserved.</p>
+        <div style="display: flex; gap: 15px;">
+            <a href="#" style="color: #888; text-decoration: none;">Twitter</a>
+            <a href="#" style="color: #888; text-decoration: none;">LinkedIn</a>
+            <a href="#" style="color: #888; text-decoration: none;">Instagram</a>
+        </div>
+    </div>
+</footer>
     <!-- Video Modal -->
     <div class="video-modal" id="videoModal">
         <div class="modal-content">
@@ -535,85 +515,24 @@
                 <button class="close-modal" id="closeModal">&times;</button>
             </div>
             <div class="modal-body">
-                <video id="videoPlayer" controls autoplay style="width:100%; border-radius:12px; display:none;"></video>
-                <iframe id="videoIframe" allowfullscreen style="width:100%; height:400px; border:none; display:none;"></iframe>
-            </div>
+    <video id="videoPlayer"
+           controls
+           autoplay
+           style="width:100%; border-radius:12px; display:none;">
+    </video>
+
+    <iframe id="videoIframe"
+            allowfullscreen
+            style="width:100%; height:400px; border:none; display:none;">
+    </iframe>
+</div>
+
+
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
     <script src="{% static 'js/testimonials.js' %}"></script>
     
-    <script>
-        // Tab switching functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const tabButtons = document.querySelectorAll('.tab-button');
-            const tabContents = document.querySelectorAll('.tab-content');
-            
-            tabButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const tabId = this.getAttribute('data-tab');
-                    
-                    // Remove active class from all buttons and contents
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    tabContents.forEach(content => content.classList.remove('active'));
-                    
-                    // Add active class to current button and corresponding content
-                    this.classList.add('active');
-                    document.getElementById(`tab-${tabId}`).classList.add('active');
-                });
-            });
-            
-            // Initialize Swiper for featured testimonials
-            const swiper = new Swiper('.testimonials-slider', {
-                slidesPerView: 1,
-                spaceBetween: 30,
-                loop: true,
-                autoplay: {
-                    delay: 6000,
-                    disableOnInteraction: false,
-                },
-                pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true,
-                },
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                },
-                breakpoints: {
-                    768: {
-                        slidesPerView: 2,
-                    },
-                    1024: {
-                        slidesPerView: 3,
-                    }
-                }
-            });
-            
-            // Animate stats counter
-            const statNumbers = document.querySelectorAll('.stat-number');
-            statNumbers.forEach(stat => {
-                const target = parseFloat(stat.getAttribute('data-count'));
-                const increment = target / 100;
-                let current = 0;
-                
-                const timer = setInterval(() => {
-                    current += increment;
-                    if (current >= target) {
-                        stat.textContent = target.toFixed(1);
-                        clearInterval(timer);
-                    } else {
-                        stat.textContent = Math.floor(current);
-                    }
-                }, 20);
-            });
-        });
-        
-        function splitServices(servicesString) {
-            if (!servicesString) return [];
-            return servicesString.split(',').map(s => s.trim()).filter(s => s);
-        }
-    </script>
 </body>
 </html>

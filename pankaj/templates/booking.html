@@ -236,7 +236,7 @@
         <button class="calendar-nav-btn prev" type="button">
             <i class="fas fa-chevron-left"></i>
         </button>
-        <div class="current-month">January 2024</div>
+        <div class="current-month">January 2026     </div>
         <button class="calendar-nav-btn next" type="button">
             <i class="fas fa-chevron-right"></i>
         </button>
@@ -278,11 +278,13 @@
     <div class="summary-details">
         <div class="summary-date" id="summaryDate">No date selected</div>
         <div class="summary-time" id="summaryTime">No time selected</div>
+        <div class="summary-duration" id="summaryDuration"></div>
     </div>
 </div>
-                        <form id="bookingForm" method="POST" action="#">
+                        <form id="bookingForm" method="POST" action="{% url 'submit_booking' duration=duration %}">
                             {% csrf_token %}
                             <input type="hidden" name="duration" value="{{ duration }}">
+                            <input type="hidden" name="selected_slot_id" id="selectedSlotId" value="">
                             <input type="hidden" name="duration_minutes" value="{{ duration_minutes }}">
                             <input type="hidden" name="price" value="{{ price }}">
                             <input type="hidden" name="selected_time" id="selectedTime" value="">
@@ -394,7 +396,7 @@
                             <div class="form-group checkbox-group">
                                 <input type="checkbox" id="terms" name="terms" required>
                                 <label for="terms">
-                                    I agree to the <a href="/terms" target="_blank">Terms of Service</a> and <a href="/privacy" target="_blank">Privacy Policy</a>. I understand that this consultation is subject to professional engagement terms and will receive an email confirmation with meeting details.
+                                    I agree to the <a href="/terms-and-conditions" target="_blank">Terms of Service</a> and <a href="/privacy-policy" target="_blank">Privacy Policy</a>. I understand that this consultation is subject to professional engagement terms and will receive an email confirmation with meeting details.
                                 </label>
                             </div>
                             

@@ -21,5 +21,12 @@ urlpatterns = [
     # Admin URL - note: this won't work without proper admin setup
     path('admin-tools/approve-testimonials/', views.approve_testimonials, name='approve_testimonials'),
     path('debug-testimonials/', views.debug_testimonials, name='debug_testimonials'),
+    path('api/available-slots/', views.get_available_slots, name='available_slots'),
+    path('api/date-availability/', views.check_date_availability, name='date_availability'),
+    
+    # Booking form submission
+    path('booking/<str:duration>/submit/', views.booking, name='submit_booking'),
+    path('admin/bookings/', views.admin_booking_management, name='admin_booking_management'),
+    path('admin/bookings/cancel/<uuid:booking_id>/', views.admin_cancel_booking, name='admin_cancel_booking'),
 
 ]

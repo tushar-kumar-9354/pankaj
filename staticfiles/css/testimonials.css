@@ -5,7 +5,7 @@
     position: relative;
     padding: 180px 0 120px;
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
-                url(https://plus.unsplash.com/premium_photo-1661775817073-a129c05a9534?q=80&w=1333&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D) center/cover no-repeat;
+                url('https://plus.unsplash.com/premium_photo-1661775817073-a129c05a9534?q=80&w=1333&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') center/cover no-repeat;
     color: white;
     text-align: center;
     overflow: hidden;
@@ -800,14 +800,14 @@
 }
 
 .btn-primary {
-    background: white;
-    color: #000;
+    background: rgb(0, 0, 0);
+    color: #ffffff;
     border: 2px solid white;
 }
 
 .btn-primary:hover {
     background: transparent;
-    color: white;
+    color: rgb(0, 0, 0);
     transform: translateY(-3px);
     box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
 }
@@ -1145,4 +1145,60 @@ footer {
     .cta-text h3 {
         font-size: 2rem;
     }
+}
+/* Rating stars */
+.rating-stars {
+    color: #ffc107;
+    margin: 10px 0;
+}
+
+.star-rating {
+    display: inline-flex;
+    direction: rtl;
+}
+
+.star-rating input {
+    display: none;
+}
+
+.star-rating label {
+    color: #ddd;
+    font-size: 1.5rem;
+    padding: 0 2px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.star-rating input:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: #ffc107;
+}
+
+/* Testimonial form styles */
+.testimonial-form-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial-form-container h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+.form-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 1px solid #eaeaea;
+    border-radius: 10px;
+}
+
+.form-section h4 {
+    color: #3498db;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
 }

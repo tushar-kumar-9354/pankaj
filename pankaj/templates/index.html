@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .hero {
+            background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.8) 100%), url('{% static "images/home.avif" %}') center/cover no-repeat fixed;
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -36,7 +41,6 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <div class="hero-bg"></div>
         <div class="container">
             <h2>ANJALI BANSAL & ASSOCIATES</h2>
             <p>Navigating the complex regulatory landscape with confidence. Our expertise ensures compliance, minimizes risks, and enables you to focus on achieving your strategic objectives.</p>
@@ -46,62 +50,65 @@
 
     <!-- Expertise Section -->
     <section id="expertise">
-        <div class="container">
-            <div class="section-title">
-                <h2>OUR EXPERTISE</h2>
+    <div class="container">
+        <div class="section-title">
+            <h2>OUR EXPERTISE</h2>
+        </div>
+        <div class="expertise-grid">
+            <div class="expertise-item">
+                <div class="expertise-icon">
+                    <i class="fas fa-globe-asia"></i>
+                </div>
+                <div class="expertise-bg" style="background-image: url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100');"></div>
+                <h3>FEMA Advisory & Compliance</h3>
+                <p>Expert guidance on Foreign Exchange Management Act regulations, RBI compliance, and cross-border transactions. We ensure your international financial operations are fully compliant and optimized.</p>
+                <ul class="expertise-features">
+                    <li>FEMA Advisory Services</li>
+                    <li>RBI Compliance & Reporting</li>
+                    <li>Cross-border Transaction Structuring</li>
+                    <li>Foreign Investment Guidance</li>
+                    <li>ECB & ODI Compliance</li>
+                </ul>
+                <!-- Updated link for FEMA -->
+                <a href="/our_expertise#fema-advisory" class="btn">Read More</a>
             </div>
-            <div class="expertise-grid">
-                <div class="expertise-item">
-                    <div class="expertise-icon">
-                        <i class="fas fa-globe-asia"></i>
-                    </div>
-                    <div class="expertise-bg" style="background-image: url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100');"></div>
-                    <h3>FEMA Advisory & Compliance</h3>
-                    <p>Expert guidance on Foreign Exchange Management Act regulations, RBI compliance, and cross-border transactions. We ensure your international financial operations are fully compliant and optimized.</p>
-                    <ul class="expertise-features">
-                        <li>FEMA Advisory Services</li>
-                        <li>RBI Compliance & Reporting</li>
-                        <li>Cross-border Transaction Structuring</li>
-                        <li>Foreign Investment Guidance</li>
-                        <li>ECB & ODI Compliance</li>
-                    </ul>
-                    <a href="/services#fema" class="btn">Read More</a>
+            <div class="expertise-item">
+                <div class="expertise-icon">
+                    <i class="fas fa-chart-line"></i>
                 </div>
-                <div class="expertise-item">
-                    <div class="expertise-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <div class="expertise-bg" style="background-image: url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100');"></div>
-                    <h3>Private Equity & Fundraising</h3>
-                    <p>Comprehensive support for equity and debt fundraising, from early-stage startups to established companies. We structure transactions that maximize value while ensuring regulatory compliance.</p>
-                    <ul class="expertise-features">
-                        <li>PE/VC Investment Structuring</li>
-                        <li>Debt & Equity Financing</li>
-                        <li>Due Diligence & Documentation</li>
-                        <li>CCDs, NCDs, OCDs Issuance</li>
-                        <li>Term Sheet Negotiation</li>
-                    </ul>
-                    <a href="/services#fundraising" class="btn">Read More</a>
+                <div class="expertise-bg" style="background-image: url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100');"></div>
+                <h3>Private Equity & Fundraising</h3>
+                <p>Comprehensive support for equity and debt fundraising, from early-stage startups to established companies. We structure transactions that maximize value while ensuring regulatory compliance.</p>
+                <ul class="expertise-features">
+                    <li>PE/VC Investment Structuring</li>
+                    <li>Debt & Equity Financing</li>
+                    <li>Due Diligence & Documentation</li>
+                    <li>CCDs, NCDs, OCDs Issuance</li>
+                    <li>Term Sheet Negotiation</li>
+                </ul>
+                <!-- Updated link for PE/VC -->
+                <a href="/our_expertise#private-equity" class="btn">Read More</a>
+            </div>
+            <div class="expertise-item">
+                <div class="expertise-icon">
+                    <i class="fas fa-balance-scale"></i>
                 </div>
-                <div class="expertise-item">
-                    <div class="expertise-icon">
-                        <i class="fas fa-balance-scale"></i>
-                    </div>
-                    <div class="expertise-bg" style="background-image: url('https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100');"></div>
-                    <h3>SEBI & Regulatory Compliance</h3>
-                    <p>End-to-end SEBI registration and compliance services for investment advisors, portfolio managers, AIFs, and research analysts. We handle the complexities so you can focus on your business.</p>
-                    <ul class="expertise-features">
-                        <li>SEBI Registration Services</li>
-                        <li>Investment Advisory Compliance</li>
-                        <li>AIF & Portfolio Management</li>
-                        <li>Annual Compliance & Audits</li>
-                        <li>Regulatory Reporting</li>
-                    </ul>
-                    <a href="/services#sebi" class="btn">Read More</a>
-                </div>
+                <div class="expertise-bg" style="background-image: url('https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100');"></div>
+                <h3>SEBI & Regulatory Compliance</h3>
+                <p>End-to-end SEBI registration and compliance services for investment advisors, portfolio managers, AIFs, and research analysts. We handle the complexities so you can focus on your business.</p>
+                <ul class="expertise-features">
+                    <li>SEBI Registration Services</li>
+                    <li>Investment Advisory Compliance</li>
+                    <li>AIF & Portfolio Management</li>
+                    <li>Annual Compliance & Audits</li>
+                    <li>Regulatory Reporting</li>
+                </ul>
+                <!-- Updated link for SEBI - points to the SEBI section in your image -->
+                <a href="/our_expertise#sebi-compliance" class="btn">Read More</a>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Belief Section -->
     <section class="belief" id="belief">

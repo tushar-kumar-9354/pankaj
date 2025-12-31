@@ -19,7 +19,7 @@ urlpatterns = [
     path('services/', views.services, name='services'),
     path('booking/<str:duration>/', views.booking, name='booking'),
     path('privacy-policy/', views.privacy_policy, name='privacy_policy'),
-    path('terms-and-conditions/', views.terms_and_conditions, name='terms_and_conditions'),
+    path('terms and conditions/', views.terms_and_conditions, name='terms_and_conditions'),
     path('disclaimer/', views.disclaimer, name='disclaimer'),
     path('refund-policy/', views.refund_policy, name='refund_policy'),
     # Admin URL - note: this won't work without proper admin setup

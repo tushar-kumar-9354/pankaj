@@ -36,52 +36,18 @@
     </header>
 
     <!-- Hero Banner -->
-    <section class="testimonials-hero">
+    <section class="testimonials-hero" 
+        style="background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                url('https://plus.unsplash.com/premium_photo-1661775817073-a129c05a9534?q=80&w=1333&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') 
+                center/cover no-repeat fixed;">
         <div class="container">
             <div class="testimonials-hero-content">
                 <h1 class="page-title">Client Testimonials</h1>
                 <p class="page-subtitle">Trusted by businesses across industries. Read what our clients have to say about our corporate secretarial services and partnership.</p>
-                <div class="breadcrumb">
-                    <a href="/">Home</a> / <span>Testimonials</span>
-                </div>
             </div>
-        </div>
-        <div class="hero-overlay"></div>
-        <div class="hero-shape">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-                <path fill="#ffffff" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-            </svg>
         </div>
     </section>
     
-    <!-- Debug Section (Keep this - you can remove later) -->
-    <section class="debug-section">
-        <div class="container">
-            <h4><i class="fas fa-bug me-2"></i>Debug Info</h4>
-            <p>Total Testimonials: <strong>{{ all_testimonials|length }}</strong></p>
-            <p>Featured Testimonials: <strong>{{ featured_testimonials|length }}</strong> (Shows ALL featured, not limited to 4)</p>
-            <p>Video Testimonials: <strong>{{ video_testimonials|length }}</strong></p>
-            <p>Industries Served: <strong>{{ stats.industries_served }}</strong></p>
-            
-            {% if all_testimonials %}
-            <h5 class="mt-4">All Testimonials in Database:</h5>
-            <ul>
-                {% for t in all_testimonials %}
-                <li>
-                    <strong>{{ t.client_name }}</strong> - {{ t.company }} 
-                    <span class="badge bg-{% if t.is_featured %}success{% else %}secondary{% endif %} ms-2">
-                        {% if t.is_featured %}Featured{% else %}Regular{% endif %}
-                    </span>
-                    <span class="badge bg-info ms-1">{{ t.industry }}</span>
-                </li>
-                {% endfor %}
-            </ul>
-            {% else %}
-            <p class="text-danger">No testimonials in queryset. Check database and filters.</p>
-            {% endif %}
-        </div>
-    </section>
-
     <!-- Submit CTA Section -->
     <section class="submit-cta-section">
         <div class="container text-center">
@@ -110,6 +76,7 @@
             </div>
         </div>
     </section>
+
     <!-- Testimonials Stats -->
     <section class="testimonials-stats">
         <div class="container">
@@ -119,27 +86,32 @@
             </div>
             
             <div class="stats-grid">
-    <div class="stat-item">
-        <div class="stat-number" data-count="{{ stats.total_clients }}">0</div>
-        <div class="stat-label">Happy Clients</div>
-    </div>
-    <div class="stat-item">
-        <div class="stat-number" data-count="{{ stats.avg_rating }}">0</div>
-        <div class="stat-label">Average Rating</div>
-    </div>
-    <div class="stat-item">
-        <div class="stat-number" data-count="{{ stats.industries_served }}">0</div>
-        <div class="stat-label">Industries Served</div>
-    </div>
-    <div class="stat-item">
-        <div class="stat-number" data-count="98">0</div>
-        <div class="stat-label">Client Satisfaction %</div>
-    </div>
-</div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="{{ stats.total_clients }}">0</div>
+                    <div class="stat-label">Happy Clients</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="{{ stats.avg_rating }}">0</div>
+                    <div class="stat-label">Average Rating</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="{{ stats.industries_served }}">0</div>
+                    <div class="stat-label">Industries Served</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="98">0</div>
+                    <div class="stat-label">Client Satisfaction %</div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Featured Testimonials Slider -->
-    <section class="featured-testimonials">
+    <section class="featured-testimonials parallax-section"
+        style="background: 
+            linear-gradient(rgba(248, 249, 250, 0.9), rgba(255, 255, 255, 0.9)),
+            url('https://images.unsplash.com/photo-1551836026-d5c2d49e7b84?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') 
+            center/cover no-repeat fixed;">
         <div class="container">
             <div class="section-title">
                 <h2>Featured Testimonials</h2>
@@ -148,250 +120,210 @@
             
             <div class="testimonials-slider swiper">
                 <div class="swiper-wrapper">
-                    <!-- Testimonial 1 -->
-                    <div class="testimonials-slider swiper">
-    <div class="swiper-wrapper">
-        {% for testimonial in featured_testimonials %}
-        <div class="swiper-slide">
-            <div class="featured-testimonial">
-                <div class="testimonial-header">
-                    {% if testimonial.client_image or testimonial.image_url %}
-                    <div class="client-image">
-                        <img src="{% if testimonial.client_image %}{{ testimonial.client_image.url }}{% else %}{{ testimonial.image_url }}{% endif %}" alt="{{ testimonial.client_name }}">
-                    </div>
-                    {% endif %}
-                    <div class="client-info">
-                        <h4>{{ testimonial.client_name }}</h4>
-                        <p class="client-position">{{ testimonial.position }}, {{ testimonial.company }}</p>
-                        <p class="client-industry">{{ testimonial.industry }}</p>
-                    </div>
-                    <div class="testimonial-rating">
-                        <div class="stars">
-                            {% with ''|center:testimonial.rating as range %}
-                            {% for _ in range %}
-                                <i class="fas fa-star"></i>
-                            {% endfor %}
-                            {% endwith %}
+                    {% for testimonial in featured_testimonials %}
+                    <div class="swiper-slide">
+                        <div class="featured-testimonial">
+                            <div class="testimonial-header">
+                                {% if testimonial.client_image or testimonial.image_url %}
+                                <div class="client-image">
+                                    <img src="{% if testimonial.client_image %}{{ testimonial.client_image.url }}{% else %}{{ testimonial.image_url }}{% endif %}" alt="{{ testimonial.client_name }}">
+                                </div>
+                                {% endif %}
+                                <div class="client-info">
+                                    <h4>{{ testimonial.client_name }}</h4>
+                                    <p class="client-position">{{ testimonial.position }}, {{ testimonial.company }}</p>
+                                    <p class="client-industry">{{ testimonial.industry }}</p>
+                                </div>
+                                <div class="testimonial-rating">
+                                    <div class="stars">
+                                        {% with ''|center:testimonial.rating as range %}
+                                        {% for _ in range %}
+                                            <i class="fas fa-star"></i>
+                                        {% endfor %}
+                                        {% endwith %}
+                                    </div>
+                                    <span>{{ testimonial.rating }}.0</span>
+                                </div>
+                            </div>
+                            <div class="testimonial-content">
+                                <i class="fas fa-quote-left"></i>
+                                <p>"{{ testimonial.content }}"</p>
+                                <i class="fas fa-quote-right"></i>
+                            </div>
+                            <div class="testimonial-footer">
+                                <div class="service-tags">
+                                    {% for tag in testimonial.get_service_tags %}
+                                    <span>{{ tag }}</span>
+                                    {% endfor %}
+                                </div>
+                                <div class="testimonial-date">{{ testimonial.date_added|date:"F Y" }}</div>
+                            </div>
                         </div>
-                        <span>{{ testimonial.rating }}.0</span>
                     </div>
+                    {% endfor %}
                 </div>
-                <div class="testimonial-content">
-                    <i class="fas fa-quote-left"></i>
-                    <p>"{{ testimonial.content }}"</p>
-                    <i class="fas fa-quote-right"></i>
-                </div>
-                <div class="testimonial-footer">
-                    <div class="service-tags">
-                        {% for tag in testimonial.get_service_tags %}
-                        <span>{{ tag }}</span>
-                        {% endfor %}
-                    </div>
-                    <div class="testimonial-date">{{ testimonial.date_added|date:"F Y" }}</div>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-    
-    <!-- Navigation buttons -->
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
-    <div class="swiper-pagination"></div>
-</div>
-                <!-- Pagination -->
+                
+                <!-- Navigation buttons -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
                 <div class="swiper-pagination"></div>
             </div>
         </div>
     </section>
 
     <!-- Industry Testimonials -->
-    <section class="industry-testimonials py-5" style="background: var(--light-bg);">
-        <div class="container">
-            <div class="section-title">
-                <h2>Testimonials by Industry</h2>
-                <p class="section-subtitle">See how we've helped businesses across different sectors achieve compliance excellence</p>
-            </div>
-            
-            <div class="industry-tabs">
-                <!-- Dynamic Industry Tabs -->
-                <div class="tab-buttons">
-                    <button class="tab-button active" data-tab="all">All Industries</button>
-                    {% for industry_item in industry_data %}
-                    <button class="tab-button" data-tab="{{ industry_item.slug }}">{{ industry_item.name }}</button>
-                    {% endfor %}
-                </div>
-                
-                <!-- All Testimonials Tab -->
-                <div class="tab-content active" id="tab-all">
-                    <div class="testimonials-grid">
-                        {% for testimonial in all_testimonials %}
-                        <div class="testimonial-card">
-                            {% if testimonial.is_featured %}
-                            <div class="featured-badge">
-                                <i class="fas fa-star me-1"></i>FEATURED
-                            </div>
-                            {% endif %}
-                            <div class="testimonial-header">
-                                {% if testimonial.client_image or testimonial.image_url %}
-                                <div class="client-image">
-                                    <img src="{% if testimonial.client_image %}{{ testimonial.client_image.url }}{% else %}{{ testimonial.image_url }}{% endif %}" alt="{{ testimonial.client_name }}">
-                                </div>
-                                {% else %}
-                                <div class="client-image">
-                                    <i class="fas fa-user"></i>
-                                </div>
-                                {% endif %}
-                                <div class="client-info">
-                                    <h4>{{ testimonial.client_name }}</h4>
-                                    <p class="client-position">{{ testimonial.position }}{% if testimonial.company %}, {{ testimonial.company }}{% endif %}</p>
-                                    <span class="client-industry">{{ testimonial.industry }}</span>
-                                </div>
-                                <div class="testimonial-rating">
-                                    <div class="stars">
-                                        {% with ''|center:testimonial.rating as range %}
-                                        {% for _ in range %}
-                                            <i class="fas fa-star"></i>
-                                        {% endfor %}
-                                        {% endwith %}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="testimonial-content">
-                                <i class="fas fa-quote-left"></i>
-                                <p>"{{ testimonial.content|truncatewords:30 }}"</p>
-                            </div>
-                            <div class="testimonial-footer">
-                                {% if testimonial.services %}
-                                <div class="service-tags">
-                                    {% for service in testimonial.get_service_tags|slice:":2" %}
-                                    <span>{{ service }}</span>
-                                    {% endfor %}
-                                </div>
-                                {% endif %}
-                                <div class="testimonial-date">{{ testimonial.date_added|date:"M Y" }}</div>
-                            </div>
-                        </div>
-                        {% empty %}
-                        <div class="empty-testimonial">
-                            <i class="fas fa-comments"></i>
-                            <h4>No Testimonials Yet</h4>
-                            <p>Be the first to share your experience with Anjali Bansal & Associates!</p>
-                            <a href="{% url 'submit_testimonial' %}" class="btn-primary mt-3">
-                                <i class="fas fa-plus-circle me-2"></i>Submit Your Testimonial
-                            </a>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                
-                <!-- Industry-specific Tabs - DYNAMIC -->
-                {% for industry_item in industry_data %}
-                <div class="tab-content" id="tab-{{ industry_item.slug }}">
-                    <div class="testimonials-grid">
-                        {% for testimonial in industry_item.testimonials %}
-                        <div class="testimonial-card">
-                            <div class="testimonial-header">
-                                {% if testimonial.client_image or testimonial.image_url %}
-                                <div class="client-image">
-                                    <img src="{% if testimonial.client_image %}{{ testimonial.client_image.url }}{% else %}{{ testimonial.image_url }}{% endif %}" alt="{{ testimonial.client_name }}">
-                                </div>
-                                {% else %}
-                                <div class="client-image">
-                                    <i class="fas fa-user"></i>
-                                </div>
-                                {% endif %}
-                                <div class="client-info">
-                                    <h4>{{ testimonial.client_name }}</h4>
-                                    <p class="client-position">{{ testimonial.position }}{% if testimonial.company %}, {{ testimonial.company }}{% endif %}</p>
-                                    <span class="client-industry">{{ testimonial.industry }}</span>
-                                </div>
-                                <div class="testimonial-rating">
-                                    <div class="stars">
-                                        {% with ''|center:testimonial.rating as range %}
-                                        {% for _ in range %}
-                                            <i class="fas fa-star"></i>
-                                        {% endfor %}
-                                        {% endwith %}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="testimonial-content">
-                                <i class="fas fa-quote-left"></i>
-                                <p>"{{ testimonial.content|truncatewords:30 }}"</p>
-                            </div>
-                            <div class="testimonial-footer">
-                                {% if testimonial.services %}
-                                <div class="service-tags">
-                                    {% for service in testimonial.get_service_tags|slice:":2" %}
-                                    <span>{{ service }}</span>
-                                    {% endfor %}
-                                </div>
-                                {% endif %}
-                                <div class="testimonial-date">{{ testimonial.date_added|date:"M Y" }}</div>
-                            </div>
-                        </div>
-                        {% empty %}
-                        <div class="empty-testimonial">
-                            <i class="fas fa-industry"></i>
-                            <h4>No {{ industry_item.name }} Testimonials Yet</h4>
-                            <p>Be the first from the {{ industry_item.name }} industry to share your experience!</p>
-                            <a href="{% url 'submit_testimonial' %}" class="btn-primary mt-3">
-                                <i class="fas fa-plus-circle me-2"></i>Submit Your Testimonial
-                            </a>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </section>
-    <!-- Video Testimonials -->
-    <section class="video-testimonials">
+<!-- Industry Testimonials Section -->
+<section class="industry-testimonials">
     <div class="container">
         <div class="section-title">
-            <h2>Video Testimonials</h2>
-            <p class="section-subtitle">
-                Hear our clients share their experiences in their own words
-            </p>
+            <h2>Testimonials by Industry</h2>
+            <p class="section-subtitle">See how we've helped businesses across different sectors achieve compliance excellence</p>
         </div>
-
-        <div class="video-grid">
-            {% for testimonial in video_testimonials %}
-            <div class="video-item">
-                <div class="video-thumbnail"
-     data-video="{{ testimonial.get_video_source }}"
-     data-title="{{ testimonial.client_name }}, {{ testimonial.company }}">
-
-    {% if testimonial.video_thumbnail %}
-        <img src="{{ testimonial.video_thumbnail.url }}" alt="">
-    {% else %}
-        <img src="{% static 'img/video-placeholder.jpg' %}" alt="">
-    {% endif %}
-
-    <div class="play-button">
-        <i class="fas fa-play"></i>
-    </div>
-</div>
-
-                    <div class="video-overlay">
-                        <p>{{ testimonial.content|truncatewords:15 }}</p>
+        
+        <div class="industry-tabs">
+            <!-- Dynamic Industry Tabs -->
+            <div class="tab-buttons">
+                <button class="tab-button active" data-tab="all">
+                    All Industries
+                    <span class="count">{{ all_testimonials.count }}</span>
+                </button>
+                {% for industry in industry_data %}
+                <button class="tab-button" data-tab="{{ industry.slug }}">
+                    {{ industry.name }}
+                    <span class="count">{{ industry.count }}</span>
+                </button>
+                {% endfor %}
+            </div>
+            
+            <!-- All Testimonials Tab -->
+            <div class="tab-content active" id="tab-all">
+                <div class="testimonials-grid">
+                    {% for testimonial in all_testimonials %}
+                    <div class="testimonial-card">
+                        {% if testimonial.featured %}
+                        <div class="featured-badge">
+                            <i class="fas fa-star me-1"></i>FEATURED
+                        </div>
+                        {% endif %}
+                        
+                        {% if testimonial.user and not testimonial.is_anonymous %}
+                        <div class="user-badge">
+                            <i class="fas fa-user-check"></i> Verified User
+                        </div>
+                        {% endif %}
+                        
+                        <div class="testimonial-header">
+                            <div class="client-image">
+                                <img src="{{ testimonial.get_profile_image_url }}" alt="{{ testimonial.client_name }}">
+                            </div>
+                            <div class="client-info">
+                                <h4>{{ testimonial.get_display_name }}</h4>
+                                <p class="client-position">{{ testimonial.position }}</p>
+                                <p class="client-company">{{ testimonial.company_name }}</p>
+                                {% if testimonial.show_industry and testimonial.industry %}
+                                <span class="client-industry">{{ testimonial.industry.name }}</span>
+                                {% endif %}
+                            </div>
+                            <div class="testimonial-rating">
+                                <div class="stars">
+                                    {% for i in "12345"|make_list %}
+                                        {% if forloop.counter <= testimonial.rating %}
+                                            <i class="fas fa-star"></i>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <span>{{ testimonial.rating }}.0</span>
+                            </div>
+                        </div>
+                        <div class="testimonial-content">
+                            <i class="fas fa-quote-left"></i>
+                            <p>"{{ testimonial.testimonial_text|truncatewords:30 }}"</p>
+                        </div>
+                        <div class="testimonial-footer">
+                            {% if testimonial.services_used.exists or testimonial.other_services %}
+                            <div class="service-tags">
+                                {% for service in testimonial.services_used.all|slice:":2" %}
+                                <span>{{ service.name }}</span>
+                                {% endfor %}
+                                {% if testimonial.other_services %}
+                                <span>Other Services</span>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+                            <div class="testimonial-date">{{ testimonial.created_at|date:"M Y" }}</div>
+                        </div>
                     </div>
-                </div>
-
-                <div class="video-info">
-                    <h4>{{ testimonial.client_name }}, {{ testimonial.company }}</h4>
-                    <p>{{ testimonial.industry }}</p>
+                    {% empty %}
+                    <div class="empty-testimonial">
+                        <i class="fas fa-comments"></i>
+                        <h4>No Testimonials Yet</h4>
+                        <p>Be the first to share your experience with Anjali Bansal & Associates!</p>
+                        <a href="{% url 'submit_testimonial' %}" class="btn-primary mt-3">
+                            <i class="fas fa-plus-circle me-2"></i>Submit Your Testimonial
+                        </a>
+                    </div>
+                    {% endfor %}
                 </div>
             </div>
-            {% empty %}
-            <p style="text-align:center;">No video testimonials available.</p>
+            
+            <!-- Industry-specific Tabs -->
+            {% for industry in industry_data %}
+            <div class="tab-content" id="tab-{{ industry.slug }}">
+                <div class="testimonials-grid" id="industry-{{ industry.slug }}-content">
+                    <!-- Content will be loaded via AJAX -->
+                    <div class="loading-spinner">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Loading testimonials...</p>
+                    </div>
+                </div>
+            </div>
             {% endfor %}
         </div>
     </div>
 </section>
+    <!-- Video Testimonials -->
+    <section class="video-testimonials parallax-section"
+        style="background: 
+            linear-gradient(rgba(248, 249, 250, 0.9), rgba(255, 255, 255, 0.9)),
+            url('https://images.unsplash.com/photo-1559136555-9303baea8ebd?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') 
+            center/cover no-repeat fixed;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Video Testimonials</h2>
+                <p class="section-subtitle">
+                    Hear our clients share their experiences in their own words
+                </p>
+            </div>
 
+            <div class="video-grid">
+                {% for testimonial in video_testimonials %}
+                <div class="video-item">
+                    <div class="video-thumbnail"
+                        data-video="{{ testimonial.get_video_source }}"
+                        data-title="{{ testimonial.client_name }}, {{ testimonial.company }}">
+                        {% if testimonial.video_thumbnail %}
+                            <img src="{{ testimonial.video_thumbnail.url }}" alt="">
+                        {% else %}
+                            <img src="{% static 'img/video-placeholder.jpg' %}" alt="">
+                        {% endif %}
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="video-overlay">
+                            <p>{{ testimonial.content|truncatewords:15 }}</p>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <h4>{{ testimonial.client_name }}, {{ testimonial.company }}</h4>
+                        <p>{{ testimonial.industry }}</p>
+                    </div>
+                </div>
+                {% empty %}
+                <p style="text-align:center;">No video testimonials available.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
 
     <!-- Client Logos -->
     <section class="client-logos">
@@ -443,7 +375,11 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="testimonials-cta">
+    <section class="testimonials-cta parallax-section"
+        style="background: 
+            linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(34, 34, 34, 0.8) 100%),
+            url('https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') 
+            center/cover no-repeat fixed;">
         <div class="container">
             <div class="cta-content">
                 <div class="cta-text">
@@ -465,48 +401,49 @@
     </section>
 
     <!-- Footer -->
-<footer style="background-color: #1a1a1a; color: #ffffff; padding: 40px 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;">
-        
-        <div style="flex: 1; min-width: 250px;">
-            <h3 style="color: #4CAF50; margin-bottom: 15px;">Your Brand Name</h3>
-            <p style="font-size: 14px; line-height: 1.6; color: #cccccc;">
-                Providing quality services with transparency and integrity. Follow us on our journey to excellence.
-            </p>
+    <footer style="background-color: #1a1a1a; color: #ffffff; padding: 40px 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;">
+            
+            <div style="flex: 1; min-width: 250px;">
+                <h3 style="color: #4CAF50; margin-bottom: 15px;">Your Brand Name</h3>
+                <p style="font-size: 14px; line-height: 1.6; color: #cccccc;">
+                    Providing quality services with transparency and integrity. Follow us on our journey to excellence.
+                </p>
+            </div>
+
+            <div style="flex: 1; min-width: 150px;">
+                <h4 style="margin-bottom: 15px; font-size: 18px;">Quick Links</h4>
+                <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                    <li><a href="/" style="color: #cccccc; text-decoration: none;">Home</a></li>
+                    <li><a href="/about" style="color: #cccccc; text-decoration: none;">About Us</a></li>
+                    <li><a href="/services" style="color: #cccccc; text-decoration: none;">Services</a></li>
+                    <li><a href="/contact" style="color: #cccccc; text-decoration: none;">Contact</a></li>
+                </ul>
+            </div>
+
+            <div style="flex: 1; min-width: 150px;">
+                <h4 style="margin-bottom: 15px; font-size: 18px;">Legal Support</h4>
+                <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                    <li><a href="/privacy-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Privacy Policy</a></li>
+                    <li><a href="/terms and conditions" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Terms & Conditions</a></li>
+                    <li><a href="/refund-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Refund Policy</a></li>
+                    <li><a href="/disclaimer" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Disclaimer</a></li>
+                </ul>
+            </div>
         </div>
 
-        <div style="flex: 1; min-width: 150px;">
-            <h4 style="margin-bottom: 15px; font-size: 18px;">Quick Links</h4>
-            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
-                <li><a href="/" style="color: #cccccc; text-decoration: none;">Home</a></li>
-                <li><a href="/about" style="color: #cccccc; text-decoration: none;">About Us</a></li>
-                <li><a href="/services" style="color: #cccccc; text-decoration: none;">Services</a></li>
-                <li><a href="/contact" style="color: #cccccc; text-decoration: none;">Contact</a></li>
-            </ul>
-        </div>
+        <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0;">
 
-        <div style="flex: 1; min-width: 150px;">
-            <h4 style="margin-bottom: 15px; font-size: 18px;">Legal Support</h4>
-            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
-                <li><a href="/privacy-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Privacy Policy</a></li>
-                <li><a href="/terms and conditions" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Terms & Conditions</a></li>
-                <li><a href="/refund-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Refund Policy</a></li>
-                <li><a href="/disclaimer" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Disclaimer</a></li>
-            </ul>
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 13px; color: #888;">
+            <p>&copy; 2025 Your Brand Name. All Rights Reserved.</p>
+            <div style="display: flex; gap: 15px;">
+                <a href="#" style="color: #888; text-decoration: none;">Twitter</a>
+                <a href="#" style="color: #888; text-decoration: none;">LinkedIn</a>
+                <a href="#" style="color: #888; text-decoration: none;">Instagram</a>
+            </div>
         </div>
-    </div>
+    </footer>
 
-    <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0;">
-
-    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 13px; color: #888;">
-        <p>&copy; 2025 Your Brand Name. All Rights Reserved.</p>
-        <div style="display: flex; gap: 15px;">
-            <a href="#" style="color: #888; text-decoration: none;">Twitter</a>
-            <a href="#" style="color: #888; text-decoration: none;">LinkedIn</a>
-            <a href="#" style="color: #888; text-decoration: none;">Instagram</a>
-        </div>
-    </div>
-</footer>
     <!-- Video Modal -->
     <div class="video-modal" id="videoModal">
         <div class="modal-content">
@@ -515,19 +452,17 @@
                 <button class="close-modal" id="closeModal">&times;</button>
             </div>
             <div class="modal-body">
-    <video id="videoPlayer"
-           controls
-           autoplay
-           style="width:100%; border-radius:12px; display:none;">
-    </video>
+                <video id="videoPlayer"
+                    controls
+                    autoplay
+                    style="width:100%; border-radius:12px; display:none;">
+                </video>
 
-    <iframe id="videoIframe"
-            allowfullscreen
-            style="width:100%; height:400px; border:none; display:none;">
-    </iframe>
-</div>
-
-
+                <iframe id="videoIframe"
+                        allowfullscreen
+                        style="width:100%; height:400px; border:none; display:none;">
+                </iframe>
+            </div>
         </div>
     </div>
 

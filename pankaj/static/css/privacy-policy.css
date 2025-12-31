@@ -18,22 +18,30 @@
     --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
 
-/* Hero Section */
 .privacy-hero {
-    background: linear-gradient(135deg, var(--secondary-black) 0%, var(--dark-gray) 100%);
-    color: var(--white);
-    padding: 100px 0 80px;
     position: relative;
+    padding: 180px 0 120px;
+    background-image: url('../images/unnamed.jpg');
+    color: white;
+    text-align: center;
     overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.privacy-hero .container {
+    position: relative;
+    z-index: 3;
 }
 
 .privacy-hero-content {
-    text-align: center;
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
     position: relative;
     z-index: 2;
 }
+
 
 .privacy-hero .page-title {
     font-size: 3.5rem;

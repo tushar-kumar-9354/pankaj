@@ -419,3 +419,65 @@ if (statsSection) {
         defaultActiveTab.click();
     }
 });
+document.querySelectorAll(".video-thumbnail").forEach(item => {
+    item.addEventListener("click", () => {
+        const videoUrl = item.dataset.video;
+        const title = item.dataset.title;
+
+        document.getElementById("modalTitle").innerText = title;
+        document.querySelector(".video-placeholder").innerHTML = `
+            <iframe width="100%" height="400"
+                src="${videoUrl}"
+                frameborder="0"
+                allow="autoplay; encrypted-media"
+                allowfullscreen>
+            </iframe>
+        `;
+
+        document.getElementById("videoModal").classList.add("active");
+    });
+});
+
+document.getElementById("closeModal").addEventListener("click", () => {
+    document.getElementById("videoModal").classList.remove("active");
+    document.querySelector(".video-placeholder").innerHTML = "";
+});
+
+document.querySelectorAll(".video-thumbnail").forEach(item => {
+    item.addEventListener("click", () => {
+        const videoSrc = item.dataset.video;
+        const title = item.dataset.title;
+
+        const modal = document.getElementById("videoModal");
+        const video = document.getElementById("videoPlayer");
+        const iframe = document.getElementById("videoIframe");
+
+        document.getElementById("modalTitle").innerText = title;
+
+        video.style.display = "none";
+        iframe.style.display = "none";
+
+        if (videoSrc.includes("youtube") || videoSrc.includes("vimeo")) {
+            iframe.src = videoSrc;
+            iframe.style.display = "block";
+        } else {
+            video.src = videoSrc;
+            video.style.display = "block";
+            video.load();
+            video.play();
+        }
+
+        modal.classList.add("active");
+    });
+});
+
+document.getElementById("closeModal").onclick = () => {
+    const modal = document.getElementById("videoModal");
+    const video = document.getElementById("videoPlayer");
+    const iframe = document.getElementById("videoIframe");
+
+    video.pause();
+    video.src = "";
+    iframe.src = "";
+    modal.classList.remove("active");
+};

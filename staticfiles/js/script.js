@@ -302,3 +302,51 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
     document.head.appendChild(style);
 });
+// Parallax effect for hero section
+document.addEventListener('DOMContentLoaded', function() {
+    const hero = document.querySelector('.hero');
+    const heroBg = document.querySelector('.hero-bg');
+    
+    if (heroBg) {
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * 0.5;
+            
+            heroBg.style.transform = 'translate3d(0, ' + rate + 'px, 0)';
+        });
+    }
+    
+    // Or for multiple sections with parallax:
+    const parallaxSections = document.querySelectorAll('.parallax-section');
+    
+    window.addEventListener('scroll', function() {
+        const scrolled = window.pageYOffset;
+        
+        parallaxSections.forEach(section => {
+            const speed = section.getAttribute('data-speed') || 0.5;
+            section.style.transform = 'translateY(' + (scrolled * speed) + 'px)';
+        });
+    });
+});
+// Optimize image loading
+function optimizeImages() {
+    // Use IntersectionObserver for lazy loading background images
+    const bgImages = document.querySelectorAll('[style*="background-image"]');
+    
+    const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const bgUrl = entry.target.style.backgroundImage;
+                if (bgUrl.includes('url("') && !entry.target.dataset.loaded) {
+                    // Image will load naturally when in view
+                    entry.target.dataset.loaded = true;
+                }
+            }
+        });
+    }, { rootMargin: '50px' });
+    
+    bgImages.forEach(img => imageObserver.observe(img));
+}
+
+// Call it
+optimizeImages();

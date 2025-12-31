@@ -481,3 +481,31 @@ document.getElementById("closeModal").onclick = () => {
     iframe.src = "";
     modal.classList.remove("active");
 };
+// Tab functionality for industry testimonials
+const tabButtons = document.querySelectorAll('.tab-button');
+const tabContents = document.querySelectorAll('.tab-content');
+
+// Tab switching functionality
+tabButtons.forEach(button => {
+    button.addEventListener('click', function() {
+        // Get the tab ID
+        const tabId = this.getAttribute('data-tab');
+        
+        // Remove active class from all buttons and contents
+        tabButtons.forEach(btn => {
+            btn.classList.remove('active');
+        });
+        tabContents.forEach(content => {
+            content.classList.remove('active');
+        });
+        
+        // Add active class to clicked button
+        this.classList.add('active');
+        
+        // Show corresponding content
+        const targetTab = document.getElementById(`tab-${tabId}`);
+        if (targetTab) {
+            targetTab.classList.add('active');
+        }
+    });
+});

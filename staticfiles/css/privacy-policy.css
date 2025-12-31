@@ -18,22 +18,30 @@
     --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
 
-/* Hero Section */
 .privacy-hero {
-    background: linear-gradient(135deg, var(--secondary-black) 0%, var(--dark-gray) 100%);
-    color: var(--white);
-    padding: 100px 0 80px;
     position: relative;
+    padding: 180px 0 120px;
+    background-image: url('../images/unnamed.jpg');
+    color: white;
+    text-align: center;
     overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.privacy-hero .container {
+    position: relative;
+    z-index: 3;
 }
 
 .privacy-hero-content {
-    text-align: center;
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
     position: relative;
     z-index: 2;
 }
+
 
 .privacy-hero .page-title {
     font-size: 3.5rem;
@@ -85,10 +93,11 @@
     left: 0;
     width: 100%;
     height: 100%;
-    /* Added the % symbols here */
-    background: url('{% static "images/unnamed.jpg" %}') center/cover no-repeat;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" fill="%23ffffff"/></svg>') bottom center no-repeat;
+    background-size: 1200px 120px;
     opacity: 0.03;
 }
+
 /* Introduction Section */
 .privacy-intro {
     padding: 80px 0;

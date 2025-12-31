@@ -1,6 +1,6 @@
 # admin.py - Fixed version with proper indentation
 from django.contrib import admin
-from .models import BlogPost, Testimonial, TestimonialSubmission, ConsultationBooking, AvailableSlot, BookedSlot
+from .models import BlogPost, Testimonial, TestimonialSubmission, ConsultationBooking, AvailableSlot
 from django.utils import timezone
 from django.core.mail import send_mail
 from django.conf import settings
@@ -599,12 +599,3 @@ class AvailableSlotAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         return super().get_queryset(request).order_by('day', 'start_time')
 
-@admin.register(BookedSlot)
-class BookedSlotAdmin(admin.ModelAdmin):
-    list_display = ('date', 'slot', 'booking')
-    list_filter = ('date', 'slot__day')
-    search_fields = ('booking__name', 'booking__email')
-    readonly_fields = ('date', 'slot', 'booking')
-    
-    def has_add_permission(self, request):
-        return False  # BookedSlots should only be created via booking process

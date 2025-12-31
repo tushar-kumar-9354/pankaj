@@ -48,34 +48,6 @@
         </div>
     </section>
     
-    <!-- Submit CTA Section -->
-    <section class="submit-cta-section">
-        <div class="container text-center">
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="card">
-                        <div class="card-body py-5 px-4">
-                            <h3 class="mb-3">
-                                <i class="fas fa-microphone-alt me-2" style="color: var(--accent-color);"></i>
-                                Share Your Experience
-                            </h3>
-                            <p class="lead mb-4">
-                                Have you worked with Anjali Bansal & Associates? 
-                                We'd love to hear about your experience!
-                            </p>
-                            <a href="{% url 'submit_testimonial' %}" class="btn-primary">
-                                <i class="fas fa-plus-circle me-2"></i>Submit Your Testimonial
-                            </a>
-                            <p class="small mt-4 mb-0">
-                                <i class="fas fa-shield-alt me-1"></i>
-                                All submissions are reviewed before publishing
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Testimonials Stats -->
     <section class="testimonials-stats">
@@ -99,7 +71,7 @@
                     <div class="stat-label">Industries Served</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number" data-count="98">0</div>
+                    <div class="stat-number" data-count="{{ stats.client_satisfaction }}">0</div>
                     <div class="stat-label">Client Satisfaction %</div>
                 </div>
             </div>
@@ -324,7 +296,41 @@
             </div>
         </div>
     </section>
-
+    <!-- Simple Centered CTA -->
+<section class="submit-cta-section" style="padding: 60px 0; background: #f8f9fa;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="text-center">
+                    <div style="background: white; padding: 40px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);">
+                        <i class="fas fa-comment-dots" style="font-size: 3rem; color: #3498db; margin-bottom: 20px;"></i>
+                        
+                        <h2 style="color: #2c3e50; margin-bottom: 15px;">
+                            Want To Share Your Experience ?
+                        </h2>
+                        
+                        <p style="color: #666; font-size: 1.1rem; margin-bottom: 30px; line-height: 1.6;">
+                            Your feedback helps us improve and guides other businesses in their decision-making. 
+                            We value every testimonial from our valued clients.
+                        </p>
+                        <div class="d-flex justify-content-center gap-3 flex-wrap">
+                            <a href="{% url 'submit_testimonial' %}" 
+                               class="btn btn-primary px-4 py-3" 
+                               style="border-radius: 50px; min-width: 200px; font-weight: 600;">
+                                <i class="fas fa-pen me-2"></i>Write Testimonial
+                            </a>
+                        </div>
+                        
+                        <p class="mt-4 mb-0 small text-muted">
+                            <i class="fas fa-check-circle text-success me-1"></i>
+                            All submissions are carefully reviewed before being published
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
     <!-- Client Logos -->
     <section class="client-logos">
         <div class="container">

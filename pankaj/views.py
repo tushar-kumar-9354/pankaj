@@ -218,7 +218,8 @@ def testimonials(request):
         'avg_rating': round(Testimonial.objects.filter(is_active=True).aggregate(
             Avg('rating')
         )['rating__avg'] or 0, 1),  # Default to 0 if no ratings
-        'industries_served': len(industries),  # Count of unique industries
+        'industries_served': len(industries),
+        'client_satisfaction': 98,  # Count of unique industries
     }
     
     # ─── Video Testimonials ───────────────────────────────────────────────────

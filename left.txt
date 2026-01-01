@@ -1,6 +1,13 @@
-latest blogs
-what we think 
-indusries 
-submit testimonials better drop down
+latest blogs ---done 
+what we think ---done
+industries 
+submit testimonials better drop down 
 thankyou page better
-cancellaytion  reason fixed from views
+cancellaytion  reason fixed from views ---done
+
+paytment
+
+remove duplicates,bugs,seperate css js and html
+optimize code
+search engine opt
+

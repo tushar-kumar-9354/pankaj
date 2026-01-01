@@ -242,6 +242,18 @@ def get_absolute_url(self):
     except:
         # Emergency fallback
         return f"/blogs/{self.slug}/"
+# Add this method to your BlogPost model in models.py
+def get_category_image(self):
+    """Return a default image URL based on blog category."""
+    category_images = {
+        'FEMA': 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100',
+        'SEBI': 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100',
+        'Corporate Law': 'https://images.unsplash.com/photo-1589391886085-8b6b0ac72a1a?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100',
+        'Fundraising': 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100',
+        'Startups': 'https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100',
+        'Compliance': 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100',
+    }
+    return category_images.get(self.category, 'https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100')
 # ══════════════════════════════════════════════════════════════════════════════
 #                              TESTIMONIAL MODEL
 # ══════════════════════════════════════════════════════════════════════════════

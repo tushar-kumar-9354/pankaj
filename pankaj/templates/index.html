@@ -17,27 +17,33 @@
 <body>
     <!-- Header -->
     <header>
-        <div class="container header-container">
-            <div class="logo">
+        
+    <div class="container header-container">
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <div class="logo">
+            <img src="{% static 'images/kplogo.png' %}" alt="Company Logo" class="logo-image">
+            <div class="logo-text">
                 <h1>ANJALI BANSAL & ASSOCIATES</h1>
                 <p>COMPANY SECRETARIES</p>
             </div>
-            <button class="mobile-menu-btn" id="mobileMenuBtn">
-                <i class="fas fa-bars"></i>
-            </button>
-            <nav class="nav-menu" id="navMenu">
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/about">About</a></li>
-                    <li><a href="/our_expertise">Expertise</a></li>
-                    <li><a href="/testimonials">Testimonials</a></li>
-                    <li><a href="/blogs">Blogs</a></li>
-                    
-                    <li><a href="/contact">Contact</a></li>
-                </ul>
-            </nav>
         </div>
-    </header>
+        
+        <nav class="nav-menu" id="navMenu">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/our_expertise">Expertise</a></li>
+                <li><a href="/testimonials">Testimonials</a></li>
+                <li><a href="/blogs">Blogs</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+    
 
     <!-- Hero Section -->
     <section class="hero" id="home">
@@ -158,92 +164,110 @@
     </section>
 
     <!-- Articles Section -->
-    <section id="articles">
-        <div class="container">
-            <div class="section-title">
-                <h2>LATEST BLOGS</h2>
-            </div>
-            <div class="articles-grid">
-                <div class="article-card">
-                    <div class="article-img" style="background-image: url('https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100');"></div>
-                    <div class="article-content">
-                        <span class="article-date">December 15, 2023</span>
-                        <h4>Recent Changes in FEMA Regulations</h4>
-                        <p>Understanding the latest amendments to FEMA regulations and how they impact cross-border transactions.</p>
-                        <a href="/blogs" class="btn">Read More</a>
-                    </div>
-                </div>
-                <div class="article-card">
-                    <div class="article-img" style="background-image: url('https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100');"></div>
-                    <div class="article-content">
-                        <span class="article-date">December 10, 2023</span>
-                        <h4>Startup Funding Strategies for 2023</h4>
-                        <p>Exploring effective debt and equity financing options for early and mid-stage startups in the current economic climate.</p>
-                        <a href="/blogs" class="btn">Read More</a>
-                    </div>
-                </div>
-                <div class="article-card">
-                    <div class="article-img" style="background-image: url('https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100');"></div>
-                    <div class="article-content">
-                        <span class="article-date">December 5, 2023</span>
-                        <h4>SEBI Compliance for Investment Advisors</h4>
-                        <p>Key requirements and best practices for maintaining SEBI compliance as an investment advisor or portfolio manager.</p>
-                        <a href="/blogs" class="btn">Read More</a>
-                    </div>
-                </div>
-            </div>
+<!-- Articles Section -->
+<section id="articles">
+    <div class="container">
+        <div class="section-title">
+            <h2>LATEST BLOGS</h2>
         </div>
-    </section>
-
+        
+        <div class="articles-grid">
+            {% for blog in latest_blogs %}
+            <div class="article-card">
+                {% if blog.featured_image %}
+                <div class="article-img" style="background-image: url('{{ blog.featured_image.url }}')"></div>
+                {% else %}
+                <!-- Simple fallback without complex if-else -->
+                <div class="article-img" style="background-image: url('https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100')"></div>
+                {% endif %}
+                
+                <div class="article-content">
+                    <span class="article-date">{{ blog.date_published|date:"F d, Y" }}</span>
+                    <h4>{{ blog.title }}</h4>
+                    <p>{{ blog.excerpt|truncatechars:150 }}</p>
+                    <a href="{% url 'blog_detail' blog.slug %}" class="btn">Read More</a>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Show fallback if no blogs exist -->
+            <p style="text-align: center; grid-column: 1 / -1; padding: 40px; color: #666;">
+                No blogs published yet. Check back soon!
+            </p>
+            {% endfor %}
+        </div>
+        
+        <div style="text-align: center; margin-top: 50px;">
+            <a href="/blogs" class="btn">View All Blogs</a>
+        </div>
+    </div>
+</section>
     <!-- Testimonials Carousel -->
-    <section class="testimonials">
-        <div class="testimonial-bg"></div>
-        <div class="container">
-            <div class="section-title">
-                <h2>What our clients think...</h2>
+<!-- Testimonials Carousel -->
+<section class="testimonials">
+    <div class="testimonial-bg"></div>
+    <div class="container">
+        <div class="section-title">
+            <h2>What our clients think...</h2>
+        </div>
+        
+        {% if testimonials %}
+        <div class="testimonial-carousel">
+            <div class="testimonial-track" id="testimonialTrack">
+                {% for testimonial in testimonials %}
+                <div class="testimonial-slide">
+                    <p>"{{ testimonial.content }}"</p>
+                    <div class="testimonial-author">{{ testimonial.client_name }}</div>
+                    <div class="testimonial-company">{{ testimonial.position }}, {{ testimonial.company }}</div>
+                </div>
+                {% endfor %}
             </div>
-            <div class="testimonial-carousel">
-                <div class="testimonial-track" id="testimonialTrack">
-                    <div class="testimonial-slide">
-                        <p>"Anjali came at a time when we were in the middle of a funding round and really needed some help. She knows the CS playbook inside-out and sailed us through effortlessly. Her team is one of the best there is and an absolute delight to work with."</p>
-                        <div class="testimonial-author">Divyam Agrawal</div>
-                        <div class="testimonial-company">Co-founder, NuShala</div>
-                    </div>
-                    <div class="testimonial-slide">
-                        <p>"The expertise in FEMA regulations saved us from potential compliance issues that could have cost us millions. Their attention to detail is remarkable, and they always deliver on time. Highly recommended for any international business operations."</p>
-                        <div class="testimonial-author">Priya Sharma</div>
-                        <div class="testimonial-company">CEO, GlobalTech Solutions</div>
-                    </div>
-                    <div class="testimonial-slide">
-                        <p>"Working with Anjali Bansal & Associates for our SEBI registration was a seamless experience. They handled everything from documentation to compliance, allowing us to focus on growing our investment advisory business."</p>
-                        <div class="testimonial-author">Rohan Mehta</div>
-                        <div class="testimonial-company">Managing Director, CapitalEdge Advisors</div>
-                    </div>
-                    <div class="testimonial-slide">
-                        <p>"Their fundraising support helped us secure Series B funding efficiently. The legal structuring and due diligence were handled professionally, making the entire process smooth for our investors and us."</p>
-                        <div class="testimonial-author">Ananya Patel</div>
-                        <div class="testimonial-company">Founder, HealthTech Innovations</div>
-                    </div>
+            <div class="carousel-nav">
+                <button class="carousel-btn prev-btn" id="prevBtn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="carousel-dots" id="carouselDots">
+                    {% for testimonial in testimonials %}
+                    <span class="carousel-dot {% if forloop.first %}active{% endif %}" data-index="{{ forloop.counter0 }}"></span>
+                    {% endfor %}
                 </div>
-                <div class="carousel-nav">
-                    <button class="carousel-btn prev-btn" id="prevBtn">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <div class="carousel-dots" id="carouselDots">
-                        <span class="carousel-dot active" data-index="0"></span>
-                        <span class="carousel-dot" data-index="1"></span>
-                        <span class="carousel-dot" data-index="2"></span>
-                        <span class="carousel-dot" data-index="3"></span>
-                    </div>
-                    <button class="carousel-btn next-btn" id="nextBtn">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                    <a href="/testimonials" class="btn">View All Testimonials</a>
-                </div>
+                <button class="carousel-btn next-btn" id="nextBtn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <a href="/testimonials" class="btn">View All Testimonials</a>
             </div>
         </div>
-    </section>
-
+        {% else %}
+        <!-- Fallback if no testimonials are available -->
+        <div class="testimonial-carousel">
+            <div class="testimonial-track" id="testimonialTrack">
+                <div class="testimonial-slide">
+                    <p>"Anjali came at a time when we were in the middle of a funding round and really needed some help. She knows the CS playbook inside-out and sailed us through effortlessly. Her team is one of the best there is and an absolute delight to work with."</p>
+                    <div class="testimonial-author">Divyam Agrawal</div>
+                    <div class="testimonial-company">Co-founder, NuShala</div>
+                </div>
+                <div class="testimonial-slide">
+                    <p>"The expertise in FEMA regulations saved us from potential compliance issues that could have cost us millions. Their attention to detail is remarkable, and they always deliver on time. Highly recommended for any international business operations."</p>
+                    <div class="testimonial-author">Priya Sharma</div>
+                    <div class="testimonial-company">CEO, GlobalTech Solutions</div>
+                </div>
+            </div>
+            <div class="carousel-nav">
+                <button class="carousel-btn prev-btn" id="prevBtn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="carousel-dots" id="carouselDots">
+                    <span class="carousel-dot active" data-index="0"></span>
+                    <span class="carousel-dot" data-index="1"></span>
+                </div>
+                <button class="carousel-btn next-btn" id="nextBtn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <a href="/testimonials" class="btn">View All Testimonials</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
     <!-- Contact Section -->
     <section class="contact-section" id="contact">
         <div class="container">

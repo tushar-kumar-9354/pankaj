@@ -1009,3 +1009,119 @@ header {
         padding: 0 15px;
     }
 }
+
+/* Header Styles */
+header {
+    background-color: #fff;
+    box-shadow: 0 2px 30px rgba(0,0,0,0.08);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid #eee;
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.95);
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0; /* Reduced from 20px */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-shrink: 0;
+}
+
+.logo-image {
+    height: 50px; /* Smaller logo */
+    width: auto;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-text h1 {
+    margin: 0;
+    font-size: 1.4rem; /* Slightly smaller */
+    font-weight: 700;
+    color: #000;
+    line-height: 1.2;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.logo-text p {
+    margin: 0;
+    font-size: 0.85rem; /* Smaller subtitle */
+    color: #666;
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin-left: 35px; /* Reduced from 40px */
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    font-size: 0.9rem; /* Slightly smaller font */
+    letter-spacing: 1px;
+    padding: 8px 0;
+    position: relative;
+    white-space: nowrap;
+}
+
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #000 0%, #666 100%);
+    transition: width 0.3s ease;
+    border-radius: 1px;
+}
+
+nav ul li a:hover {
+    color: #000;
+}
+
+nav ul li a:hover::after {
+    width: 100%;
+}
+
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #000;
+    cursor: pointer;
+    z-index: 1001;
+    padding: 5px;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.mobile-menu-btn:hover {
+    background-color: rgba(0,0,0,0.05);
+}

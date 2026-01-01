@@ -264,3 +264,70 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
     document.head.appendChild(style);
 });
+// Enhanced Parallax Effect for Blogs Hero
+document.addEventListener('DOMContentLoaded', function() {
+    const blogsHero = document.querySelector('.blogs-hero');
+    const heroOverlay = document.querySelector('.blogs-hero .hero-overlay');
+    
+    if (blogsHero) {
+        // Add scroll parallax effect
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * 0.5;
+            
+            // Parallax effect for background
+            blogsHero.style.backgroundPosition = 'center ' + (-rate * 0.5) + 'px';
+            
+            // Fade effect for overlay on scroll
+            if (heroOverlay) {
+                const opacity = 0.8 + (scrolled * 0.001);
+                heroOverlay.style.opacity = Math.min(opacity, 1);
+            }
+        });
+        
+        // Add mouse move parallax effect
+        document.addEventListener('mousemove', function(e) {
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+            
+            blogsHero.style.transform = `translateX(${xAxis}px) translateY(${yAxis}px)`;
+        });
+        
+        // Remove mouse move effect on mobile
+        if (window.innerWidth <= 768) {
+            blogsHero.style.transform = 'none';
+        }
+    }
+    
+    // Count animation for stats (if any)
+    const statNumbers = document.querySelectorAll('.stat-number');
+    if (statNumbers.length > 0) {
+        statNumbers.forEach(stat => {
+            const target = parseInt(stat.getAttribute('data-count'));
+            const increment = target / 200;
+            let current = 0;
+            
+            const updateCount = () => {
+                if (current < target) {
+                    current += increment;
+                    stat.textContent = Math.ceil(current);
+                    setTimeout(updateCount, 1);
+                } else {
+                    stat.textContent = target;
+                }
+            };
+            
+            // Trigger on scroll into view
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        updateCount();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+            
+            observer.observe(stat);
+        });
+    }
+});

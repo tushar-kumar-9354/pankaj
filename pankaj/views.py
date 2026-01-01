@@ -31,6 +31,9 @@ logger = logging.getLogger(__name__)
 # ══════════════════════════════════════════════════════════════════════════════
 #                              CORE WEBSITE VIEWS
 # ══════════════════════════════════════════════════════════════════════════════
+# ══════════════════════════════════════════════════════════════════════════════
+#                              CORE WEBSITE VIEWS
+# ══════════════════════════════════════════════════════════════════════════════
 
 def index(request):
     """
@@ -40,7 +43,7 @@ def index(request):
         Rendered homepage template with context data
     """
     # Get latest 3 published blog posts for homepage display
-    latest_blogs = BlogPost.objects.filter(is_published=True)[:3]
+    latest_blogs = BlogPost.objects.filter(is_published=True).order_by('-date_published')[:3]
     
     # Get active featured testimonials for homepage carousel/slider
     testimonials = Testimonial.objects.filter(is_active=True, is_featured=True)[:4]
@@ -53,8 +56,6 @@ def index(request):
     
     # Render homepage template with context
     return render(request, "index.html", context)
-
-
 def about(request):
     """About page view."""
     return render(request, "about.html")
@@ -129,16 +130,9 @@ def blogs(request):
         'page_obj': page_obj,
     })
 
-
 def blog_detail(request, slug):
     """
     Individual blog post detail view with enhanced features.
-    
-    Args:
-        slug: URL-friendly identifier for the blog post
-    
-    Returns:
-        Rendered blog detail template with post and related posts
     """
     # Get the specific blog post by slug, ensure it's published
     blog = get_object_or_404(BlogPost, slug=slug, is_published=True)
@@ -150,20 +144,38 @@ def blog_detail(request, slug):
     related_posts = BlogPost.objects.filter(
         category=blog.category, 
         is_published=True
-    ).exclude(id=blog.id)[:3]  # Limit to 3 related posts
+    ).exclude(id=blog.id)[:3]
     
-    # Get all categories for sidebar
-    categories = BlogPost.CATEGORY_CHOICES
+    # Get ACTUAL categories from existing published blogs only
+    all_published_blogs = BlogPost.objects.filter(is_published=True)
+    categories = list(set([blog.category for blog in all_published_blogs 
+                         if blog.category and blog.slug and str(blog.slug).strip() != '']))
+    categories.sort()
+    
+    # Get featured posts (excluding current post)
+    # First try to get actual featured posts
+    featured_posts = BlogPost.objects.filter(
+        is_published=True,
+        is_featured=True
+    ).exclude(id=blog.id)[:3]
+    
+    # If no featured posts, show latest posts instead
+    if not featured_posts:
+        featured_posts = BlogPost.objects.filter(
+            is_published=True
+        ).exclude(id=blog.id).order_by('-date_published')[:3]
     
     # Prepare context for template
     context = {
-        'blog': blog,  # Main blog post
-        'related_posts': related_posts,  # Related posts for sidebar
-        'categories': categories,  # All categories
+        'blog': blog,
+        'related_posts': related_posts,
+        'categories': categories,
+        'featured_posts': featured_posts,  # This will always have posts
+        'current_category': blog.category,
     }
     
-    # Render blog detail template
     return render(request, "blog_detail.html", context)
+
 # ══════════════════════════════════════════════════════════════════════════════
 #                              TESTIMONIAL VIEWS
 # ══════════════════════════════════════════════════════════════════════════════

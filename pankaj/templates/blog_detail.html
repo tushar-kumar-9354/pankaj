@@ -4,600 +4,474 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ blog.title }} - Anjali Bansal & Associates</title>
+    <title>{{ blog.title }} | Anjali Bansal & Associates</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        /* ===== GLOBAL STYLES ===== */
-        :root {
-            --primary-color: #000;
-            --secondary-color: #333;
-            --accent-color: #007bff;
-            --light-gray: #f8f9fa;
-            --medium-gray: #e9ecef;
-            --dark-gray: #555;
-            --white: #fff;
-            --shadow: 0 5px 20px rgba(0,0,0,0.08);
-            --transition: all 0.3s ease;
+        /* Blog Detail Specific Styles */
+        .blog-detail-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: var(--light-gray);
-        }
-
-        .container {
+        
+        .blog-detail-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 50px;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
         }
-
-        a {
-            text-decoration: none;
-            color: inherit;
+        
+        .blog-main-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
         }
-
-        img {
-            max-width: 100%;
-            height: auto;
+        
+        .blog-sidebar {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
         }
-
-        /* ===== HEADER ===== */
-        header {
-            background: var(--white);
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-        }
-
-        .logo h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 1.5rem;
-            color: var(--primary-color);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-        }
-
-        .nav-links a {
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: var(--accent-color);
-        }
-
-        /* ===== BREADCRUMB ===== */
+        
         .breadcrumb {
-            padding: 20px 0;
-            background: var(--white);
             margin-bottom: 30px;
+            font-size: 0.9rem;
+            color: #666;
         }
-
-        .breadcrumb-content {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--dark-gray);
+        
+        .breadcrumb a {
+            color: #333;
+            text-decoration: none;
         }
-
+        
         .breadcrumb a:hover {
-            color: var(--accent-color);
             text-decoration: underline;
         }
-
-        /* ===== BLOG CONTENT ===== */
-        .blog-detail {
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 40px;
-            padding: 40px 0;
-        }
-
-        .article-header {
-            margin-bottom: 40px;
-        }
-
-        .article-category {
-            display: inline-block;
-            background: var(--primary-color);
-            color: var(--white);
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-        }
-
-        .article-title {
-            font-family: 'Montserrat', sans-serif;
+        
+        .blog-header h1 {
             font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
+            color: #000;
             margin-bottom: 20px;
             line-height: 1.3;
         }
-
-        .article-meta {
+        
+        .blog-meta {
             display: flex;
+            flex-wrap: wrap;
             gap: 20px;
-            color: var(--dark-gray);
-            font-size: 0.9rem;
             margin-bottom: 30px;
+            color: #666;
+            font-size: 0.9rem;
         }
-
-        .article-meta span {
+        
+        .blog-meta span {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 5px;
         }
-
+        
         .featured-image {
             margin-bottom: 40px;
-            border-radius: 10px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: var(--shadow);
         }
-
+        
         .featured-image img {
             width: 100%;
             height: auto;
             display: block;
         }
-
-        .article-content {
-            background: var(--white);
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-        }
-
-        .article-content h2,
-        .article-content h3 {
-            font-family: 'Montserrat', sans-serif;
-            margin: 30px 0 15px;
-            color: var(--primary-color);
-        }
-
-        .article-content p {
-            margin-bottom: 20px;
-            font-size: 1.1rem;
+        
+        .blog-content {
             line-height: 1.8;
+            font-size: 1.1rem;
+            color: #333;
         }
-
-        .article-content ul,
-        .article-content ol {
-            margin: 20px 0 20px 30px;
+        
+        .blog-content p {
+            margin-bottom: 25px;
         }
-
-        .article-content li {
-            margin-bottom: 10px;
+        
+        .blog-content h2, .blog-content h3 {
+            margin: 40px 0 20px;
+            color: #000;
         }
-
-        /* ===== SIDEBAR ===== */
-        .sidebar {
-            margin-top: 40px;
-        }
-
+        
+        /* Sidebar Styles */
         .sidebar-widget {
-            background: var(--white);
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
-
+        
         .sidebar-widget h3 {
-            font-family: 'Montserrat', sans-serif;
             font-size: 1.3rem;
+            color: #000;
             margin-bottom: 20px;
-            color: var(--primary-color);
             padding-bottom: 10px;
-            border-bottom: 2px solid var(--medium-gray);
+            border-bottom: 2px solid #f0f0f0;
         }
-
-        .related-posts {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .related-post {
-            display: flex;
-            gap: 15px;
-            padding: 15px;
-            background: var(--light-gray);
-            border-radius: 5px;
-            transition: var(--transition);
-        }
-
-        .related-post:hover {
-            background: var(--medium-gray);
-        }
-
-        .related-post-image {
-            width: 80px;
-            height: 80px;
-            border-radius: 5px;
-            overflow: hidden;
-            flex-shrink: 0;
-        }
-
-        .related-post-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .related-post-content h4 {
-            font-size: 1rem;
-            margin-bottom: 5px;
-            color: var(--primary-color);
-        }
-
-        .related-post-content p {
-            font-size: 0.9rem;
-            color: var(--dark-gray);
-        }
-
+        
         .categories-list {
             list-style: none;
         }
-
+        
         .categories-list li {
             margin-bottom: 10px;
         }
-
+        
         .categories-list a {
             display: flex;
             align-items: center;
             gap: 10px;
+            color: #333;
+            text-decoration: none;
             padding: 10px 15px;
-            border-radius: 5px;
-            transition: var(--transition);
+            border-radius: 8px;
+            transition: all 0.3s ease;
         }
-
-        .categories-list a:hover {
-            background: var(--primary-color);
-            color: var(--white);
+        
+        .categories-list a:hover,
+        .categories-list a.active {
+            background: #f8f9fa;
+            color: #000;
+            transform: translateX(5px);
         }
-
-        /* ===== AUTHOR BOX ===== */
-        .author-box {
-            background: var(--white);
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            margin-top: 40px;
+        
+        .categories-list i {
+            color: #666;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .featured-post-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .featured-post-item:last-child {
+            border-bottom: none;
+        }
+        
+        .featured-post-item h4 {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+        
+        .featured-post-item a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        
+        .featured-post-item a:hover {
+            color: #000;
+        }
+        
+        .related-posts {
             display: flex;
+            flex-direction: column;
             gap: 20px;
-            align-items: center;
         }
-
-        .author-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: var(--primary-color);
-            color: var(--white);
+        
+        .related-post-item {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 2rem;
+            gap: 15px;
+        }
+        
+        .related-post-image {
+            width: 80px;
+            height: 60px;
+            border-radius: 8px;
+            background-size: cover;
+            background-position: center;
             flex-shrink: 0;
         }
-
-        .author-info h4 {
-            font-family: 'Montserrat', sans-serif;
-            margin-bottom: 10px;
-            color: var(--primary-color);
+        
+        .related-post-content h4 {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            line-height: 1.3;
         }
-
-        /* ===== FOOTER ===== */
-        footer {
-            background: var(--primary-color);
-            color: var(--white);
-            padding: 60px 0 30px;
-            margin-top: 60px;
+        
+        .related-post-content h4 a {
+            color: #333;
+            text-decoration: none;
         }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 40px;
-            margin-bottom: 40px;
+        
+        .related-post-content h4 a:hover {
+            color: #000;
         }
-
-        .footer-column h4 {
-            font-family: 'Montserrat', sans-serif;
-            margin-bottom: 20px;
+        
+        .post-date {
+            font-size: 0.8rem;
+            color: #888;
         }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 10px;
-        }
-
-        .footer-links a:hover {
-            color: var(--accent-color);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            color: rgba(255,255,255,0.7);
-        }
-
-        /* ===== RESPONSIVE ===== */
+        
+        /* Responsive */
         @media (max-width: 992px) {
-            .blog-detail {
+            .blog-detail-container {
                 grid-template-columns: 1fr;
+                gap: 30px;
             }
             
-            .article-title {
+            .blog-header h1 {
                 font-size: 2rem;
             }
         }
-
+        
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .article-content {
+            .blog-main-content,
+            .blog-sidebar {
                 padding: 25px;
             }
             
-            .article-meta {
+            .blog-meta {
                 flex-direction: column;
                 gap: 10px;
             }
-            
-            .author-box {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .footer-content {
-                grid-template-columns: repeat(2, 1fr);
-            }
         }
 
-        @media (max-width: 576px) {
-            .article-title {
-                font-size: 1.8rem;
-            }
-            
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-        }
+        .featured-post-item {
+    padding: 16px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.featured-post-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.featured-post-item h4 {
+    margin: 0 0 10px 0;
+    font-size: 1.05rem;
+    line-height: 1.4;
+    font-weight: 600;
+    color: #222;
+    word-break: break-word;       /* Prevents titles from being cut off */
+    hyphens: auto;
+    overflow-wrap: break-word;
+}
+
+.featured-post-item a {
+    color: #0066cc;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.featured-post-item a:hover {
+    text-decoration: underline;
+}
     </style>
 </head>
 <body>
     <!-- Header -->
     <header>
-        <div class="container">
-            <nav class="navbar">
-                <div class="logo">
-                    <h1>Anjali Bansal & Associates</h1>
+        <div class="container header-container">
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="logo">
+                <img src="{% static 'images/kplogo.png' %}" alt="Company Logo" class="logo-image">
+                <div class="logo-text">
+                    <h1>ANJALI BANSAL & ASSOCIATES</h1>
+                    <p>COMPANY SECRETARIES</p>
                 </div>
-                <div class="nav-links">
-                    <a href="/">Home</a>
-                    <a href="/about/">About Us</a>
-                    <a href="/services/">Services</a>
-                    <a href="/blogs/">Blogs</a>
-                    <a href="/contact/">Contact</a>
-                </div>
+            </div>
+            
+            <nav class="nav-menu" id="navMenu">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/our_expertise">Expertise</a></li>
+                    <li><a href="/testimonials">Testimonials</a></li>
+                    <li><a href="/blogs">Blogs</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Breadcrumb -->
-    <div class="breadcrumb">
+    <!-- Blog Detail Content -->
+    <section class="blog-detail-section">
         <div class="container">
-            <div class="breadcrumb-content">
-                <a href="/">Home</a>
-                <i class="fas fa-chevron-right"></i>
-                <a href="{% url 'blogs' %}">Blogs</a>
-                <i class="fas fa-chevron-right"></i>
-                <span>{{ blog.title|truncatewords:5 }}</span>
+            <div class="blog-detail-container">
+                <!-- Main Content -->
+                <div class="blog-main-content">
+                    
+                    <!-- Breadcrumb -->
+                    <div class="breadcrumb">
+    <a href="/">Home</a> / 
+    <a href="{% url 'blogs' %}">Blogs</a> / 
+    {% if blog.category %}
+    <a href="{% url 'blogs' %}?category={{ blog.category }}">{{ blog.category }}</a> / 
+    {% endif %}
+    <span>{{ blog.title|truncatewords:5 }}</span>
+</div>
+
+                    <!-- Blog Header -->
+                    <div class="blog-header">
+                        <h1>{{ blog.title }}</h1>
+                        <div class="blog-meta">
+                            <span class="date"><i class="far fa-calendar"></i> {{ blog.date_published|date:"F d, Y" }}</span>
+                            <span class="category"><i class="fas fa-folder"></i> {{ blog.category }}</span>
+                            <span class="read-time"><i class="far fa-clock"></i> {{ blog.read_time }} min read</span>
+                            <span class="views"><i class="far fa-eye"></i> {{ blog.view_count }} views</span>
+                            {% if blog.author %}
+                            <span class="author"><i class="fas fa-user"></i> {{ blog.author.get_full_name|default:blog.author.username }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Featured Image -->
+                    {% if blog.featured_image %}
+                    <div class="featured-image">
+                        <img src="{{ blog.featured_image.url }}" alt="{{ blog.title }}">
+                    </div>
+                    {% elif blog.image_url %}
+                    <div class="featured-image">
+                        <img src="{{ blog.image_url }}" alt="{{ blog.title }}">
+                    </div>
+                    {% endif %}
+
+                    <!-- Blog Content -->
+                    <div class="blog-content">
+                        {{ blog.content|linebreaks }}
+                    </div>
+
+                    <!-- Blog Footer -->
+                    <div class="blog-footer">
+                        <div class="share-buttons">
+                            <span>Share this article:</span>
+                            <!-- Add social sharing buttons here -->
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Sidebar (Updated with new widgets) -->
+                <div class="blog-sidebar">
+                    
+                    <!-- Categories Widget -->
+                   <!-- Categories Widget -->
+<div class="sidebar-widget">
+    <h3>Categories</h3>
+    <ul class="categories-list">
+        <li>
+            <a href="{% url 'blogs' %}" {% if not current_category %}class="active"{% endif %}>
+                <i class="fas fa-th-list"></i>
+                All Categories
+            </a>
+        </li>
+        {% for cat in categories %}
+        <li>
+            <a href="{% url 'blogs' %}?category={{ cat }}" 
+               {% if current_category == cat %}class="active"{% endif %}>
+                <i class="fas fa-folder"></i>
+                {{ cat }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+                    <!-- Featured Posts Widget -->
+                    <!-- Featured Posts Widget -->
+
+                    <!-- Featured Posts Widget -->
+<div class="sidebar-widget">
+    <h3>Featured Articles</h3>
+    {% if featured_posts %}
+        <div class="featured-post">
+            {% for post in featured_posts %}
+            <div class="featured-post-item">
+                <h4>{{ post.title|truncatewords:10 }}</h4>
+                <a href="{% url 'blog_detail' post.slug %}">Read More →</a>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No featured articles available at the moment.</p>
+    {% endif %}
+</div>
+                    <!-- Related Posts Widget -->
+                    <div class="sidebar-widget">
+                        <h3>Related Posts</h3>
+                        <div class="related-posts">
+                            {% for related_post in related_posts %}
+                            <div class="related-post-item">
+                                {% if related_post.featured_image %}
+                                <div class="related-post-image" style="background-image: url('{{ related_post.featured_image.url }}')"></div>
+                                {% elif related_post.image_url %}
+                                <div class="related-post-image" style="background-image: url('{{ related_post.image_url }}')"></div>
+                                {% else %}
+                                <div class="related-post-image" style="background-image: url('https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100')"></div>
+                                {% endif %}
+                                <div class="related-post-content">
+                                    <h4><a href="{% url 'blog_detail' related_post.slug %}">{{ related_post.title|truncatewords:6 }}</a></h4>
+                                    <span class="post-date">{{ related_post.date_published|date:"M d, Y" }}</span>
+                                </div>
+                            </div>
+                            {% empty %}
+                            <p>No related posts.</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
-    </div>
-
-    <!-- Main Content -->
-    <div class="container">
-        <div class="blog-detail">
-            <!-- Main Article -->
-            <main class="article-main">
-                <div class="article-header">
-                    <span class="article-category">{{ blog.category|default:"General" }}</span>
-                    <h1 class="article-title">{{ blog.title|default:"Untitled Post" }}</h1>
-                    <div class="article-meta">
-                        <span><i class="far fa-calendar"></i> {{ blog.date_published|date:"F d, Y"|default:"Date not available" }}</span>
-                        <span><i class="far fa-clock"></i> {{ blog.read_time|default:5 }} min read</span>
-                        {% if blog.author %}
-                        <span><i class="far fa-user"></i> {{ blog.author.get_full_name|default:blog.author.username }}</span>
-                        {% endif %}
-                    </div>
-                </div>
-
-                {% if blog.featured_image %}
-                    <img src="{{ blog.featured_image.url }}" alt="{{ blog.title }}">
-                {% elif blog.image_url %}
-                    <img src="{{ blog.image_url }}" alt="{{ blog.title }}">
-                {% else %}
-                    <img src="{% static 'images/default-blog.jpg' %}" alt="{{ blog.title }}">
-                {% endif %}
-
-                <div class="article-content">
-                    {{ blog.content|safe|linebreaks }}
-                </div>
-
-                <!-- Author Box -->
-                <div class="author-box">
-                    <div class="author-avatar">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="author-info">
-                        <h4>About the Author</h4>
-                        <p>
-                            {% if blog.author %}
-                                {{ blog.author.get_full_name|default:blog.author.username }} is an expert in {{ blog.category|default:"corporate law" }} with years of experience helping businesses navigate complex regulatory environments.
-                            {% else %}
-                                Anjali Bansal & Associates is a leading corporate law firm specializing in FEMA, SEBI, fundraising, and startup compliance.
-                            {% endif %}
-                        </p>
-                    </div>
-                </div>
-            </main>
-
-            <!-- Sidebar -->
-            <aside class="sidebar">
-                <!-- Related Posts -->
-                <div class="sidebar-widget">
-                    <h3>Related Articles</h3>
-                    <div class="related-posts">
-                        {% for related in related_posts|slice:":3" %}
-                        <a href="{% url 'blog_detail' related.slug %}" class="related-post">
-                            <div class="related-post-image">
-                                {% if related.featured_image %}
-                                <img src="{{ related.featured_image.url }}" alt="{{ related.title }}">
-                                {% else %}
-                                <div style="background: #f0f0f0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
-                                    <i class="fas fa-newspaper" style="color: #ccc;"></i>
-                                </div>
-                                {% endif %}
-                            </div>
-                            <div class="related-post-content">
-                                <h4>{{ related.title|truncatewords:6 }}</h4>
-                                <p>{{ related.date_published|date:"M d, Y" }}</p>
-                            </div>
-                        </a>
-                        {% empty %}
-                        <p>No related articles found.</p>
-                        {% endfor %}
-                    </div>
-                </div>
-
-                <!-- Categories -->
-                <div class="sidebar-widget">
-                    <h3>Categories</h3>
-                    <ul class="categories-list">
-                        {% for cat in categories %}
-                        <li>
-                            <a href="{% url 'blogs' %}?category={{ cat.0 }}">
-                                <i class="fas fa-folder"></i>
-                                {{ cat.1 }}
-                            </a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-
-                <!-- Share Article -->
-                <div class="sidebar-widget">
-                    <h3>Share this Article</h3>
-                    <div style="display: flex; gap: 10px;">
-                        <button onclick="shareOnFacebook()" style="flex: 1; padding: 10px; background: #3b5998; color: white; border: none; border-radius: 5px; cursor: pointer;">
-                            <i class="fab fa-facebook"></i> Facebook
-                        </button>
-                        <button onclick="shareOnLinkedIn()" style="flex: 1; padding: 10px; background: #0077b5; color: white; border: none; border-radius: 5px; cursor: pointer;">
-                            <i class="fab fa-linkedin"></i> LinkedIn
-                        </button>
-                    </div>
-                </div>
-            </aside>
-        </div>
-    </div>
+    </section>
 
     <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h4>Anjali Bansal & Associates</h4>
-                    <p>Expert legal consulting for FEMA, SEBI, Corporate Law, Fundraising, and Startup Compliance.</p>
-                </div>
-                <div class="footer-column">
-                    <h4>Quick Links</h4>
-                    <ul class="footer-links">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/about/">About Us</a></li>
-                        <li><a href="/services/">Services</a></li>
-                        <li><a href="/blogs/">Blogs</a></li>
-                        <li><a href="/contact/">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>Our Services</h4>
-                    <ul class="footer-links">
-                        <li><a href="/services/#fema">FEMA Compliance</a></li>
-                        <li><a href="/services/#sebi">SEBI Regulations</a></li>
-                        <li><a href="/services/#corporate">Corporate Law</a></li>
-                        <li><a href="/services/#fundraising">Fundraising</a></li>
-                        <li><a href="/services/#startups">Startup Advisory</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>Contact Info</h4>
-                    <ul class="footer-links">
-                        <li><i class="fas fa-map-marker-alt"></i> 123 Legal Street, New Delhi</li>
-                        <li><i class="fas fa-phone"></i> +91 98765 43210</li>
-                        <li><i class="fas fa-envelope"></i> contact@example.com</li>
-                    </ul>
-                </div>
+    <footer style="background-color: #1a1a1a; color: #ffffff; padding: 40px 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;">
+            
+            <div style="flex: 1; min-width: 250px;">
+                <h3 style="color: #4CAF50; margin-bottom: 15px;">Anjali Bansal & Associates</h3>
+                <p style="font-size: 14px; line-height: 1.6; color: #cccccc;">
+                    Providing quality services with transparency and integrity. Follow us on our journey to excellence.
+                </p>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Anjali Bansal & Associates. All rights reserved.</p>
+
+            <div style="flex: 1; min-width: 150px;">
+                <h4 style="margin-bottom: 15px; font-size: 18px;">Quick Links</h4>
+                <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                    <li><a href="/" style="color: #cccccc; text-decoration: none;">Home</a></li>
+                    <li><a href="/about" style="color: #cccccc; text-decoration: none;">About Us</a></li>
+                    <li><a href="/services" style="color: #cccccc; text-decoration: none;">Services</a></li>
+                    <li><a href="/contact" style="color: #cccccc; text-decoration: none;">Contact</a></li>
+                </ul>
+            </div>
+
+            <div style="flex: 1; min-width: 150px;">
+                <h4 style="margin-bottom: 15px; font-size: 18px;">Legal Support</h4>
+                <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                    <li><a href="/privacy-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Privacy Policy</a></li>
+                    <li><a href="/terms and conditions" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Terms & Conditions</a></li>
+                    <li><a href="/refund-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Refund Policy</a></li>
+                    <li><a href="/disclaimer" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Disclaimer</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0;">
+
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 13px; color: #888;">
+            <p>&copy; 2025 Anjali Bansal & Associates. All Rights Reserved.</p>
+            <div style="display: flex; gap: 15px;">
+                <a href="#" style="color: #888; text-decoration: none;">Twitter</a>
+                <a href="#" style="color: #888; text-decoration: none;">LinkedIn</a>
+                <a href="#" style="color: #888; text-decoration: none;">Instagram</a>
             </div>
         </div>
     </footer>
 
-    <script>
-        function shareOnFacebook() {
-            const url = window.location.href;
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
-        }
-
-        function shareOnLinkedIn() {
-            const url = window.location.href;
-            window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}`, '_blank');
-        }
-
-        // Increment view count
-        document.addEventListener('DOMContentLoaded', function() {
-            // This would typically be an AJAX call to your backend
-            console.log('Blog post viewed:', '{{ blog.title }}');
-            // You can implement view tracking here
-        });
-    </script>
+    <script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>

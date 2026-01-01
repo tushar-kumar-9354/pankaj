@@ -4,5 +4,7 @@ psycopg2-binary
 whitenoise
 waitress
 flask
+whitenoise
+dj-database-url
+psycopg2-binary
 jsonschema
-requests

@@ -4,3 +4,5 @@ psycopg2-binary
 whitenoise
 waitress
 flask
+jsonschema
+requests

@@ -737,41 +737,7 @@
     margin-bottom: 20px;
 }
 
-.member-social {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
 
-.member-social a {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    font-size: 1rem;
-}
-
-.member-social .linkedin {
-    background: #0077b5;
-}
-
-.member-social .email {
-    background: #000;
-}
-
-.member-social .profile {
-    background: #666;
-}
-
-.member-social a:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
 
 .team-cta {
     text-align: center;

@@ -6,7 +6,6 @@ thankyou page better ---done
 cancellaytion  reason fixed from views ---done
 admin panel --done 
 paytment
-subscribe 
 remove duplicates,bugs,seperate css js and html
 optimize code
 search engine opt

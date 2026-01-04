@@ -57,13 +57,9 @@ path('booking/<uuid:booking_id>/cancel/', views.admin_cancel_booking, name='canc
 path('admin/verify-cash/<str:payment_id>/', views.admin_verify_cash_payment, name='verify_cash_payment'),
 path('booking/<uuid:booking_id>/download/', views.download_booking_details, name='download_booking_details'),
 path('booking/test-json/', views.test_json_response, name='test_json'),
-# Subscription URLs
-path('blogs/verify-subscription/<str:token>/', views.verify_subscription, name='verify_subscription'),
-path('blogs/unsubscribe/<str:token>/', views.unsubscribe, name='unsubscribe'),
-path('debug/subscriptions/', views.debug_subscription, name='debug_subscriptions'),
+
 path('test-email/', views.test_email_send, name='test_email'),
-path('test-subscription/', views.test_subscription_form, name='test_subscription'),
-path('blogs/subscribe/', views.subscribe_to_blogs, name='subscribe_to_blogs'),
+
 ]
 
 def blog_detail_by_id(request, blog_id):

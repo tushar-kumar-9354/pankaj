@@ -16,8 +16,7 @@
 </head>
 <body>
     <!-- Header -->
-    <header>
-        
+  <header>
     <div class="container header-container">
         <button class="mobile-menu-btn" id="mobileMenuBtn">
             <i class="fas fa-bars"></i>
@@ -27,7 +26,7 @@
             <img src="{% static 'images/kplogo.png' %}" alt="Company Logo" class="logo-image">
             <div class="logo-text">
                 <h1>KP RegTech</h1>
-           
+                <p></p>
             </div>
         </div>
         
@@ -43,8 +42,6 @@
         </nav>
     </div>
 </header>
-    
-
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="container">
@@ -82,19 +79,7 @@
                 <div class="expertise-icon">
                     <i class="fas fa-chart-line"></i>
                 </div>
-                <div class="expertise-bg" style="background-image: url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100');"></div>
-                <h3>Private Equity & Fundraising</h3>
-                <p>Comprehensive support for equity and debt fundraising, from early-stage startups to established companies. We structure transactions that maximize value while ensuring regulatory compliance.</p>
-                <ul class="expertise-features">
-                    <li>PE/VC Investment Structuring</li>
-                    <li>Debt & Equity Financing</li>
-                    <li>Due Diligence & Documentation</li>
-                    <li>CCDs, NCDs, OCDs Issuance</li>
-                    <li>Term Sheet Negotiation</li>
-                </ul>
-                <!-- Updated link for PE/VC -->
-                <a href="/our_expertise#private-equity" class="btn">Read More</a>
-            </div>
+                
             <div class="expertise-item">
                 <div class="expertise-icon">
                     <i class="fas fa-balance-scale"></i>
@@ -116,52 +101,6 @@
     </div>
 </section>
 
-    <!-- Belief Section -->
-    <section class="belief" id="belief">
-        <div class="belief-bg"></div>
-        <div class="container">
-            <div class="section-title">
-                <h2>We Believe...</h2>
-            </div>
-            <div class="belief-content">
-                <blockquote>"in providing exceptional corporate secretarial services that empower businesses to navigate the complex regulatory landscape with confidence. Our expertise ensures compliance, minimizes risks, and enables you to focus on achieving your strategic objectives."</blockquote>
-                <p>At pankaj and Associates, we understand the challenges businesses face in navigating the ever-evolving legal and regulatory scenario. We are committed to providing accurate and timely advice, ensuring your company maintains compliance and minimizes risks.</p>
-                <a href="/about" class="btn">Read More About Us</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- What Sets Us Apart Section -->
-    <section class="features">
-        <div class="container">
-            <div class="section-title">
-                <h2>What sets us apart?</h2>
-            </div>
-            <div class="features-grid">
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="fas fa-user-tie"></i>
-                    </div>
-                    <h4>Expertise and Compliance</h4>
-                    <p>Deep knowledge of regulatory frameworks and commitment to ensuring full compliance for all clients.</p>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <h4>Meticulous Attention to Detail</h4>
-                    <p>Thorough approach to every case, ensuring no aspect is overlooked in your regulatory compliance.</p>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <h4>Timely Deliverables</h4>
-                    <p>Respect for deadlines with efficient processes to ensure all deliverables are provided on schedule.</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Articles Section -->
 <!-- Articles Section -->
@@ -252,7 +191,7 @@
                 <h2>Need more details? Contact us</h2>
             </div>
             <div class="contact-content">
-                <p>We are here to assist. Contact us by phone, email, or via our social media channels.</p>
+                <p>We are here to assist. Contact us by phone, and email.</p>
                 <div class="contact-info">
                     <div class="contact-item">
                         <i class="fas fa-phone-alt"></i>
@@ -262,10 +201,7 @@
                         <i class="fas fa-envelope"></i>
                         <span>kpregtech@gmail.com</span>
                     </div>
-                    <div class="contact-item">
-                        <i class="fas fa-clock"></i>
-                        <span>Mon-Fri: 9AM-6PM</span>
-                    </div>
+                    
                 </div>
                 <div style="margin-top: 40px;">
                     <a href="/contact" class="btn">Contact Us</a>
@@ -282,7 +218,7 @@
     <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;">
         
         <div style="flex: 1; min-width: 250px;">
-            <h3 style="color: #4CAF50; margin-bottom: 15px;">KP RegTech</h3>
+            <h3 style="color: #ffffff; margin-bottom: 15px;">KP RegTech</h3>
             <p style="font-size: 14px; line-height: 1.6; color: #cccccc;">
                 Providing quality services with transparency and integrity. Follow us on our journey to excellence.
             </p>
@@ -313,13 +249,10 @@
 
     <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 13px; color: #888;">
         <p>&copy; 2025 KP RegTech. All Rights Reserved.</p>
-        <div style="display: flex; gap: 15px;">
-            <a href="#" style="color: #888; text-decoration: none;">Twitter</a>
-            <a href="#" style="color: #888; text-decoration: none;">LinkedIn</a>
-            <a href="#" style="color: #888; text-decoration: none;">Instagram</a>
-        </div>
+        
     </div>
 </footer>
+</style>
 
 <script>
 // Mobile menu toggle
@@ -347,8 +280,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-
-
     <script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>

@@ -97,7 +97,7 @@ if (statsSection) {
                 name: "Sanjay Kapoor",
                 position: "CEO, Capital Bank",
                 rating: 4.5,
-                content: "As a banking institution, our compliance requirements are stringent. Anjali Bansal & Associates has consistently delivered accurate and timely solutions.",
+                content: "As a banking institution, our compliance requirements are stringent. KP RegTech has consistently delivered accurate and timely solutions.",
                 tags: ["Banking Compliance", "RBI Regulations", "Audit Support"],
                 industry: "finance"
             },
@@ -146,7 +146,7 @@ if (statsSection) {
                 name: "Rohit Mehta",  // Added from featured slider
                 position: "CFO, TechNova Solutions",
                 rating: 5,
-                content: "Anjali Bansal & Associates has been instrumental in guiding us through complex SEBI compliance requirements.",
+                content: "KP RegTech has been instrumental in guiding us through complex SEBI compliance requirements.",
                 tags: ["SEBI Compliance", "Corporate Governance", "Board Meetings"]
             }
         ],
@@ -171,7 +171,7 @@ if (statsSection) {
                 name: "Sanjay Kapoor",
                 position: "CEO, Capital Bank",
                 rating: 4.5,
-                content: "As a banking institution, our compliance requirements are stringent. Anjali Bansal & Associates has consistently delivered accurate and timely solutions.",
+                content: "As a banking institution, our compliance requirements are stringent. KP RegTech has consistently delivered accurate and timely solutions.",
                 tags: ["Banking Compliance", "RBI Regulations", "Audit Support"]
             },
             {

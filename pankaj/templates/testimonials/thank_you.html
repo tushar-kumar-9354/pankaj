@@ -1,107 +1,236 @@
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Thank You | KP RegTech</title>
+    
+    <!-- Same fonts & icons as main site -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap">
+    
+    <!-- You can either link your existing style.css or add critical styles here -->
+    <style>
+        :root {
+            --primary: #2c5282;           /* Main brand blue */
+            --primary-dark: #1e3a5f;
+            --accent: #4299e1;
+            --light: #f7fafc;
+            --gray: #4a5568;
+            --dark: #1a202c;
+            --success: #38a169;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .thankyou-hero {
+            background: linear-gradient(135deg, rgba(44, 82, 130, 0.92) 0%, rgba(30, 58, 95, 0.95) 100%),
+                        url('{% static "images/pattern-dots-light.png" %}') repeat;
+            background-size: 60px;
+            color: white;
+            padding: 9rem 1rem 7rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .thankyou-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 30% 20%, rgba(66,153,225,0.18) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .thankyou-content {
+            max-width: 780px;
+            margin: 0 auto;
+        }
+
+        .thankyou-icon {
+            font-size: 5.5rem;
+            color: var(--accent);
+            margin-bottom: 1.8rem;
+            filter: drop-shadow(0 8px 16px rgba(0,0,0,0.25));
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 1.35rem;
+            font-weight: 400;
+            opacity: 0.92;
+            margin-bottom: 2.5rem;
+        }
+
+        .next-steps-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+            padding: 2.5rem;
+            margin: 3rem auto;
+            max-width: 680px;
+        }
+
+        .next-steps-list {
+            font-size: 1.1rem;
+            color: var(--gray);
+        }
+
+        .next-steps-list i {
+            color: var(--success);
+            width: 1.8em;
+        }
+
+        .btn-brand {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.9rem 2.2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.35s ease;
+            box-shadow: 0 4px 14px rgba(44,82,130,0.25);
+        }
+
+        .btn-brand:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(44,82,130,0.35);
+        }
+
+        .btn-outline-brand {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+        }
+
+        .btn-outline-brand:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .action-cards {
+            margin-top: 4rem;
+        }
+
+        .action-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+            height: 100%;
+        }
+
+        .action-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.14);
+        }
+
+        .action-icon {
+            font-size: 2.8rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .text-primary    { color: var(--primary) !important; }
+        .text-success    { color: var(--success) !important; }
+        .text-accent     { color: var(--accent) !important; }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.8rem; }
+            .thankyou-icon { font-size: 4.5rem; }
+            .thankyou-hero { padding: 7rem 1rem 5rem; }
+        }
+    </style>
 </head>
 <body>
-    
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <!-- Success Card -->
-            <div class="card shadow-lg border-0 text-center py-5" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                <div class="card-body text-white">
-                    <div class="mb-4">
-                        <i class="fas fa-check-circle fa-5x text-white"></i>
-                    </div>
-                    
-                    <h1 class="display-4 fw-bold mb-3">Thank You!</h1>
-                    
-                    <p class="lead mb-4">
-                        Your testimonial has been successfully submitted for review.
-                    </p>
-                    
-                    <div class="row justify-content-center mt-4">
-                        <div class="col-md-8">
-                            <div class="card bg-white bg-opacity-25 border-0 mb-3">
-                                <div class="card-body">
-                                    <h5 class="text-white">
-                                        <i class="fas fa-envelope me-2"></i>
-                                        What's Next?
-                                    </h5>
-                                    <ul class="list-unstyled text-white text-start mt-3">
-                                        <li class="mb-2">
-                                            <i class="fas fa-check-circle me-2"></i>
-                                            Check your email for confirmation
-                                        </li>
-                                        <li class="mb-2">
-                                            <i class="fas fa-clock me-2"></i>
-                                            Our team will review your submission
-                                        </li>
-                                        <li class="mb-2">
-                                            <i class="fas fa-bell me-2"></i>
-                                            You'll be notified when it's published
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-question-circle me-2"></i>
-                                            Questions? <a href="{% url 'contact' %}" class="text-white fw-bold">Contact Us</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="mt-5">
-                        <a href="{% url 'testimonials' %}" class="btn btn-light btn-lg me-3">
-                            <i class="fas fa-arrow-left me-2"></i>Back to Testimonials
-                        </a>
-                        <a href="{% url 'index' %}" class="btn btn-outline-light btn-lg">
-                            <i class="fas fa-home me-2"></i>Return to Home
-                        </a>
-                    </div>
+
+    <!-- Hero / Thank You Banner -->
+    <section class="thankyou-hero">
+        <div class="thankyou-content">
+            <i class="fas fa-check-circle thankyou-icon"></i>
+            
+            <h1>Thank You!</h1>
+            <p class="subtitle">
+                Your testimonial has been successfully submitted<br>
+                and is currently under review.
+            </p>
+
+            <div class="next-steps-card">
+                <h4 style="color: var(--primary); font-weight: 600; margin-bottom: 1.6rem;">
+                    What's Next?
+                </h4>
+                
+                <ul class="list-unstyled next-steps-list">
+                    <li class="mb-3"><i class="fas fa-envelope"></i> Confirmation email has been sent</li>
+                    <li class="mb-3"><i class="fas fa-clock"></i> Our team will carefully review your submission (usually 1–3 business days)</li>
+                    <li class="mb-3"><i class="fas fa-bell"></i> You'll receive notification once it's published</li>
+                    <li><i class="fas fa-question-circle"></i> Any questions? 
+                        <a href="{% url 'contact' %}" class="fw-bold text-accent">Contact us</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="mt-5 pt-3">
+                <a href="{% url 'testimonials' %}" class="btn btn-brand btn-lg me-3 mb-3">
+                    <i class="fas fa-arrow-left me-2"></i> Back to Testimonials
+                </a>
+                <a href="{% url 'index' %}" class="btn btn-outline-brand btn-lg mb-3">
+                    <i class="fas fa-home me-2"></i> Return to Home
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Action Cards -->
+    <section class="container action-cards">
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-4">
+                <div class="action-card">
+                    <i class="fas fa-share-alt action-icon text-primary"></i>
+                    <h5>Share Your Experience</h5>
+                    <p class="text-muted mb-3">Help other businesses discover us</p>
+                    <!-- You can add social share buttons here later -->
                 </div>
             </div>
-            
-            <!-- Next Steps -->
-            <div class="row mt-4">
-                <div class="col-md-4">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-share-alt fa-2x text-primary mb-3"></i>
-                            <h5>Share with Others</h5>
-                            <p class="text-muted">Let others know about your positive experience</p>
-                        </div>
-                    </div>
+
+            <div class="col-md-4">
+                <div class="action-card">
+                    <i class="fas fa-calendar-check action-icon text-success"></i>
+                    <h5>Need More Support?</h5>
+                    <p class="text-muted mb-3">Schedule a consultation</p>
+                    <a href="{% url 'contact' %}" class="btn btn-sm btn-outline-brand">
+                        Book Consultation
+                    </a>
                 </div>
-                <div class="col-md-4">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-calendar-check fa-2x text-success mb-3"></i>
-                            <h5>Book Consultation</h5>
-                            <p class="text-muted">Need more services? Book a consultation</p>
-                            <a href="{% url 'contact' %}" class="btn btn-sm btn-outline-success">Book Now</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-newspaper fa-2x text-info mb-3"></i>
-                            <h5>Read Our Blog</h5>
-                            <p class="text-muted">Stay updated with latest compliance insights</p>
-                            <a href="{% url 'blogs' %}" class="btn btn-sm btn-outline-info">Read Blog</a>
-                        </div>
-                    </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="action-card">
+                    <i class="fas fa-newspaper action-icon text-accent"></i>
+                    <h5>Latest Compliance Updates</h5>
+                    <p class="text-muted mb-3">Stay informed with our insights</p>
+                    <a href="{% url 'blogs' %}" class="btn btn-sm btn-outline-brand">
+                        Read Blog
+                    </a>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </section>
 
 </body>
 </html>

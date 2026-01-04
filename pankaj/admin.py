@@ -1,5 +1,7 @@
 # admin.py - Fixed version with proper indentation
+from traceback import format_tb
 from django.contrib import admin
+from flask import redirect
 from .models import BlogPost, Testimonial, TestimonialSubmission, ConsultationBooking, AvailableSlot
 from django.utils import timezone
 from django.core.mail import send_mail
@@ -137,7 +139,6 @@ class TestimonialAdmin(admin.ModelAdmin):
         'rating',
         'is_featured',
         'is_active',
-        'has_video',
     )
     
     list_filter = ('industry', 'is_featured', 'is_active')
@@ -155,9 +156,7 @@ class TestimonialAdmin(admin.ModelAdmin):
             'fields': (
                 'client_image',
                 'image_url',
-                'video_url',
-                'video_thumbnail',
-                'video',
+                
             ),
             'classes': ('collapse',)
         }),
@@ -166,11 +165,7 @@ class TestimonialAdmin(admin.ModelAdmin):
         }),
     )
     
-    def has_video(self, obj):
-        return bool(obj.video or obj.video_url)
-    has_video.boolean = True
-    has_video.short_description = 'Has Video'
-
+    
 @admin.register(TestimonialSubmission)
 class TestimonialSubmissionAdmin(admin.ModelAdmin):
     list_display = ['full_name', 'company_name', 'industry', 'status', 'submitted_date', 'has_profile_picture', 'has_testimonial']
@@ -254,7 +249,7 @@ class TestimonialSubmissionAdmin(admin.ModelAdmin):
             # Send approval email
             try:
                 send_mail(
-                    subject='Your Testimonial Has Been Published - Anjali Bansal & Associates',
+                    subject='Your Testimonial Has Been Published - KP RegTech',
                     message=f'''Dear {submission.full_name},
                     
 Great news! Your testimonial has been approved and is now published on our website.
@@ -264,7 +259,7 @@ Thank you again for sharing your experience. We truly value your feedback.
 View your testimonial here: https://yourwebsite.com/testimonials/
 
 Best regards,
-Anjali Bansal & Associates''',
+KP RegTech''',
                     from_email=settings.DEFAULT_FROM_EMAIL,
                     recipient_list=[submission.email],
                     fail_silently=True,
@@ -285,7 +280,7 @@ Anjali Bansal & Associates''',
             # Send rejection email
             try:
                 send_mail(
-                    subject='Regarding Your Testimonial Submission - Anjali Bansal & Associates',
+                    subject='Regarding Your Testimonial Submission - KP RegTech',
                     message=f'''Dear {submission.full_name},
                     
 Thank you for submitting your testimonial. After careful review, we've decided not to publish it at this time.
@@ -293,7 +288,7 @@ Thank you for submitting your testimonial. After careful review, we've decided n
 We still appreciate your feedback and hope to serve you again in the future.
 
 Best regards,
-Anjali Bansal & Associates''',
+KP RegTech''',
                     from_email=settings.DEFAULT_FROM_EMAIL,
                     recipient_list=[submission.email],
                     fail_silently=True,
@@ -393,7 +388,18 @@ class ConsultationBookingAdmin(admin.ModelAdmin):
                       'cancellation_reason_display', 'is_cancellable_display')
     list_editable = ('status', 'is_paid')
     date_hierarchy = 'appointment_date'
-    actions = ['mark_as_confirmed', 'mark_as_completed', 'cancel_selected_bookings']
+    actions = ['mark_as_confirmed', 'mark_as_completed', 'cancel_selected_bookings', 'download_selected_bookings']
+    def download_selected_bookings(self, request, queryset):
+        """Generate PDF for selected bookings."""
+        if queryset.count() == 1:
+            booking = queryset.first()
+            from django.urls import reverse
+            url = reverse('download_booking_details', kwargs={'booking_id': booking.booking_id})
+            return redirect(f"{url}?format=pdf")
+        else:
+            self.message_user(request, "Please select only one booking to download.", level='WARNING')
+    
+    download_selected_bookings.short_description = "Download booking details (PDF)"
     
     fieldsets = (
         ('Booking Information', {
@@ -599,3 +605,126 @@ class AvailableSlotAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         return super().get_queryset(request).order_by('day', 'start_time')
 
+# from .models import Payment
+
+# @admin.register(Payment)
+# class PaymentAdmin(admin.ModelAdmin):
+#     list_display = ('payment_id', 'booking', 'amount', 'method', 'status', 'created_at')
+#     list_filter = ('status', 'method', 'created_at')
+#     search_fields = ('payment_id', 'booking__booking_id', 'booking__name', 'booking__email')
+#     readonly_fields = ('created_at', 'updated_at', 'completed_at')
+#     list_editable = ('status',)
+    
+#     fieldsets = (
+#         ('Payment Information', {
+#             'fields': ('booking', 'payment_id', 'razorpay_order_id', 'razorpay_payment_id')
+#         }),
+#         ('Payment Details', {
+#             'fields': ('amount', 'currency', 'method', 'status')
+#         }),
+#         ('Payment Method Details', {
+#             'fields': ('upi_id', 'card_last4', 'bank_name'),
+#             'classes': ('collapse',)
+#         }),
+#         ('Timestamps', {
+#             'fields': ('created_at', 'updated_at', 'completed_at'),
+#             'classes': ('collapse',)
+#         }),
+#         ('Error Information', {
+#             'fields': ('error_code', 'error_description'),
+#             'classes': ('collapse',)
+#         }),
+#     )
+
+from django.utils.html import format_html
+from .models import Payment
+@admin.register(Payment)
+class PaymentAdmin(admin.ModelAdmin):
+    list_display = ('payment_id', 'booking_link', 'amount', 'method', 'status_display', 'is_paid_display', 'created_at')
+    list_filter = ('status', 'method', 'created_at', 'cash_payment_verified')
+    search_fields = ('payment_id', 'booking__booking_id', 'booking__name')
+    readonly_fields = ('payment_id', 'created_at', 'completed_at', 'cash_payment_verified_at')
+    
+    def booking_link(self, obj):
+        if obj.booking:
+            return format_html('<a href="/admin/consultation/consultationbooking/{}/change/">{}</a>', 
+                              obj.booking.id, obj.booking.booking_id)
+        return "No Booking"
+    booking_link.short_description = 'Booking'
+    
+    def status_display(self, obj):
+        if obj.method == 'cash' and not obj.cash_payment_verified:
+            return format_html('<span style="color: orange;">⏳ Pending Verification</span>')
+        elif obj.status == 'success':
+            return format_html('<span style="color: green;">✅ Paid</span>')
+        elif obj.status == 'pending':
+            return format_html('<span style="color: orange;">⏳ Pending</span>')
+        else:
+            return format_html('<span style="color: red;">❌ {}</span>', obj.get_status_display())
+    status_display.short_description = 'Status'
+    
+    def is_paid_display(self, obj):
+        if not obj.booking:
+            return format_html('<span style="color: red;">❌ No Booking</span>')
+        if obj.method == 'cash' and not obj.cash_payment_verified:
+            return format_html('<span style="color: orange;">⏳ Pending</span>')
+        return format_html('<span style="color: green;">✅</span>' if obj.booking.is_paid else '<span style="color: red;">❌</span>')
+    is_paid_display.short_description = 'Paid'
+    
+    def get_queryset(self, request):
+        """Optimize query to select related booking"""
+        return super().get_queryset(request).select_related('booking')
+    
+    fieldsets = (
+        ('Payment Information', {
+            'fields': ('payment_id', 'booking', 'amount', 'method', 'status', 'transaction_id')
+        }),
+        ('Cash Payment Verification', {
+            'fields': ('cash_payment_verified', 'cash_payment_verified_by', 'cash_payment_verified_at', 'cash_payment_notes'),
+            'classes': ('collapse',)
+        }),
+        ('Timestamps', {
+            'fields': ('created_at', 'completed_at'),
+            'classes': ('collapse',)
+        }),
+    )
+
+from .models import BlogSubscriber
+
+@admin.register(BlogSubscriber)
+class BlogSubscriberAdmin(admin.ModelAdmin):
+    list_display = ('email', 'is_active', 'is_verified', 'subscribed_at')
+    list_filter = ('is_active', 'is_verified', 'subscribed_at')
+    search_fields = ('email',)
+    readonly_fields = ('subscribed_at', 'unsubscribed_at', 'verification_token')
+    actions = ['activate_subscribers', 'deactivate_subscribers', 
+               'send_verification_emails', 'test_email_send']
+    
+    def test_email_send(self, request, queryset):
+        """Test sending verification emails."""
+        for subscriber in queryset:
+            success = subscriber.send_verification_email()
+            if success:
+                self.message_user(request, f"Test email sent to {subscriber.email}")
+            else:
+                self.message_user(request, f"Failed to send email to {subscriber.email}", level='ERROR')
+    
+    test_email_send.short_description = "Send test verification email"
+    def activate_subscribers(self, request, queryset):
+        updated = queryset.update(is_active=True)
+        self.message_user(request, f'{updated} subscribers activated.')
+    
+    def deactivate_subscribers(self, request, queryset):
+        updated = queryset.update(is_active=False, unsubscribed_at=timezone.now())
+        self.message_user(request, f'{updated} subscribers deactivated.')
+    
+    def send_verification_emails(self, request, queryset):
+        sent_count = 0
+        for subscriber in queryset.filter(is_verified=False):
+            if subscriber.send_verification_email():
+                sent_count += 1
+        self.message_user(request, f'Verification emails sent to {sent_count} subscribers.')
+    
+    activate_subscribers.short_description = "Activate selected subscribers"
+    deactivate_subscribers.short_description = "Deactivate selected subscribers"
+    send_verification_emails.short_description = "Send verification emails"

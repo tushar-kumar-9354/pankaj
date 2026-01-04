@@ -52,6 +52,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    'pankaj.middleware.PaymentDebugMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'pankaj.middleware.JsonExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'bisht.urls'
@@ -144,8 +147,11 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 
-# Add these to your settings.py
+# # # Add these to your settings.py
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# In settings.py, add this:
+SITE_URL = 'http://127.0.0.1:8000'  # For local development
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True

@@ -1,13 +1,19 @@
 latest blogs ---done 
 what we think ---done
 industries 
-submit testimonials better drop down 
-thankyou page better
+submit testimonials better drop down --
+thankyou page better ---done 
 cancellaytion  reason fixed from views ---done
-admin panel
+admin panel --done 
 paytment
 subscribe 
 remove duplicates,bugs,seperate css js and html
 optimize code
 search engine opt
+
+
+
+Whether you are planning to register, already registered, or preparing for inspection — we are here to help.
+
+
 

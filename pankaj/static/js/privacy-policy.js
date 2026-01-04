@@ -243,7 +243,7 @@ function printPolicy() {
         <!DOCTYPE html>
         <html>
         <head>
-            <title>Privacy Policy - Anjali Bansal & Associates</title>
+            <title>Privacy Policy - KP RegTech</title>
             <style>
                 body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; }
                 h1, h2, h3 { color: #1a3a5f; }
@@ -261,8 +261,8 @@ function printPolicy() {
         <body>
             <div class="print-header">
                 <h1>Privacy Policy</h1>
-                <h2>Anjali Bansal & Associates</h2>
-                <p>Company Secretaries</p>
+                <h2>KP RegTech</h2>
+                <p></p>
             </div>
             ${printContent.innerHTML}
             <div class="print-date">
@@ -287,7 +287,7 @@ function downloadPolicy() {
         <!DOCTYPE html>
         <html>
         <head>
-            <title>Privacy Policy - Anjali Bansal & Associates</title>
+            <title>Privacy Policy - KP RegTech</title>
             <style>
                 body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 40px; }
                 h1, h2, h3 { color: #1a3a5f; }
@@ -302,13 +302,13 @@ function downloadPolicy() {
         <body>
             <div class="pdf-header">
                 <h1>Privacy Policy</h1>
-                <h2>Anjali Bansal & Associates</h2>
-                <p class="company-info">Company Secretaries</p>
+                <h2>KP RegTech</h2>
+                <p class="company-info"></p>
                 <p class="company-info">Last Updated: ${new Date().toLocaleDateString()}</p>
             </div>
             ${policyContent}
             <div class="pdf-footer">
-                <p>© ${new Date().getFullYear()} Anjali Bansal & Associates. All rights reserved.</p>
+                <p>© ${new Date().getFullYear()} KP RegTech. All rights reserved.</p>
                 <p>This document was downloaded on ${new Date().toLocaleDateString()}</p>
             </div>
         </body>

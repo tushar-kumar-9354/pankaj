@@ -4,192 +4,326 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Disclaimer | Anjali Bansal & Associates | Company Secretaries</title>
-    <link rel="stylesheet" href="{% static 'css/disclaimer.css' %}">
+    <title>KP RegTech</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .hero {
+            background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.8) 100%), url('{% static "images/home.avif" %}') center/cover no-repeat fixed;
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
     <header>
-    <div class="container header-container">
-        <button class="mobile-menu-btn" id="mobileMenuBtn">
-            <i class="fas fa-bars"></i>
-        </button>
-        
-        <div class="logo">
-            <img src="{% static 'images/kplogo.png' %}" alt="Company Logo" class="logo-image">
-            <div class="logo-text">
-                <h1>ANJALI BANSAL & ASSOCIATES</h1>
-                <p>COMPANY SECRETARIES</p>
+        <div class="container header-container">
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="logo">
+                <img src="{% static 'images/kplogo.png' %}" alt="Company Logo" class="logo-image">
+                <div class="logo-text">
+                    <a href="/" style="text-decoration: none; color: inherit;"><h1>KP RegTech</h1></a>
+                </div>
             </div>
+            <nav class="nav-menu" id="navMenu">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/our_expertise">Expertise</a></li>
+                    <li><a href="/testimonials">Testimonials</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle">Resources <span class="dropdown-arrow">▼</span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/blogs">Blogs</a></li>
+                            <li class="subdropdown">
+                                <a href="#" class="subdropdown-toggle">Research Analysts <span class="subdropdown-arrow">▶</span></a>
+                                <ul class="subdropdown-menu">
+                                    <li><a href="/pdfs/analyst-report-2024.pdf" target="_blank">2024 Market Analysis</a></li>
+                                    <li><a href="/pdfs/quarterly-review-q1.pdf" target="_blank">Q1 2024 Review</a></li>
+                                    <li><a href="/pdfs/industry-trends.pdf" target="_blank">Industry Trends</a></li>
+                                </ul>
+                            </li>
+                            <li class="subdropdown">
+                                <a href="#" class="subdropdown-toggle">Investment Advisors <span class="subdropdown-arrow">▶</span></a>
+                                <ul class="subdropdown-menu">
+                                    <li><a href="/pdfs/advisor-guide-2024.pdf" target="_blank">2024 Advisor Guide</a></li>
+                                    <li><a href="/pdfs/portfolio-strategies.pdf" target="_blank">Portfolio Strategies</a></li>
+                                    <li><a href="/pdfs/risk-management.pdf" target="_blank">Risk Management</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </nav>
         </div>
-        
-        <nav class="nav-menu" id="navMenu">
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/our_expertise">Expertise</a></li>
-                <li><a href="/testimonials">Testimonials</a></li>
-                <li><a href="/blogs">Blogs</a></li>
-                <li><a href="/contact">Contact</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
-
+    </header>
+    
     <!-- Hero Section -->
-    <section class="disclaimer-hero">
-        <div class="hero-overlay"></div>
+    <section class="hero" id="home">
         <div class="container">
-            <div class="hero-content">
-                <h1>Disclaimer</h1>
-                <p>Professional clarity on the purpose and use of information provided on this website.</p>
-                <div class="hero-divider"></div>
-                <div class="breadcrumb">
-                    <a href="/">Home</a> / <span>Disclaimer</span>
+            <h2>KP RegTech</h2>
+            <p>Navigating the complex regulatory landscape with confidence. Our expertise ensures compliance, minimizes risks, and enables you to focus on achieving your strategic objectives.</p>
+        </div>
+    </section>
+
+    <!-- Expertise Section -->
+    <section id="expertise">
+        <div class="container">
+            <div class="section-title">
+                <h2>OUR EXPERTISE</h2>
+            </div>
+            <div class="expertise-grid">
+                <div class="expertise-item">
+                    <div class="expertise-icon">
+                        <i class="fas fa-globe-asia"></i>
+                    </div>
+                    <div class="expertise-bg" style="background-image: url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100');"></div>
+                    <h3>FEMA Advisory & Compliance</h3>
+                    <p>Expert guidance on Foreign Exchange Management Act regulations, RBI compliance, and cross-border transactions. We ensure your international financial operations are fully compliant and optimized.</p>
+                    <ul class="expertise-features">
+                        <li>FEMA Advisory Services</li>
+                        <li>RBI Compliance & Reporting</li>
+                        <li>Cross-border Transaction Structuring</li>
+                        <li>Foreign Investment Guidance</li>
+                        <li>ECB & ODI Compliance</li>
+                    </ul>
+                    <a href="/our_expertise#fema-advisory" class="btn">Read More</a>
+                </div>
+                <div class="expertise-item">
+                    <div class="expertise-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="expertise-bg" style="background-image: url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100');"></div>
+                    <h3>Private Equity & Fundraising</h3>
+                    <p>Comprehensive support for equity and debt fundraising, from early-stage startups to established companies. We structure transactions that maximize value while ensuring regulatory compliance.</p>
+                    <ul class="expertise-features">
+                        <li>PE/VC Investment Structuring</li>
+                        <li>Debt & Equity Financing</li>
+                        <li>Due Diligence & Documentation</li>
+                        <li>CCDs, NCDs, OCDs Issuance</li>
+                        <li>Term Sheet Negotiation</li>
+                    </ul>
+                    <a href="/our_expertise#private-equity" class="btn">Read More</a>
+                </div>
+                <div class="expertise-item">
+                    <div class="expertise-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <div class="expertise-bg" style="background-image: url('https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100');"></div>
+                    <h3>SEBI & Regulatory Compliance</h3>
+                    <p>End-to-end SEBI registration and compliance services for investment advisors, portfolio managers, AIFs, and research analysts. We handle the complexities so you can focus on your business.</p>
+                    <ul class="expertise-features">
+                        <li>SEBI Registration Services</li>
+                        <li>Investment Advisory Compliance</li>
+                        <li>AIF & Portfolio Management</li>
+                        <li>Annual Compliance & Audits</li>
+                        <li>Regulatory Reporting</li>
+                    </ul>
+                    <a href="/our_expertise#sebi-compliance" class="btn">Read More</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Disclaimer Content -->
-    <section class="disclaimer-body">
+    <!-- Belief Section -->
+    <section class="belief" id="belief">
+        <div class="belief-bg"></div>
         <div class="container">
-            <div class="disclaimer-card">
-                <!-- Ownership Statement -->
-                <div class="disclaimer-item">
-                    <div class="disclaimer-icon">
-                        <i class="fas fa-building"></i>
-                    </div>
-                    <div class="disclaimer-content">
-                        <h2>Website Ownership & Purpose</h2>
-                        <p>This website belongs to <strong>CS Anjali Bansal & Associates</strong>, Practicing Company Secretary, Bengaluru, Karnataka.</p>
-                        <p>This website is not intended to be a source of advertising or solicitation and the contents of the website shall not be construed as legal advice or opinion. The contents of this website are solely for the purpose of guidance and not for commercial use of the reader/user.</p>
-                    </div>
-                </div>
+            <div class="section-title">
+                <h2>We Believe...</h2>
+            </div>
+            <div class="belief-content">
+                <blockquote>"in providing exceptional corporate secretarial services that empower businesses to navigate the complex regulatory landscape with confidence. Our expertise ensures compliance, minimizes risks, and enables you to focus on achieving your strategic objectives."</blockquote>
+                <p>At pankaj and Associates, we understand the challenges businesses face in navigating the ever-evolving legal and regulatory scenario. We are committed to providing accurate and timely advice, ensuring your company maintains compliance and minimizes risks.</p>
+                <a href="/about" class="btn">Read More About Us</a>
+            </div>
+        </div>
+    </section>
 
-                <!-- No Client Relationship -->
-                <div class="disclaimer-item">
-                    <div class="disclaimer-icon">
-                        <i class="fas fa-handshake"></i>
+    <!-- What Sets Us Apart Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>What sets us apart?</h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-tie"></i>
                     </div>
-                    <div class="disclaimer-content">
-                        <h2>No Professional-Client Relationship</h2>
-                        <p>Any receipt or use of this website does not constitute or create any client-consultant relationship. Professional services are only established through a formal, written engagement agreement.</p>
-                    </div>
+                    <h4>Expertise and Compliance</h4>
+                    <p>Deep knowledge of regulatory frameworks and commitment to ensuring full compliance for all clients.</p>
                 </div>
-
-                <!-- Information Accuracy -->
-                <div class="disclaimer-item">
-                    <div class="disclaimer-icon">
-                        <i class="fas fa-check-circle"></i>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-search"></i>
                     </div>
-                    <div class="disclaimer-content">
-                        <h2>Information Accuracy & Limitations</h2>
-                        <p>The information provided in our articles is obtained from reliable sources and has been written after due research on our part. The contents of this website are true and best to our knowledge.</p>
-                        <p class="note-box"><i class="fas fa-info-circle"></i> <strong>Note:</strong> We do not guarantee the completeness or absolute accuracy of the information. Laws and regulations are subject to change.</p>
-                    </div>
+                    <h4>Meticulous Attention to Detail</h4>
+                    <p>Thorough approach to every case, ensuring no aspect is overlooked in your regulatory compliance.</p>
                 </div>
-
-                <!-- User Responsibility -->
-                <div class="disclaimer-item">
-                    <div class="disclaimer-icon">
-                        <i class="fas fa-user-shield"></i>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
                     </div>
-                    <div class="disclaimer-content">
-                        <h2>User Responsibility</h2>
-                        <p>The user of this website will be responsible and liable for any action taken by him/her based on the articles or information provided on this website.</p>
-                        <p>We shall not be responsible for any loss or liability incurred by the user of this website in any manner whatsoever. Users are advised to seek formal, situation-specific professional advice before making decisions.</p>
-                    </div>
-                </div>
-
-                <!-- Copyright -->
-                <div class="disclaimer-item">
-                    <div class="disclaimer-icon">
-                        <i class="fas fa-copyright"></i>
-                    </div>
-                    <div class="disclaimer-content">
-                        <h2>Intellectual Property</h2>
-                        <p>The copyright of the articles and all original content published on this website solely belongs to <strong>Anjali Bansal & Associates</strong>.</p>
-                        <p>This content shall not be copied, reproduced, or used for any commercial benefit, whether fully or partially, without prior written consent.</p>
-                    </div>
+                    <h4>Timely Deliverables</h4>
+                    <p>Respect for deadlines with efficient processes to ensure all deliverables are provided on schedule.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="about-cta">
+    <!-- Articles Section -->
+    <section id="articles">
         <div class="container">
-            <div class="cta-content">
-                <div class="cta-text">
-                    <h3>Seek Professional Guidance</h3>
-                    <p>For advice specific to your situation, please schedule a formal consultation. We provide tailored solutions for corporate compliance and secretarial matters.</p>
-                    <div class="contact-info">
-                        <p><i class="fas fa-phone"></i> +91 9148973085</p>
-                        <p><i class="fas fa-envelope"></i> info@anjalibansal.in</p>
+            <div class="section-title">
+                <h2>LATEST BLOGS</h2>
+            </div>
+            
+            <div class="articles-grid">
+                {% for blog in latest_blogs %}
+                <div class="article-card">
+                    {% if blog.featured_image %}
+                    <div class="article-img" style="background-image: url('{{ blog.featured_image.url }}')"></div>
+                    {% else %}
+                    <div class="article-img" style="background-image: url('https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100')"></div>
+                    {% endif %}
+                    
+                    <div class="article-content">
+                        <span class="article-date">{{ blog.date_published|date:"F d, Y" }}</span>
+                        <h4>{{ blog.title }}</h4>
+                        <p>{{ blog.excerpt|truncatechars:150 }}</p>
+                        <a href="{% url 'blog_detail' blog.slug %}" class="btn">Read More</a>
                     </div>
                 </div>
-                <div class="cta-buttons">
-                    <a href="/booking/45-min" class="btn-cta btn-primary">
-                        <i class="fas fa-calendar-check"></i>
-                        <span>Book a Consultation</span>
-                    </a>
-                    <a href="/contact" class="btn-cta btn-secondary">
+                {% empty %}
+                <p style="text-align: center; grid-column: 1 / -1; padding: 40px; color: #666;">
+                    No blogs published yet. Check back soon!
+                </p>
+                {% endfor %}
+            </div>
+            
+            <div style="text-align: center; margin-top: 50px;">
+                <a href="/blogs" class="btn">View All Blogs</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Carousel -->
+    <section class="testimonials">
+        <div class="testimonial-bg"></div>
+        <div class="container">
+            <div class="section-title">
+                <h2>What our clients think...</h2>
+            </div>
+            
+            {% if testimonials %}
+            <div class="testimonial-carousel">
+                <div class="testimonial-track" id="testimonialTrack">
+                    {% for testimonial in testimonials %}
+                    <div class="testimonial-slide">
+                        <p>"{{ testimonial.content }}"</p>
+                        <div class="testimonial-author">{{ testimonial.client_name }}</div>
+                        <div class="testimonial-company">{{ testimonial.position }}, {{ testimonial.company }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="carousel-nav">
+                    <button class="carousel-btn prev-btn" id="prevBtn">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="carousel-dots" id="carouselDots">
+                        {% for testimonial in testimonials %}
+                        <span class="carousel-dot {% if forloop.first %}active{% endif %}" data-index="{{ forloop.counter0 }}"></span>
+                        {% endfor %}
+                    </div>
+                    <button class="carousel-btn next-btn" id="nextBtn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <a href="/testimonials" class="btn">View All Testimonials</a>
+                </div>
+            </div>
+            {% else %}
+            <p style="text-align: center; color: #666; padding: 40px;">
+                No testimonials available at the moment. Please check back later.
+            </p>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Need more details? Contact us</h2>
+            </div>
+            <div class="contact-content">
+                <p>We are here to assist. Contact us by phone, email, or via our social media channels.</p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>+91 9148973085</span>
+                    </div>
+                    <div class="contact-item">
                         <i class="fas fa-envelope"></i>
-                        <span>Contact for Clarification</span>
-                    </a>
+                        <span>kpregtech@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Mon-Fri: 9AM-6PM</span>
+                    </div>
+                </div>
+                <div style="margin-top: 40px;">
+                    <a href="/contact" class="btn">Contact Us</a>
+                    <a href="{% url 'booking' duration='45-min' %}" class="btn">Book Consultation</a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-<footer style="background-color: #1a1a1a; color: #ffffff; padding: 40px 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;">
-        
-        <div style="flex: 1; min-width: 250px;">
-            <h3 style="color: #4CAF50; margin-bottom: 15px;">Your Brand Name</h3>
-            <p style="font-size: 14px; line-height: 1.6; color: #cccccc;">
-                Providing quality services with transparency and integrity. Follow us on our journey to excellence.
-            </p>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>KP RegTech</h3>
+                    <p>Providing quality services with transparency and integrity. Follow us on our journey to excellence.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/our_expertise">Expertise</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="/privacy-policy">Privacy Policy</a></li>
+                        <li><a href="/terms-and-conditions">Terms & Conditions</a></li>
+                        <li><a href="/refund-policy">Refund Policy</a></li>
+                        <li><a href="/disclaimer">Disclaimer</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="footer-bottom">
+                <p>&copy; 2025 KP RegTech. All Rights Reserved.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
         </div>
+    </footer>
 
-        <div style="flex: 1; min-width: 150px;">
-            <h4 style="margin-bottom: 15px; font-size: 18px;">Quick Links</h4>
-            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
-                <li><a href="/" style="color: #cccccc; text-decoration: none;">Home</a></li>
-                <li><a href="/about" style="color: #cccccc; text-decoration: none;">About Us</a></li>
-                <li><a href="/services" style="color: #cccccc; text-decoration: none;">Services</a></li>
-                <li><a href="/contact" style="color: #cccccc; text-decoration: none;">Contact</a></li>
-            </ul>
-        </div>
-
-        <div style="flex: 1; min-width: 150px;">
-            <h4 style="margin-bottom: 15px; font-size: 18px;">Legal Support</h4>
-            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
-                <li><a href="/privacy-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Privacy Policy</a></li>
-                <li><a href="/terms and conditions" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Terms & Conditions</a></li>
-                <li><a href="/refund-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Refund Policy</a></li>
-                <li><a href="/disclaimer" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Disclaimer</a></li>
-            </ul>
-        </div>
-    </div>
-
-    <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0;">
-
-    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 13px; color: #888;">
-        <p>&copy; 2025 Your Brand Name. All Rights Reserved.</p>
-        <div style="display: flex; gap: 15px;">
-            <a href="#" style="color: #888; text-decoration: none;">Twitter</a>
-            <a href="#" style="color: #888; text-decoration: none;">LinkedIn</a>
-            <a href="#" style="color: #888; text-decoration: none;">Instagram</a>
-        </div>
-    </div>
-</footer>
-
-    <!-- JavaScript -->
-    <script src="{% static 'js/disclaimer.js' %}"></script>
+    <!-- REMOVED THE DUPLICATE INLINE SCRIPT TAG -->
+    <script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>

@@ -1,0 +1,114 @@
+<!-- templates/payment/success_test.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful | KP RegTech</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .success-container {
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 40px;
+            text-align: center;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .success-icon {
+            color: #28a745;
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+        
+        .success-container h1 {
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+        
+        .booking-details {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            text-align: left;
+        }
+        
+        .actions {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #28a745;
+            color: white;
+            border: none;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            border: none;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        .test-badge {
+            background: #ffc107;
+            color: #856404;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <div class="success-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        
+        <h1>Payment Successful! <span class="test-badge">TEST</span></h1>
+        
+        <p>Your test payment has been processed successfully. Your booking is now confirmed.</p>
+        
+        <div class="booking-details">
+            <p><strong>Payment ID:</strong> {{ payment.payment_id }}</p>
+            <p><strong>Booking ID:</strong> {{ booking.booking_id }}</p>
+            <p><strong>Amount:</strong> ₹{{ payment.amount }}</p>
+            <p><strong>Method:</strong> {{ payment.get_method_display }}</p>
+            <p><strong>Date:</strong> {{ booking.appointment_date|date:"F d, Y" }} at {{ booking.appointment_time|time:"g:i A" }}</p>
+        </div>
+        
+        <p><i class="fas fa-info-circle"></i> This was a test payment. No real money was charged.</p>
+        
+        <div class="actions">
+            <a href="{% url templates/admin/verify_cash_payment %}" class="btn btn-primary">
+                <i class="fas fa-calendar-alt"></i> View Booking Details
+            </a>
+            <a href="/" class="btn btn-secondary">
+                <i class="fas fa-home"></i> Back to Home
+            </a>
+        </div>
+    </div>
+</body>
+</html>

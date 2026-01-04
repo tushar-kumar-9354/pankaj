@@ -1,0 +1,219 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Payment | KP RegTech</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/payment.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    {% include 'includes/header.html' %}
+    
+    <section class="payment-container">
+        <div class="container">
+            <div class="payment-header">
+                <h1><i class="fas fa-lock"></i> Complete Your Payment</h1>
+                <p class="subtitle">Test Payment System - No real money will be charged</p>
+            </div>
+            
+            <div class="payment-wrapper">
+                <!-- Booking Summary -->
+                <div class="booking-summary-card">
+                    <h3>Booking Details</h3>
+                    <div class="summary-item">
+                        <span>Booking ID:</span>
+                        <strong>{{ booking.booking_id }}</strong>
+                    </div>
+                    <div class="summary-item">
+                        <span>Client Name:</span>
+                        <span>{{ booking.name }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Appointment:</span>
+                        <span>{{ booking.appointment_date|date:"d M, Y" }} at {{ booking.appointment_time|time:"g:i A" }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Duration:</span>
+                        <span>{{ booking.get_duration_display }}</span>
+                    </div>
+                    <div class="summary-total">
+                        <span>Amount to Pay:</span>
+                        <strong class="amount">₹{{ booking.price }}</strong>
+                    </div>
+                </div>
+                
+                <!-- Payment Methods -->
+                <div class="payment-methods-card">
+                    <h3>Select Payment Method</h3>
+                    
+                    <form id="paymentForm" method="POST" action="{% url 'process_test_payment' payment_id=payment.payment_id %}">
+                        {% csrf_token %}
+                        
+                        <div class="payment-methods">
+                            <!-- UPI Payment -->
+                            <div class="payment-method" onclick="selectMethod('upi')">
+                                <div class="method-header">
+                                    <input type="radio" name="payment_method" value="upi" id="upiOption" {% if payment.method == 'upi' %}checked{% endif %}>
+                                    <div class="method-icon">
+                                        <i class="fas fa-mobile-alt"></i>
+                                    </div>
+                                    <div class="method-info">
+                                        <h4>UPI Payment</h4>
+                                        <p>Google Pay, PhonePe, PayTM</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Card Payment -->
+                            <div class="payment-method" onclick="selectMethod('card')">
+                                <div class="method-header">
+                                    <input type="radio" name="payment_method" value="card" id="cardOption">
+                                    <div class="method-icon">
+                                        <i class="fas fa-credit-card"></i>
+                                    </div>
+                                    <div class="method-info">
+                                        <h4>Card Payment</h4>
+                                        <p>Visa, Mastercard, Rupay</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Net Banking -->
+                            <div class="payment-method" onclick="selectMethod('netbanking')">
+                                <div class="method-header">
+                                    <input type="radio" name="payment_method" value="netbanking" id="netbankingOption">
+                                    <div class="method-icon">
+                                        <i class="fas fa-university"></i>
+                                    </div>
+                                    <div class="method-info">
+                                        <h4>Net Banking</h4>
+                                        <p>All major Indian banks</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Cash/Offline -->
+                            <div class="payment-method" onclick="selectMethod('cash')">
+                                <div class="method-header">
+                                    <input type="radio" name="payment_method" value="cash" id="cashOption" {% if payment.method == 'cash' %}checked{% endif %}>
+                                    <div class="method-icon">
+                                        <i class="fas fa-money-bill-alt"></i>
+                                    </div>
+                                    <div class="method-info">
+                                        <h4>Cash/Offline Payment</h4>
+                                        <p>Pay at office or bank transfer</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Cash Payment Instructions -->
+                        <div class="cash-instructions" id="cashInstructions" style="display: none;">
+                            <div class="instructions-box">
+                                <h4><i class="fas fa-info-circle"></i> Cash Payment Instructions</h4>
+                                <ul>
+                                    <li>Visit our office with your Booking ID: <strong>{{ booking.booking_id }}</strong></li>
+                                    <li>Make payment via bank transfer to our account</li>
+                                    <li>Email the payment receipt to kpregtech@gmail.com</li>
+                                    <li>Your booking will be confirmed after payment verification</li>
+                                </ul>
+                                <p class="note"><i class="fas fa-exclamation-triangle"></i> Booking will remain pending until cash payment is verified.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Payment Actions -->
+                        <div class="payment-actions">
+                            <button type="button" class="btn-back" onclick="window.history.back()">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </button>
+                            
+                            <div class="action-buttons" id="actionButtons">
+                                <!-- For online payments -->
+                                <button type="submit" class="btn-pay-success" name="simulate_success" value="true">
+                                    <i class="fas fa-check-circle"></i> Simulate Successful Payment
+                                </button>
+                                <button type="submit" class="btn-pay-fail" name="simulate_success" value="false">
+                                    <i class="fas fa-times-circle"></i> Simulate Failed Payment
+                                </button>
+                                
+                                <!-- For cash payments -->
+                                <button type="button" class="btn-cash-record" id="btnCashRecord" style="display: none;">
+                                    <i class="fas fa-money-check-alt"></i> Record Cash Payment
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Test Mode Notice -->
+            <div class="test-mode-notice">
+                <i class="fas fa-flask"></i>
+                <div>
+                    <h4>Test Mode</h4>
+                    <p>This is a test payment system. No real money will be charged. Use this to test the payment flow.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    {% include 'includes/footer.html' %}
+    
+    <script>
+        function selectMethod(method) {
+            // Update radio button
+            document.getElementById(method + 'Option').checked = true;
+            
+            // Show/hide cash instructions
+            const cashInstructions = document.getElementById('cashInstructions');
+            const btnCashRecord = document.getElementById('btnCashRecord');
+            
+            if (method === 'cash') {
+                cashInstructions.style.display = 'block';
+                btnCashRecord.style.display = 'inline-block';
+                // Hide online payment buttons
+                document.querySelectorAll('.btn-pay-success, .btn-pay-fail').forEach(btn => {
+                    btn.style.display = 'none';
+                });
+            } else {
+                cashInstructions.style.display = 'none';
+                btnCashRecord.style.display = 'none';
+                // Show online payment buttons
+                document.querySelectorAll('.btn-pay-success, .btn-pay-fail').forEach(btn => {
+                    btn.style.display = 'inline-block';
+                });
+            }
+            
+            // Update method selection UI
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.classList.remove('selected');
+            });
+            document.querySelector(`[onclick="selectMethod('${method}')"]`).classList.add('selected');
+        }
+        
+        // Initialize with current method
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentMethod = "{{ payment.method }}" || 'upi';
+            selectMethod(currentMethod);
+            
+            // Handle cash payment recording
+            document.getElementById('btnCashRecord').addEventListener('click', function() {
+                if (confirm('Record cash payment? This will mark your booking as pending until payment is verified.')) {
+                    const form = document.getElementById('paymentForm');
+                    const cashInput = document.createElement('input');
+                    cashInput.type = 'hidden';
+                    cashInput.name = 'simulate_success';
+                    cashInput.value = 'true';
+                    form.appendChild(cashInput);
+                    form.submit();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

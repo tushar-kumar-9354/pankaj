@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Consultation | Anjali Bansal & Associates | Company Secretaries</title>
+    <title>Book Consultation | KP RegTech | </title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/booking.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -21,8 +21,8 @@
         <div class="logo">
             <img src="{% static 'images/kplogo.png' %}" alt="Company Logo" class="logo-image">
             <div class="logo-text">
-                <h1>ANJALI BANSAL & ASSOCIATES</h1>
-                <p>COMPANY SECRETARIES</p>
+                <h1>KP RegTech</h1>
+                <p></p>
             </div>
         </div>
         
@@ -176,7 +176,7 @@
                                     <i class="fas fa-user-tie"></i>
                                     <div>
                                         <h6>Expert Guidance</h6>
-                                        <p>Direct access to experienced company secretaries</p>
+                                        <p>Direct access to experienced </p>
                                     </div>
                                 </div>
                                 <div class="benefit">
@@ -285,7 +285,9 @@
         <div class="summary-duration" id="summaryDuration"></div>
     </div>
 </div>
-                        <form id="bookingForm" method="POST" action="{% url 'submit_booking' duration=duration %}">
+                        <!-- <form id="bookingForm" method="POST" action="{% url 'submit_booking' duration=duration %}"> -->
+                        <!-- Replace the form opening tag with this: -->
+<form id="bookingForm" method="POST" action="{% url 'booking' duration=duration %}" enctype="multipart/form-data">
                             {% csrf_token %}
                             <input type="hidden" name="duration" value="{{ duration }}">
                             <input type="hidden" name="selected_slot_id" id="selectedSlotId" value="">
@@ -400,14 +402,14 @@
                             <div class="form-group checkbox-group">
                                 <input type="checkbox" id="terms" name="terms" required>
                                 <label for="terms">
-                                    I agree to the <a href="/terms-and-conditions" target="_blank">Terms of Service</a> and <a href="/privacy-policy" target="_blank">Privacy Policy</a>. I understand that this consultation is subject to professional engagement terms and will receive an email confirmation with meeting details.
+                                    I agree to the <a href="/terms and conditions" target="_blank">Terms of Service</a> and <a href="/privacy-policy" target="_blank">Privacy Policy</a>. I understand that this consultation is subject to professional engagement terms and will receive an email confirmation with meeting details.
                                 </label>
                             </div>
                             
                             <div class="form-group checkbox-group">
                                 <input type="checkbox" id="newsletter" name="newsletter">
                                 <label for="newsletter">
-                                    Yes, I'd like to receive regulatory updates, compliance tips, and service announcements from Anjali Bansal & Associates.
+                                    Yes, I'd like to receive regulatory updates, compliance tips, and service announcements from KP RegTech.
                                 </label>
                             </div>
                             
@@ -452,7 +454,7 @@
     <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;">
         
         <div style="flex: 1; min-width: 250px;">
-            <h3 style="color: #4CAF50; margin-bottom: 15px;">Your Brand Name</h3>
+            <h3 style="; margin-bottom: 15px;">KP RegTech</h3>
             <p style="font-size: 14px; line-height: 1.6; color: #cccccc;">
                 Providing quality services with transparency and integrity. Follow us on our journey to excellence.
             </p>
@@ -482,7 +484,7 @@
     <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0;">
 
     <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 13px; color: #888;">
-        <p>&copy; 2025 Your Brand Name. All Rights Reserved.</p>
+        <p>&copy; 2025 KP RegTech. All Rights Reserved.</p>
         <div style="display: flex; gap: 15px;">
             <a href="#" style="color: #888; text-decoration: none;">Twitter</a>
             <a href="#" style="color: #888; text-decoration: none;">LinkedIn</a>
@@ -531,5 +533,119 @@
 
     <script src="{% static 'js/script.js' %}"></script>
     <script src="{% static 'js/booking.js' %}"></script>
+
+<!-- In booking.html, update the form section -->
+<!-- Replace the existing form submission script with this: -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const bookingForm = document.getElementById('bookingForm');
+    
+    if (bookingForm) {
+        bookingForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            console.log('Form submission started...');
+            
+            // Validate form
+            if (!validateForm()) {
+                return false;
+            }
+            
+            // Get all required data
+            const selectedDate = document.getElementById('selectedDate').value;
+            const selectedTime = document.getElementById('selectedTime').value;
+            const appointmentDatetime = document.getElementById('appointmentDatetime').value;
+            
+            console.log('Date/time data:', {
+                selectedDate,
+                selectedTime,
+                appointmentDatetime
+            });
+            
+            // Check if date/time is selected
+            if (!selectedDate || !selectedTime) {
+                alert('Please select a date and time for your appointment');
+                return false;
+            }
+            
+            // If appointmentDatetime is not set, create it
+            if (!appointmentDatetime && selectedDate && selectedTime) {
+                const datetimeStr = `${selectedDate}T${selectedTime}:00`;
+                document.getElementById('appointmentDatetime').value = datetimeStr;
+                console.log('Created datetime:', datetimeStr);
+            }
+            
+            // Show loading state
+            const submitBtn = this.querySelector('.btn-submit');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            submitBtn.disabled = true;
+            
+            try {
+                // Create FormData object
+                const formData = new FormData(this);
+                
+                // Debug: Log form data
+                console.log('Submitting form data:');
+                for (let pair of formData.entries()) {
+                    console.log(pair[0] + ': ' + pair[1]);
+                }
+                
+                // Submit via AJAX
+                const response = await fetch(this.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    }
+                });
+                
+                const data = await response.json();
+                console.log('Server response:', data);
+                
+                if (data.success) {
+                    console.log('Booking created successfully, redirecting to payment...');
+                    // Redirect to payment page
+                    window.location.href = data.redirect_url;
+                } else {
+                    alert('Error: ' + (data.error || 'Unknown error occurred'));
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }
+            } catch (error) {
+                console.error('Submission error:', error);
+                alert('An error occurred. Please try again.');
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+    }
+    
+    function validateForm() {
+        const requiredFields = ['name', 'email', 'phone', 'topic'];
+        let isValid = true;
+        
+        for (const fieldName of requiredFields) {
+            const field = document.querySelector(`[name="${fieldName}"]`);
+            if (field && !field.value.trim()) {
+                alert(`Please fill in ${fieldName.replace('_', ' ')}`);
+                field.focus();
+                isValid = false;
+                break;
+            }
+        }
+        
+        // Check terms
+        const terms = document.getElementById('terms');
+        if (!terms.checked) {
+            alert('Please agree to the Terms of Service and Privacy Policy');
+            terms.focus();
+            isValid = false;
+        }
+        
+        return isValid;
+    }
+});
+</script>
 </body>
 </html>

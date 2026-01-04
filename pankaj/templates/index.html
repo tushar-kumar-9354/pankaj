@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anjali Bansal & Associates | Company Secretaries</title>
+    <title>KP RegTech</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -26,8 +26,8 @@
         <div class="logo">
             <img src="{% static 'images/kplogo.png' %}" alt="Company Logo" class="logo-image">
             <div class="logo-text">
-                <h1>ANJALI BANSAL & ASSOCIATES</h1>
-                <p>COMPANY SECRETARIES</p>
+                <h1>KP RegTech</h1>
+           
             </div>
         </div>
         
@@ -48,7 +48,7 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="container">
-            <h2>ANJALI BANSAL & ASSOCIATES</h2>
+            <h2>KP RegTech</h2>
             <p>Navigating the complex regulatory landscape with confidence. Our expertise ensures compliance, minimizes risks, and enables you to focus on achieving your strategic objectives.</p>
             
         </div>
@@ -125,7 +125,7 @@
             </div>
             <div class="belief-content">
                 <blockquote>"in providing exceptional corporate secretarial services that empower businesses to navigate the complex regulatory landscape with confidence. Our expertise ensures compliance, minimizes risks, and enables you to focus on achieving your strategic objectives."</blockquote>
-                <p>At Anjali Bansal and Associates, we understand the challenges businesses face in navigating the ever-evolving legal and regulatory scenario. We are committed to providing accurate and timely advice, ensuring your company maintains compliance and minimizes risks.</p>
+                <p>At pankaj and Associates, we understand the challenges businesses face in navigating the ever-evolving legal and regulatory scenario. We are committed to providing accurate and timely advice, ensuring your company maintains compliance and minimizes risks.</p>
                 <a href="/about" class="btn">Read More About Us</a>
             </div>
         </div>
@@ -238,34 +238,11 @@
         </div>
         {% else %}
         <!-- Fallback if no testimonials are available -->
-        <div class="testimonial-carousel">
-            <div class="testimonial-track" id="testimonialTrack">
-                <div class="testimonial-slide">
-                    <p>"Anjali came at a time when we were in the middle of a funding round and really needed some help. She knows the CS playbook inside-out and sailed us through effortlessly. Her team is one of the best there is and an absolute delight to work with."</p>
-                    <div class="testimonial-author">Divyam Agrawal</div>
-                    <div class="testimonial-company">Co-founder, NuShala</div>
-                </div>
-                <div class="testimonial-slide">
-                    <p>"The expertise in FEMA regulations saved us from potential compliance issues that could have cost us millions. Their attention to detail is remarkable, and they always deliver on time. Highly recommended for any international business operations."</p>
-                    <div class="testimonial-author">Priya Sharma</div>
-                    <div class="testimonial-company">CEO, GlobalTech Solutions</div>
-                </div>
-            </div>
-            <div class="carousel-nav">
-                <button class="carousel-btn prev-btn" id="prevBtn">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <div class="carousel-dots" id="carouselDots">
-                    <span class="carousel-dot active" data-index="0"></span>
-                    <span class="carousel-dot" data-index="1"></span>
-                </div>
-                <button class="carousel-btn next-btn" id="nextBtn">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-                <a href="/testimonials" class="btn">View All Testimonials</a>
-            </div>
-        </div>
+        <p style="text-align: center; color: #666; padding: 40px;">
+            No testimonials available at the moment. Please check back later.
+        </p>
         {% endif %}
+        
     </div>
 </section>
     <!-- Contact Section -->
@@ -283,7 +260,7 @@
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-envelope"></i>
-                        <span>info@anjalibansal.in</span>
+                        <span>kpregtech@gmail.com</span>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-clock"></i>
@@ -305,7 +282,7 @@
     <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;">
         
         <div style="flex: 1; min-width: 250px;">
-            <h3 style="color: #4CAF50; margin-bottom: 15px;">Your Brand Name</h3>
+            <h3 style="color: #4CAF50; margin-bottom: 15px;">KP RegTech</h3>
             <p style="font-size: 14px; line-height: 1.6; color: #cccccc;">
                 Providing quality services with transparency and integrity. Follow us on our journey to excellence.
             </p>
@@ -335,7 +312,7 @@
     <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0;">
 
     <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 13px; color: #888;">
-        <p>&copy; 2025 Your Brand Name. All Rights Reserved.</p>
+        <p>&copy; 2025 KP RegTech. All Rights Reserved.</p>
         <div style="display: flex; gap: 15px;">
             <a href="#" style="color: #888; text-decoration: none;">Twitter</a>
             <a href="#" style="color: #888; text-decoration: none;">LinkedIn</a>
@@ -343,6 +320,34 @@
         </div>
     </div>
 </footer>
+
+<script>
+// Mobile menu toggle
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navMenu = document.getElementById('navMenu');
+    
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+        });
+    }
+    
+    // Mobile dropdown toggle
+    const dropdownToggles = document.querySelectorAll('.dropdown-toggle, .subdropdown-toggle');
+    
+    dropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                const parent = this.parentElement;
+                parent.classList.toggle('active');
+            }
+        });
+    });
+});
+</script>
+
 
     <script src="{% static 'js/script.js' %}"></script>
 </body>

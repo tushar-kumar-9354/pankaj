@@ -83,122 +83,7 @@ if (statsSection) {
     const tabContents = document.querySelectorAll('.tab-content');
 
     // Sample testimonials data - UPDATED with correct structure
-    const testimonialsData = {
-        all: [
-            {
-                name: "Amit Verma",
-                position: "Director, RetailChain India",
-                rating: 5,
-                content: "The team's expertise in retail sector compliance has been invaluable. They helped us navigate complex regulatory requirements across multiple states.",
-                tags: ["Multi-state Compliance", "Retail Regulations", "GST Compliance"],
-                industry: "retail"
-            },
-            {
-                name: "Sanjay Kapoor",
-                position: "CEO, Capital Bank",
-                rating: 4.5,
-                content: "As a banking institution, our compliance requirements are stringent. Anjali Bansal & Associates has consistently delivered accurate and timely solutions.",
-                tags: ["Banking Compliance", "RBI Regulations", "Audit Support"],
-                industry: "finance"
-            },
-            {
-                name: "Deepika Singh",
-                position: "CTO, DataSecure Tech",
-                rating: 5,
-                content: "Their understanding of technology sector compliance, especially data privacy regulations, has been exceptional. Highly recommended!",
-                tags: ["Data Privacy", "Technology Compliance", "IPR Protection"],
-                industry: "technology"
-            },
-            {
-                name: "Rahul Jain",
-                position: "Operations Head, AutoParts Ltd.",
-                rating: 4,
-                content: "Streamlined our factory compliance processes and helped us achieve significant efficiency improvements in regulatory reporting.",
-                tags: ["Factory Compliance", "Labor Laws", "Environmental Regulations"],
-                industry: "manufacturing"
-            },
-            {
-                name: "Vikram Mehta",
-                position: "Founder, EduTech Ventures",
-                rating: 5,
-                content: "From incorporation to fundraising, they guided us through every step. Their startup advisory services are top-notch.",
-                tags: ["Startup Incorporation", "Fundraising", "ESOP Planning"],
-                industry: "startups"
-            },
-            {
-                name: "Anita Desai",
-                position: "CFO, MedTech Solutions",
-                rating: 4.5,
-                content: "Healthcare sector compliance is complex, but their team made it manageable. Professional, knowledgeable, and reliable.",
-                tags: ["Healthcare Compliance", "FDA Regulations", "Clinical Trials"],
-                industry: "healthcare"
-            }
-        ],
-        technology: [
-            {
-                name: "Deepika Singh",
-                position: "CTO, DataSecure Tech",
-                rating: 5,
-                content: "Their understanding of technology sector compliance, especially data privacy regulations, has been exceptional. Highly recommended!",
-                tags: ["Data Privacy", "Technology Compliance", "IPR Protection"]
-            },
-            {
-                name: "Rohit Mehta",  // Added from featured slider
-                position: "CFO, TechNova Solutions",
-                rating: 5,
-                content: "Anjali Bansal & Associates has been instrumental in guiding us through complex SEBI compliance requirements.",
-                tags: ["SEBI Compliance", "Corporate Governance", "Board Meetings"]
-            }
-        ],
-        manufacturing: [
-            {
-                name: "Rahul Jain",
-                position: "Operations Head, AutoParts Ltd.",
-                rating: 4,
-                content: "Streamlined our factory compliance processes and helped us achieve significant efficiency improvements in regulatory reporting.",
-                tags: ["Factory Compliance", "Labor Laws", "Environmental Regulations"]
-            },
-            {
-                name: "Priya Sharma",  // Added from featured slider
-                position: "Founder, GreenEarth Organics",
-                rating: 4.5,
-                content: "As a growing SME, we needed reliable compliance partners who could scale with us.",
-                tags: ["SME Compliance", "ROC Filings", "Annual Returns"]
-            }
-        ],
-        finance: [
-            {
-                name: "Sanjay Kapoor",
-                position: "CEO, Capital Bank",
-                rating: 4.5,
-                content: "As a banking institution, our compliance requirements are stringent. Anjali Bansal & Associates has consistently delivered accurate and timely solutions.",
-                tags: ["Banking Compliance", "RBI Regulations", "Audit Support"]
-            },
-            {
-                name: "Arjun Patel",  // Added from featured slider
-                position: "CEO, FinTech Innovations Ltd.",
-                rating: 5,
-                content: "The team's expertise in startup fundraising and FEMA regulations was crucial for our Series B funding round.",
-                tags: ["Startup Advisory", "FEMA Compliance", "Fundraising"]
-            }
-        ],
-        startups: [
-            {
-                name: "Vikram Mehta",
-                position: "Founder, EduTech Ventures",
-                rating: 5,
-                content: "From incorporation to fundraising, they guided us through every step. Their startup advisory services are top-notch.",
-                tags: ["Startup Incorporation", "Fundraising", "ESOP Planning"]
-            },
-            {
-                name: "Arjun Patel",
-                position: "CEO, FinTech Innovations Ltd.",
-                rating: 5,
-                content: "The team's expertise in startup fundraising and FEMA regulations was crucial for our Series B funding round.",
-                tags: ["Startup Advisory", "FEMA Compliance", "Fundraising"]
-            }
-        ]
-    };
+
 
     // Function to create testimonial HTML - FIXED
     function createTestimonialHTML(testimonial) {
@@ -418,24 +303,6 @@ if (statsSection) {
     if (defaultActiveTab && !defaultActiveTab.classList.contains('active')) {
         defaultActiveTab.click();
     }
-});
-document.querySelectorAll(".video-thumbnail").forEach(item => {
-    item.addEventListener("click", () => {
-        const videoUrl = item.dataset.video;
-        const title = item.dataset.title;
-
-        document.getElementById("modalTitle").innerText = title;
-        document.querySelector(".video-placeholder").innerHTML = `
-            <iframe width="100%" height="400"
-                src="${videoUrl}"
-                frameborder="0"
-                allow="autoplay; encrypted-media"
-                allowfullscreen>
-            </iframe>
-        `;
-
-        document.getElementById("videoModal").classList.add("active");
-    });
 });
 
 document.getElementById("closeModal").addEventListener("click", () => {

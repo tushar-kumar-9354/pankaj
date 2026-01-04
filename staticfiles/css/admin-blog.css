@@ -1,7 +1,7 @@
 /* Admin Blog Styling */
 .field-read_count {
     font-weight: bold;
-    color: #4CAF50;
+    ;
 }
 
 .field-is_published {
@@ -9,7 +9,7 @@
 }
 
 .field-is_published.true {
-    color: #4CAF50;
+    ;
 }
 
 .field-is_published.false {

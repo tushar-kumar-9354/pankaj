@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insights & Articles - Anjali Bansal & Associates</title>
+    <title>Insights & Articles - KP RegTech</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -676,8 +676,8 @@ nav ul li a:hover::after {
         <div class="logo">
             <img src="{% static 'images/kplogo.png' %}" alt="Company Logo" class="logo-image">
             <div class="logo-text">
-                <h1>ANJALI BANSAL & ASSOCIATES</h1>
-                <p>COMPANY SECRETARIES</p>
+                <h1>KP RegTech</h1>
+                <p></p>
             </div>
         </div>
         
@@ -860,7 +860,171 @@ nav ul li a:hover::after {
                         </div>
                     </div>
 
-                    <!-- Subscribe Widget -->
+
+
+<!-- Subscribe Widget -->
+<div class="sidebar-widget">
+    <h3>Subscribe to Newsletter</h3>
+    <form id="subscribeForm" class="subscribe-form">
+        {% csrf_token %}
+        <div class="search-box">
+            <input type="email" 
+                   name="email" 
+                   id="subscribeEmail"
+                   placeholder="Enter your email address" 
+                   required
+                   style="width: 100%; padding: 12px 40px 12px 15px; border: 2px solid #e9ecef; border-radius: 5px;">
+            <button type="submit" id="subscribeBtn" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #555; cursor: pointer;">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+        <div style="margin-top: 10px; font-size: 0.8rem; color: #666;">
+            <p>We respect your privacy. Unsubscribe at any time.</p>
+        </div>
+    </form>
+    <div id="subscribeMessage" style="margin-top: 15px; display: none;"></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const subscribeForm = document.getElementById('subscribeForm');
+    const subscribeEmail = document.getElementById('subscribeEmail');
+    const subscribeBtn = document.getElementById('subscribeBtn');
+    const subscribeMessage = document.getElementById('subscribeMessage');
+    
+    if (subscribeForm) {
+        subscribeForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = subscribeEmail.value.trim();
+            
+            if (!email) {
+                showMessage('Please enter your email address.', 'error');
+                return;
+            }
+            
+            // Simple email validation
+            if (!email.includes('@') || !email.includes('.')) {
+                showMessage('Please enter a valid email address.', 'error');
+                return;
+            }
+            
+            // Show loading
+            subscribeBtn.disabled = true;
+            const originalHTML = subscribeBtn.innerHTML;
+            subscribeBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            
+            try {
+                // Get CSRF token
+                const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                
+                console.log('Sending subscription request for:', email);
+                
+                // Send POST request with JSON
+                const response = await fetch('/blogs/subscribe/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken,
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: JSON.stringify({
+                        email: email
+                    })
+                });
+                
+                const data = await response.json();
+                console.log('Response:', data);
+                
+                if (data.success) {
+                    showMessage(data.message, 'success');
+                    subscribeForm.reset();
+                } else {
+                    showMessage(data.message, 'error');
+                }
+            } catch (error) {
+                console.error('Subscription error:', error);
+                showMessage('Network error. Please try again.', 'error');
+            } finally {
+                // Reset button
+                subscribeBtn.disabled = false;
+                subscribeBtn.innerHTML = originalHTML;
+            }
+        });
+    }
+    
+    function showMessage(message, type) {
+        if (!subscribeMessage) return;
+        
+        subscribeMessage.textContent = message;
+        subscribeMessage.style.display = 'block';
+        subscribeMessage.style.padding = '12px';
+        subscribeMessage.style.borderRadius = '5px';
+        subscribeMessage.style.marginTop = '15px';
+        subscribeMessage.style.fontSize = '14px';
+        
+        if (type === 'success') {
+            subscribeMessage.style.backgroundColor = '#d4edda';
+            subscribeMessage.style.color = '#155724';
+            subscribeMessage.style.border = '1px solid #c3e6cb';
+        } else if (type === 'error') {
+            subscribeMessage.style.backgroundColor = '#f8d7da';
+            subscribeMessage.style.color = '#721c24';
+            subscribeMessage.style.border = '1px solid #f5c6cb';
+        }
+        
+        // Auto-hide message after 5 seconds
+        setTimeout(() => {
+            subscribeMessage.style.display = 'none';
+        }, 5000);
+    }
+});
+</script>
+<style>
+.subscribe-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.subscribe-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #000, #333, #000);
+}
+
+.input-group input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.1);
+}
+
+#subscribeBtn:hover {
+    background: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+#subscribeBtn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+    .input-group {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .input-group input,
+    .input-group button {
+        width: 100%;
+        border-radius: 50px !important;
+    }
+}
+</style>
                     
                 </aside>
             </div>
@@ -872,7 +1036,7 @@ nav ul li a:hover::after {
     <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;">
         
         <div style="flex: 1; min-width: 250px;">
-            <h3 style="color: #4CAF50; margin-bottom: 15px;">Your Brand Name</h3>
+            <h3 style="; margin-bottom: 15px;">KP RegTech</h3>
             <p style="font-size: 14px; line-height: 1.6; color: #cccccc;">
                 Providing quality services with transparency and integrity. Follow us on our journey to excellence.
             </p>
@@ -902,7 +1066,7 @@ nav ul li a:hover::after {
     <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0;">
 
     <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 13px; color: #888;">
-        <p>&copy; 2025 Your Brand Name. All Rights Reserved.</p>
+        <p>&copy; 2025 KP RegTech. All Rights Reserved.</p>
         <div style="display: flex; gap: 15px;">
             <a href="#" style="color: #888; text-decoration: none;">Twitter</a>
             <a href="#" style="color: #888; text-decoration: none;">LinkedIn</a>

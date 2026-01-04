@@ -14,7 +14,11 @@ from django.http import HttpResponse, JsonResponse  # HTTP response types
 from django.db.models.functions import Lower, Trim  # Database function utilities
 from django.db.models import Avg, Count  # Database aggregation functions
 from django.template.loader import render_to_string  # Template rendering to string
-
+import razorpay
+import json
+from django.views.decorators.csrf import csrf_exempt
+from streamlit import success
+from .models import Payment
 # Standard Library Imports
 from datetime import datetime, timedelta, date, time  # Date/time manipulation
 import logging  # Application logging
@@ -176,6 +180,170 @@ def blog_detail(request, slug):
     
     return render(request, "blog_detail.html", context)
 
+
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+from .models import BlogSubscriber, BlogPost
+
+
+# In your views.py, update the subscribe_to_blogs function:
+
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+@csrf_exempt
+def subscribe_to_blogs(request):
+    """Handle blog subscription form submission - DEBUGGED VERSION"""
+    print("\n" + "="*60)
+    print("DEBUG: subscribe_to_blogs view called")
+    print(f"DEBUG: Request method: {request.method}")
+    
+    if request.method == 'POST':
+        try:
+            # Get email
+            email = None
+            
+            if request.content_type == 'application/json':
+                data = json.loads(request.body)
+                email = data.get('email', '').strip().lower()
+            else:
+                email = request.POST.get('email', '').strip().lower()
+            
+            print(f"DEBUG: Email received: '{email}'")
+            
+            if not email:
+                return JsonResponse({
+                    'success': False,
+                    'message': 'Please enter your email address.'
+                })
+            
+            # Validate email
+            try:
+                validate_email(email)
+                print("DEBUG: Email validation passed")
+            except ValidationError:
+                return JsonResponse({
+                    'success': False,
+                    'message': 'Please enter a valid email address.'
+                })
+            
+            # Check if subscriber exists
+            try:
+                existing = BlogSubscriber.objects.get(email=email)
+                print(f"DEBUG: Existing subscriber found: {existing.id}")
+                print(f"DEBUG: Is active: {existing.is_active}")
+                print(f"DEBUG: Is verified: {existing.is_verified}")
+                
+                if existing.is_active and existing.is_verified:
+                    return JsonResponse({
+                        'success': False,
+                        'message': 'You are already subscribed.'
+                    })
+                elif existing.is_active and not existing.is_verified:
+                    # Resend verification
+                    print("DEBUG: Resending verification email")
+                    email_sent = existing.send_verification_email()
+                    print(f"DEBUG: Email sent: {email_sent}")
+                    
+                    if email_sent:
+                        return JsonResponse({
+                            'success': True,
+                            'message': 'Verification email resent.'
+                        })
+                    else:
+                        return JsonResponse({
+                            'success': False,
+                            'message': 'Failed to send verification email.'
+                        })
+                else:
+                    # Reactivate
+                    print("DEBUG: Reactivating subscription")
+                    existing.is_active = True
+                    existing.unsubscribed_at = None
+                    existing.save()
+                    
+                    email_sent = existing.send_verification_email()
+                    print(f"DEBUG: Reactivation email sent: {email_sent}")
+                    
+                    return JsonResponse({
+                        'success': True,
+                        'message': 'Subscription reactivated!'
+                    })
+                    
+            except BlogSubscriber.DoesNotExist:
+                # Create new subscriber
+                print(f"DEBUG: Creating new subscriber for: {email}")
+                subscriber = BlogSubscriber.objects.create(email=email)
+                print(f"DEBUG: Subscriber created with ID: {subscriber.id}")
+                print(f"DEBUG: Verification token: {subscriber.verification_token}")
+                
+                # Send verification email
+                email_sent = subscriber.send_verification_email()
+                print(f"DEBUG: Verification email sent: {email_sent}")
+                
+                if email_sent:
+                    return JsonResponse({
+                        'success': True,
+                        'message': 'Thank you! Please check your email to verify.'
+                    })
+                else:
+                    return JsonResponse({
+                        'success': False,
+                        'message': 'Failed to send verification email.'
+                    })
+                    
+        except Exception as e:
+            print(f"DEBUG: Exception: {str(e)}")
+            import traceback
+            traceback.print_exc()
+            return JsonResponse({
+                'success': False,
+                'message': f'Server error: {str(e)}'
+            })
+    
+    return JsonResponse({
+        'success': False,
+        'message': 'Invalid request.'
+    }, status=400)
+def verify_subscription(request, token):
+    """
+    Verify email subscription.
+    """
+    subscriber = get_object_or_404(BlogSubscriber, verification_token=token)
+    
+    if subscriber.is_verified:
+        return render(request, 'subscription/verified.html', {
+            'message': 'Your email is already verified.',
+            'subscriber': subscriber
+        })
+    
+    subscriber.is_verified = True
+    subscriber.save()
+    
+    return render(request, 'subscription/verified.html', {
+        'message': 'Thank you! Your email has been verified successfully.',
+        'subscriber': subscriber
+    })
+
+def unsubscribe(request, token):
+    """
+    Handle subscription unsubscription.
+    """
+    subscriber = get_object_or_404(BlogSubscriber, verification_token=token)
+    
+    if not subscriber.is_active:
+        return render(request, 'subscription/unsubscribed.html', {
+            'message': 'You are already unsubscribed.'
+        })
+    
+    subscriber.is_active = False
+    subscriber.unsubscribed_at = timezone.now()
+    subscriber.save()
+    
+    return render(request, 'subscription/unsubscribed.html', {
+        'message': 'You have been unsubscribed from blog notifications.',
+        'subscriber': subscriber
+    })
 # ══════════════════════════════════════════════════════════════════════════════
 #                              TESTIMONIAL VIEWS
 # ══════════════════════════════════════════════════════════════════════════════
@@ -236,11 +404,7 @@ def testimonials(request):
     
     # ─── Video Testimonials ───────────────────────────────────────────────────
     # Get testimonials with video URLs
-    video_testimonials = Testimonial.objects.filter(
-        is_active=True,
-        video_url__isnull=False  # Has a video URL
-    ).exclude(video_url="")  # Exclude empty URLs
-    
+   
     # ─── Admin Features ───────────────────────────────────────────────────────
     # Show pending submissions count to admin users
     pending_submissions = None
@@ -257,7 +421,7 @@ def testimonials(request):
         'industry_testimonials': industry_testimonials,  # QuerySet per industry
         'industries': industries,  # Unique industry list
         'stats': stats,  # Statistics dictionary
-        'video_testimonials': video_testimonials,  # Video testimonials
+         # Video testimonials
         'pending_submissions': pending_submissions,  # Admin-only data
     }
     
@@ -287,7 +451,7 @@ def submit_testimonial(request):
             # ─── User Confirmation Email ───────────────────────────────────────
             try:
                 send_mail(
-                    subject='Testimonial Submission Received - Anjali Bansal & Associates',
+                    subject='Testimonial Submission Received - KP RegTech',
                     message=f'''Dear {submission.full_name},
                     
 Thank you for submitting your testimonial! We truly appreciate you taking the time to share your experience.
@@ -297,7 +461,7 @@ Your submission is now under review. We'll notify you once it's approved and pub
 If you have any questions, please don't hesitate to contact us.
 
 Best regards,
-Anjali Bansal & Associates''',
+KP RegTech''',
                     from_email=settings.DEFAULT_FROM_EMAIL,
                     recipient_list=[submission.email],
                     fail_silently=True,  # Don't crash if email fails
@@ -408,7 +572,7 @@ Thank you again for sharing your experience. We truly value your feedback.
 View your testimonial here: {request.build_absolute_uri('/testimonials')}
 
 Best regards,
-Anjali Bansal & Associates''',
+KP RegTech''',
                     from_email=settings.DEFAULT_FROM_EMAIL,
                     recipient_list=[submission.email],
                     fail_silently=True,
@@ -438,7 +602,7 @@ Thank you for submitting your testimonial. After careful review, we've decided n
 We still appreciate your feedback and hope to serve you again in the future.
 
 Best regards,
-Anjali Bansal & Associates''',
+KP RegTech''',
                     from_email=settings.DEFAULT_FROM_EMAIL,
                     recipient_list=[submission.email],
                     fail_silently=True,
@@ -514,31 +678,17 @@ def refund_policy(request):
 # ══════════════════════════════════════════════════════════════════════════════
 #                              BOOKING VIEWS
 # ══════════════════════════════════════════════════════════════════════════════
-
 def booking(request, duration):
-    """
-    Consultation booking page view.
+    """Consultation booking page view."""
     
-    Args:
-        duration: Duration string (e.g., '30-min', '45-min', '60-min')
+    logger.info(f"Booking view called with duration: {duration}")
+    logger.info(f"Request method: {request.method}")
     
-    Features:
-        - Dynamic pricing and feature display based on duration
-        - Form handling for booking submissions
-        - Email notifications
-        - Availability checking
-    """
-    # Get query parameters for pre-filled data
-    plan = request.GET.get('plan', '')
-    original_duration = request.GET.get('duration', '')
-    price = request.GET.get('price', '')
-    
-    # ─── Duration Configuration ───────────────────────────────────────────────
-    # Define details for each duration option
+    # Duration configuration
     duration_details = {
         '30-min': {
-            'title': plan or '30-Minute Quick Consultation',
-            'price': price or '₹1,000',
+            'title': '30-Minute Quick Consultation',
+            'price': '₹1,000',
             'duration_minutes': '30',
             'price_amount': 1000,
             'features': [
@@ -549,8 +699,8 @@ def booking(request, duration):
             ]
         },
         '45-min': {
-            'title': plan or '45-Minute Standard Consultation',
-            'price': price or '₹1,500',
+            'title': '45-Minute Standard Consultation',
+            'price': '₹1,500',
             'duration_minutes': '45',
             'price_amount': 1500,
             'features': [
@@ -562,8 +712,8 @@ def booking(request, duration):
             ]
         },
         '60-min': {
-            'title': plan or '60-Minute Comprehensive Consultation',
-            'price': price or '₹2,000',
+            'title': '60-Minute Comprehensive Consultation',
+            'price': '₹2,000',
             'duration_minutes': '60',
             'price_amount': 2000,
             'features': [
@@ -576,72 +726,98 @@ def booking(request, duration):
         }
     }
     
-    # Get details for the requested duration, default to 45-min if not found
+    # Get details for the requested duration
     details = duration_details.get(duration, duration_details['45-min'])
     
-    # ─── Handle Form Submission ───────────────────────────────────────────────
+    # Handle POST request (form submission)
     if request.method == 'POST':
-        return handle_booking_submission(request, duration, details)
+        # Ensure JSON response for AJAX requests
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return handle_booking_submission(request, duration, details)
+        else:
+            # Handle regular form submission
+            result = handle_booking_submission(request, duration, details)
+            return result
     
-    # ─── Prepare Context (GET Request) ────────────────────────────────────────
+    # GET request - show booking form
     context = {
-        'duration': duration,  # Selected duration
-        'title': details['title'],  # Page title
-        'price': details['price'],  # Formatted price
-        'price_amount': details['price_amount'],  # Numeric price
-        'duration_minutes': details['duration_minutes'],  # Minutes as string
-        'features': details['features'],  # List of features
-        'referral': request.GET.get('referral', 'service_list_widget'),  # Referral source
-        'plan_name': plan,  # Plan name from query
-        'original_duration': original_duration  # Original duration parameter
+        'duration': duration,
+        'title': details['title'],
+        'price': details['price'],
+        'price_amount': details['price_amount'],
+        'duration_minutes': details['duration_minutes'],
+        'features': details['features'],
     }
     
-    # Render booking form page
     return render(request, 'booking.html', context)
+# In views.py, update handle_booking_submission function:
 
 
+# In views.py, update handle_booking_submission function:
 def handle_booking_submission(request, duration, details):
-    """
-    Handle booking form submission logic.
+    """Handle booking form submission - FIXED to prevent duplicates"""
     
-    Args:
-        request: HTTP request object
-        duration: Selected duration string
-        details: Dictionary of booking details
+    if request.method != 'POST':
+        return JsonResponse({'success': False, 'error': 'Invalid request method'})
     
-    Returns:
-        JSON response with success/error status
-    """
     try:
-        # ─── Parse Appointment Datetime ───────────────────────────────────────
-        appointment_datetime = request.POST.get('appointment_datetime')
-        if not appointment_datetime:
+        print("=== NEW BOOKING SUBMISSION START ===")
+        print(f"Request path: {request.path}")
+        print(f"Request method: {request.method}")
+        print(f"POST data: {dict(request.POST)}")
+        
+        # Parse data
+        selected_date = request.POST.get('selected_date')
+        selected_time = request.POST.get('selected_time')
+        
+        print(f"Selected date: {selected_date}, Selected time: {selected_time}")
+        
+        if not selected_date or not selected_time:
+            print("Error: No appointment time selected")
             return JsonResponse({'success': False, 'error': 'No appointment time selected'})
         
-        # Convert ISO format string to datetime object
-        dt = datetime.fromisoformat(appointment_datetime)
-        
-        # Extract duration minutes from string (e.g., '30-min' → 30)
-        duration_minutes = int(duration.replace('-min', ''))
-        
-        # ─── Validate Appointment Time ────────────────────────────────────────
-        now = datetime.now()
+        # Create datetime
+        dt_str = f"{selected_date} {selected_time}"
+        dt = datetime.strptime(dt_str, '%Y-%m-%d %H:%M')
         
         # Check if date/time is in the past
+        now = datetime.now()
         if dt < now:
+            print("Error: Cannot book appointments in the past")
             return JsonResponse({
                 'success': False, 
-                'error': 'Cannot book appointments in the past. Please select a future date and time.'
+                'error': 'Cannot book appointments in the past.'
             })
         
-        # Check if time is available (with 15 min buffer)
-        if not is_time_available(dt.date(), dt.time(), duration_minutes):
-            return JsonResponse({
-                'success': False, 
-                'error': 'This time slot is no longer available or overlaps with an existing booking. Please select another time.'
-            })
+        # Extract duration minutes
+        duration_minutes = int(duration.replace('-min', ''))
         
-        # ─── Create Booking Record ────────────────────────────────────────────
+        # CHECK FOR EXISTING BOOKING WITH SAME EMAIL, DATE, AND TIME
+        client_email = request.POST.get('email')
+        existing_booking = ConsultationBooking.objects.filter(
+            email=client_email,
+            appointment_date=dt.date(),
+            appointment_time=dt.time()
+        ).first()
+        
+        if existing_booking:
+            print(f"Existing booking found: {existing_booking.booking_id}")
+            # Return existing booking ID and payment ID
+            try:
+                payment = Payment.objects.get(booking=existing_booking)
+                return JsonResponse({
+                    'success': True,
+                    'booking_id': str(existing_booking.booking_id),
+                    'payment_id': payment.payment_id,
+                    'redirect_url': f'/booking/{existing_booking.booking_id}/payment-test/',
+                    'message': 'Using existing booking'
+                })
+            except Payment.DoesNotExist:
+                print(f"No payment found for existing booking {existing_booking.booking_id}")
+        
+        print(f"Creating NEW booking for: {request.POST.get('name')}")
+        
+        # Create Booking Record
         booking = ConsultationBooking.objects.create(
             duration=duration,
             price=details['price_amount'],
@@ -653,176 +829,227 @@ def handle_booking_submission(request, duration, details):
             phone=request.POST.get('phone'),
             company=request.POST.get('company', ''),
             designation=request.POST.get('designation', ''),
-            topic=request.POST.get('topic'),
+            topic=request.POST.get('topic', ''),
             newsletter_consent=request.POST.get('newsletter') == 'on',
-            status='confirmed'  # Auto-confirm for now
+            status='pending',
+            is_paid=False,
+            payment_id=None
         )
+        
+        print(f"Booking created: {booking.booking_id}")
         
         # Handle optional document upload
         if 'documents' in request.FILES:
             booking.documents = request.FILES['documents']
             booking.save()
         
-        # ─── Log Email Attempt Details ────────────────────────────────────────
-        logger.info(f"Attempting to send emails:")
-        logger.info(f"  - To client: {booking.email}")
-        logger.info(f"  - From: {settings.DEFAULT_FROM_EMAIL}")
-        logger.info(f"  - EMAIL_BACKEND: {settings.EMAIL_BACKEND}")
+        # Get payment method
+        payment_method = request.POST.get('payment_method', 'online')
         
-        # ─── Send Email Notifications ─────────────────────────────────────────
-        client_email_sent = send_booking_confirmation_email(booking, details)
-        admin_email_sent = send_admin_notification_email(booking, details)
+        # Check if payment already exists
+        payment = None
+        try:
+            payment = Payment.objects.get(booking=booking)
+            print(f"Payment already exists: {payment.payment_id}")
+        except Payment.DoesNotExist:
+            # Create payment ONLY if it doesn't exist
+            payment = Payment.objects.create(
+                booking=booking,
+                amount=booking.price,
+                method=payment_method,
+                status='pending'
+            )
+            print(f"New payment created: {payment.payment_id}")
         
-        logger.info(f"Booking {booking.booking_id} created. Client email: {client_email_sent}, Admin email: {admin_email_sent}")
+        # Update booking with payment ID
+        booking.payment_id = payment.payment_id
+        booking.save()
         
-        # ─── Return Success Response ──────────────────────────────────────────
+        print(f"Booking updated with payment ID: {payment.payment_id}")
+        
+        # Send initial booking confirmation email
+        try:
+            send_booking_confirmation_email(booking, details)
+            send_admin_notification_email(booking, details)
+        except Exception as e:
+            print(f"Error sending booking emails: {e}")
+        
+        print(f"=== BOOKING SUBMISSION COMPLETE ===")
+        print(f"Booking ID: {booking.booking_id}")
+        print(f"Payment ID: {payment.payment_id}")
+        print(f"Payment Method: {payment_method}")
+        
+        # Return success
         return JsonResponse({
             'success': True,
             'booking_id': str(booking.booking_id),
-            'client_email': booking.email,
-            'admin_email': settings.ADMIN_EMAIL,
-            'message': 'Booking confirmed successfully! Check your email for details.'
+            'payment_id': payment.payment_id,
+            'redirect_url': f'/booking/{booking.booking_id}/payment-test/',
+            'message': 'Booking created successfully'
         })
         
     except Exception as e:
-        # ─── Handle Errors ────────────────────────────────────────────────────
-        logger.error(f"Error in booking submission: {str(e)}")
+        import traceback
+        print(f"Error in booking submission: {str(e)}")
+        print(f"Traceback: {traceback.format_exc()}")
         return JsonResponse({'success': False, 'error': str(e)})
-
 
 # ══════════════════════════════════════════════════════════════════════════════
 #                              EMAIL FUNCTIONS
 # ══════════════════════════════════════════════════════════════════════════════
-
 def send_booking_confirmation_email(booking, details):
-    """
-    Send booking confirmation email to client.
-    
-    Args:
-        booking: ConsultationBooking instance
-        details: Dictionary of booking details
-    
-    Returns:
-        Boolean indicating success
-    """
+    """Send comprehensive booking confirmation email to both user and admin."""
     try:
-        subject = f'Consultation Booking Confirmation - {booking.booking_id}'
+        # Send to user
+        send_user_booking_email(booking, details)
         
-        # ─── Format Date/Time for Display ────────────────────────────────────
-        appointment_date = booking.appointment_date.strftime('%A, %B %d, %Y')
-        appointment_time = booking.appointment_time.strftime('%I:%M %p')
+        # Send to admin
+        send_admin_booking_email(booking, details)
         
-        # Calculate end time based on duration
-        duration_minutes = int(booking.duration.replace('-min', ''))
-        start_dt = datetime.combine(booking.appointment_date, booking.appointment_time)
-        end_dt = start_dt + timedelta(minutes=duration_minutes)
-        end_time = end_dt.strftime('%I:%M %p')
-        
-        # ─── Create HTML Email Content ────────────────────────────────────────
-        html_content = f"""
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <style>
-                body {{ font-family: Arial, sans-serif; line-height: 1.6; color: #333; }}
-                .container {{ max-width: 600px; margin: 0 auto; padding: 20px; }}
-                .header {{ background-color: #2c3e50; color: white; padding: 20px; text-align: center; }}
-                .content {{ padding: 20px; background-color: #f9f9f9; }}
-                .details {{ background-color: white; padding: 20px; border-radius: 5px; margin: 20px 0; }}
-                .footer {{ text-align: center; padding: 20px; color: #777; font-size: 12px; }}
-            </style>
-        </head>
-        <body>
-            <div class="container">
-                <div class="header">
-                    <h1>Booking Confirmed!</h1>
-                </div>
-                <div class="content">
-                    <p>Dear {booking.name},</p>
-                    <p>Thank you for booking a consultation with Anjali Bansal & Associates. Your appointment has been confirmed.</p>
-                    
-                    <div class="details">
-                        <h3>Appointment Details</h3>
-                        <p><strong>Booking ID:</strong> {booking.booking_id}</p>
-                        <p><strong>Date:</strong> {appointment_date}</p>
-                        <p><strong>Time:</strong> {appointment_time} - {end_time} ({duration_minutes} minutes)</p>
-                        <p><strong>Mode:</strong> {booking.get_mode_display()}</p>
-                        <p><strong>Duration:</strong> {booking.get_duration_display()}</p>
-                        <p><strong>Amount:</strong> ₹{booking.price}</p>
-                        <p><strong>Consultation Topic:</strong> {booking.topic[:100]}{'...' if len(booking.topic) > 100 else ''}</p>
-                    </div>
-                    
-                    <h3>Important Notes:</h3>
-                    <ul>
-                        <li>Please join the meeting 5 minutes before the scheduled time</li>
-                        <li>Have your documents ready for discussion</li>
-                        <li>Meeting link/details will be sent 1 hour before the appointment</li>
-                        <li>You can reschedule up to 24 hours before the appointment</li>
-                    </ul>
-                    
-                    <p>If you need to reschedule or have any questions, please contact us at <a href="mailto:contact@anjali-bansal.com">contact@anjali-bansal.com</a></p>
-                    
-                    <p>Best regards,<br>
-                    <strong>Anjali Bansal & Associates</strong><br>
-                    Company Secretaries</p>
-                </div>
-                <div class="footer">
-                    <p>This is an automated email. Please do not reply to this message.</p>
-                    <p>© 2024 Anjali Bansal & Associates. All rights reserved.</p>
-                </div>
-            </div>
-        </body>
-        </html>
-        """
-        
-        # ─── Create Plain Text Version ────────────────────────────────────────
-        plain_text = f"""Booking Confirmation
-========================
-
-Dear {booking.name},
-
-Thank you for booking a consultation with Anjali Bansal & Associates.
-
-APPOINTMENT DETAILS:
-Booking ID: {booking.booking_id}
-Date: {appointment_date}
-Time: {appointment_time} - {end_time} ({duration_minutes} minutes)
-Mode: {booking.get_mode_display()}
-Duration: {booking.get_duration_display()}
-Amount: ₹{booking.price}
-
-IMPORTANT NOTES:
-- Please join the meeting 5 minutes before the scheduled time
-- Have your documents ready for discussion
-- Meeting link/details will be sent 1 hour before the appointment
-- You can reschedule up to 24 hours before the appointment
-
-If you need to reschedule or have any questions, please contact us at contact@anjali-bansal.com
-
-Best regards,
-Anjali Bansal & Associates
-Company Secretaries
-"""
-        
-        # ─── Send Email to Client ─────────────────────────────────────────────
-        email_to_client = EmailMessage(
-            subject=subject,
-            body=html_content,
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            to=[booking.email],
-        )
-        email_to_client.content_subtype = "html"  # Set as HTML email
-        email_to_client.send()
-        
-        logger.info(f"✓ Confirmation email sent to {booking.email} for booking {booking.booking_id}")
-        
+        logger.info(f"✓ Booking confirmation emails sent for booking {booking.booking_id}")
         return True
-        
     except Exception as e:
-        logger.error(f"✗ Error sending confirmation email for booking {booking.booking_id}: {str(e)}")
-        # Don't fail the booking if email fails
+        logger.error(f"✗ Error sending booking emails: {str(e)}")
         return False
 
+def send_user_booking_email(booking, details):
+    """Send booking email to user."""
+    subject = f'Booking Confirmation - {booking.booking_id}'
+    
+    # Format date/time
+    appointment_date = booking.appointment_date.strftime('%A, %B %d, %Y')
+    appointment_time = booking.appointment_time.strftime('%I:%M %p')
+    
+    html_content = f"""
+    <!DOCTYPE html>
+    <html>
+    <body>
+        <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+            <h2>Booking Confirmed!</h2>
+            <p>Dear {booking.name},</p>
+            <p>Your consultation has been booked successfully.</p>
+            
+            <div style="background: #f9f9f9; padding: 15px; margin: 15px 0;">
+                <h3>Booking Details</h3>
+                <p><strong>Booking ID:</strong> {booking.booking_id}</p>
+                <p><strong>Date:</strong> {appointment_date}</p>
+                <p><strong>Time:</strong> {appointment_time}</p>
+                <p><strong>Duration:</strong> {booking.get_duration_display()}</p>
+                <p><strong>Mode:</strong> {booking.get_mode_display()}</p>
+                <p><strong>Amount:</strong> ₹{booking.price}</p>
+                <p><strong>Status:</strong> Pending Payment</p>
+            </div>
+            
+            <p><strong>Next Steps:</strong></p>
+            <ol>
+                <li>Complete your payment to confirm the booking</li>
+                <li>Meeting details will be sent 1 hour before appointment</li>
+                <li>Join 5 minutes before scheduled time</li>
+            </ol>
+            
+            <p>View your booking: <a href="http://127.0.0.1:8000/booking/{booking.booking_id}/">Booking Details</a></p>
+            
+            <p>Best regards,<br>
+            <strong>KP RegTech</strong></p>
+        </div>
+    </body>
+    </html>
+    """
+    
+    email = EmailMessage(
+        subject=subject,
+        body=html_content,
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        to=[booking.email],
+    )
+    email.content_subtype = "html"
+    email.send()
+
+def send_admin_booking_email(booking, details):
+    """Send booking notification to admin."""
+    subject = f'📅 New Booking: {booking.name} - {booking.booking_id}'
+    
+    message = f"""
+    NEW BOOKING RECEIVED
+    
+    Booking ID: {booking.booking_id}
+    Time: {booking.created_at.strftime('%Y-%m-%d %H:%M:%S')}
+    
+    Client Information:
+    Name: {booking.name}
+    Email: {booking.email}
+    Phone: {booking.phone}
+    Company: {booking.company or 'N/A'}
+    
+    Appointment Details:
+    Date: {booking.appointment_date}
+    Time: {booking.appointment_time.strftime('%H:%M')}
+    Duration: {booking.get_duration_display()}
+    Mode: {booking.get_mode_display()}
+    Amount: ₹{booking.price}
+    
+    Topic: {booking.topic}
+    
+    Action Required:
+    1. Review booking: http://127.0.0.1:8000/admin/consultation/consultationbooking/
+    2. Process payment if offline
+    3. Send meeting details
+    """
+    
+    admin_email = EmailMessage(
+        subject,
+        message,
+        settings.DEFAULT_FROM_EMAIL,
+        [settings.ADMIN_EMAIL]
+    )
+    admin_email.send()
+
+def send_admin_booking_notification(booking, details):
+    """Send detailed booking notification to admin."""
+    try:
+        subject = f'📅 New Booking: {booking.name} - {booking.booking_id}'
+        
+        message = f"""
+        NEW BOOKING RECEIVED
+        
+        Booking ID: {booking.booking_id}
+        Created: {booking.created_at}
+        
+        CLIENT:
+        Name: {booking.name}
+        Email: {booking.email}
+        Phone: {booking.phone}
+        Company: {booking.company or 'N/A'}
+        
+        APPOINTMENT:
+        Date: {booking.appointment_date}
+        Time: {booking.appointment_time}
+        Duration: {booking.get_duration_display()}
+        Mode: {booking.get_mode_display()}
+        
+        PAYMENT:
+        Amount: ₹{booking.price}
+        Status: {'Paid' if booking.is_paid else 'Pending'}
+        Method: {booking.payment.method if hasattr(booking, 'payment') else 'Not selected'}
+        
+        ADMIN ACTIONS:
+        View: https://yourdomain.com/admin/bookings/
+        Manage: https://yourdomain.com/admin/booking-management/
+        """
+        
+        # Send to admin
+        admin_email = EmailMessage(
+            subject,
+            message,
+            settings.DEFAULT_FROM_EMAIL,
+            [settings.ADMIN_EMAIL]
+        )
+        admin_email.send()
+        
+        return True
+    except Exception as e:
+        print(f"Error sending admin notification: {e}")
+        return False
 
 def send_admin_notification_email(booking, details):
     """
@@ -944,7 +1171,7 @@ def send_cancellation_email(booking, reason=None):
                 </div>
                 <div class="content">
                     <p>Dear {booking.name},</p>
-                    <p>We regret to inform you that your consultation booking with Anjali Bansal & Associates has been cancelled.</p>
+                    <p>We regret to inform you that your consultation booking with KP RegTech has been cancelled.</p>
                     
                     <div class="details">
                         <h3>Cancelled Appointment Details</h3>
@@ -963,24 +1190,24 @@ def send_cancellation_email(booking, reason=None):
                     
                     <div class="action-buttons">
                         <a href="https://anjali-bansal.com/services" class="btn btn-reschedule">Reschedule Appointment</a>
-                        <a href="mailto:contact@anjali-bansal.com" class="btn btn-contact">Contact Support</a>
+                        <a href="mailto:kpregtech@gmail.com" class="btn btn-contact">Contact Support</a>
                     </div>
                     
                     <h3>Next Steps:</h3>
                     <ul>
                         <li>You can book a new appointment through our <a href="https://anjali-bansal.com/services">services page</a></li>
-                        <li>If you have any questions, please contact us at <a href="mailto:contact@anjali-bansal.com">contact@anjali-bansal.com</a></li>
-                        <li>For refund inquiries, please email <a href="mailto:billing@anjali-bansal.com">billing@anjali-bansal.com</a></li>
+                        <li>If you have any questions, please contact us at <a href="mailto:kpregtech@gmail.com">kpregtech@gmail.com</a></li>
+                        <li>For refund inquiries, please email <a href="mailto:kpregtech@gmail.com">kpregtech@gmail.com</a></li>
                         <li>We apologize for any inconvenience caused and hope to assist you in the future</li>
                     </ul>
                     
                     <p>Best regards,<br>
-                    <strong>Anjali Bansal & Associates</strong><br>
-                    Company Secretaries</p>
+                    <strong>KP RegTech</strong><br>
+                    </p>
                 </div>
                 <div class="footer">
                     <p>This is an automated email. Please do not reply to this message.</p>
-                    <p>© {datetime.now().year} Anjali Bansal & Associates. All rights reserved.</p>
+                    <p>© {datetime.now().year} KP RegTech. All rights reserved.</p>
                 </div>
             </div>
         </body>
@@ -1238,15 +1465,15 @@ def send_status_change_email(booking, new_status, old_status=None):
                     {instructions}
                     
                     <p>If you have any questions about this status change, please contact us at 
-                       <a href="mailto:contact@anjali-bansal.com">contact@anjali-bansal.com</a></p>
+                       <a href="mailto:kpregtech@gmail.com">kpregtech@gmail.com</a></p>
                     
                     <p>Best regards,<br>
-                    <strong>Anjali Bansal & Associates</strong><br>
-                    Company Secretaries</p>
+                    <strong>KP RegTech</strong><br>
+                    </p>
                 </div>
                 <div class="footer">
                     <p>This is an automated email. Please do not reply to this message.</p>
-                    <p>© {datetime.now().year} Anjali Bansal & Associates. All rights reserved.</p>
+                    <p>© {datetime.now().year} KP RegTech. All rights reserved.</p>
                 </div>
             </div>
         </body>
@@ -1756,7 +1983,1212 @@ def is_time_available(date_obj, start_time, duration_minutes):
     
     return True  # Time slot is available
 
+# ══════════════════════════════════════════════════════════════════════════════
+#                              PAYMENT VIEWS
+# ══════════════════════════════════════════════════════════════════════════════
+
+# def initiate_payment(request, booking_id):
+#     """
+#     Initiate payment for a booking.
+#     """
+#     booking = get_object_or_404(ConsultationBooking, booking_id=booking_id)
+    
+#     # Check if payment already exists
+#     if hasattr(booking, 'payment') and booking.payment.is_successful():
+#         messages.info(request, 'Payment already completed for this booking.')
+#         return redirect('booking_detail', booking_id=booking_id)
+    
+#     # Initiate payment
+#     payment_data = booking.initiate_payment()
+    
+#     if not payment_data:
+#         messages.error(request, 'Error initiating payment. Please try again.')
+#         return redirect('booking_detail', booking_id=booking_id)
+    
+#     context = {
+#         'booking': booking,
+#         'payment_data': payment_data,
+#         'razorpay_key_id': settings.RAZORPAY_KEY_ID,
+#     }
+    
+#     return render(request, 'payment/payment.html', context)
+
+# def payment_success(request):
+#     """
+#     Handle successful payment.
+#     """
+#     payment_id = request.GET.get('payment_id')
+#     order_id = request.GET.get('order_id')
+#     signature = request.GET.get('signature')
+    
+#     try:
+#         # Verify payment with Razorpay
+#         client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+        
+#         # Get payment details
+#         payment = client.payment.fetch(payment_id)
+        
+#         # Get our payment record
+#         payment_record = Payment.objects.get(razorpay_order_id=order_id)
+        
+#         # Verify signature
+#         params_dict = {
+#             'razorpay_order_id': order_id,
+#             'razorpay_payment_id': payment_id,
+#             'razorpay_signature': signature
+#         }
+        
+#         try:
+#             client.utility.verify_payment_signature(params_dict)
+            
+#             # Update payment record
+#             payment_record.mark_as_completed(
+#                 payment_id=payment_id,
+#                 method=payment.get('method'),
+#                 additional_info={
+#                     'upi_id': payment.get('vpa'),
+#                     'card_last4': payment.get('card', {}).get('last4'),
+#                     'bank_name': payment.get('bank')
+#                 }
+#             )
+            
+#             # Send confirmation email
+#             send_payment_confirmation_email(payment_record.booking)
+            
+#             messages.success(request, 'Payment completed successfully!')
+#             return render(request, 'payment/success.html', {
+#                 'booking': payment_record.booking,
+#                 'payment': payment_record
+#             })
+            
+#         except razorpay.errors.SignatureVerificationError:
+#             payment_record.status = 'failed'
+#             payment_record.error_description = 'Signature verification failed'
+#             payment_record.save()
+            
+#             messages.error(request, 'Payment verification failed. Please contact support.')
+#             return redirect('payment_failed')
+            
+#     except Exception as e:
+#         logger.error(f"Error processing payment success: {str(e)}")
+#         messages.error(request, 'Error processing payment. Please contact support.')
+#         return redirect('payment_failed')
+
+# def payment_failed(request):
+#     """
+#     Handle failed payment.
+#     """
+#     order_id = request.GET.get('order_id', '')
+    
+#     context = {
+#         'order_id': order_id,
+#     }
+    
+#     return render(request, 'payment/failed.html', context)
+
+# @csrf_exempt
+# def razorpay_webhook(request):
+#     """
+#     Handle Razorpay webhook for payment status updates.
+#     """
+#     if request.method != 'POST':
+#         return JsonResponse({'error': 'Method not allowed'}, status=405)
+    
+#     try:
+#         webhook_secret = settings.RAZORPAY_WEBHOOK_SECRET
+#         webhook_signature = request.headers.get('X-Razorpay-Signature', '')
+        
+#         # Verify webhook signature
+#         client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+        
+#         # Get webhook body
+#         webhook_body = request.body.decode('utf-8')
+        
+#         # Verify signature
+#         client.utility.verify_webhook_signature(webhook_body, webhook_signature, webhook_secret)
+        
+#         # Parse webhook data
+#         webhook_data = json.loads(webhook_body)
+#         event = webhook_data.get('event')
+        
+#         if event == 'payment.captured':
+#             payment_data = webhook_data.get('payload', {}).get('payment', {}).get('entity', {})
+            
+#             # Update payment in database
+#             payment_id = payment_data.get('id')
+#             order_id = payment_data.get('order_id')
+            
+#             try:
+#                 payment = Payment.objects.get(razorpay_order_id=order_id)
+#                 payment.mark_as_completed(
+#                     payment_id=payment_id,
+#                     method=payment_data.get('method'),
+#                     additional_info={
+#                         'upi_id': payment_data.get('vpa'),
+#                         'card_last4': payment_data.get('card', {}).get('last4'),
+#                         'bank_name': payment_data.get('bank')
+#                     }
+#                 )
+                
+#                 logger.info(f"Payment {payment_id} marked as completed via webhook")
+                
+#             except Payment.DoesNotExist:
+#                 logger.error(f"Payment with order_id {order_id} not found")
+        
+#         return JsonResponse({'status': 'success'})
+        
+#     except Exception as e:
+#         logger.error(f"Error processing webhook: {str(e)}")
+#         return JsonResponse({'error': str(e)}, status=400)
+
+# def send_payment_confirmation_email(booking):
+#     """
+#     Send payment confirmation email to client.
+#     """
+#     try:
+#         subject = f'Payment Confirmed - Booking {booking.booking_id}'
+        
+#         # Create HTML email content
+#         html_content = f"""
+#         <!DOCTYPE html>
+#         <html>
+#         <head>
+#             <style>
+#                 body {{ font-family: Arial, sans-serif; line-height: 1.6; color: #333; }}
+#                 .container {{ max-width: 600px; margin: 0 auto; padding: 20px; }}
+#                 .header {{ background-color: #28a745; color: white; padding: 20px; text-align: center; }}
+#                 .content {{ padding: 20px; background-color: #f9f9f9; }}
+#                 .details {{ background-color: white; padding: 20px; border-radius: 5px; margin: 20px 0; }}
+#                 .footer {{ text-align: center; padding: 20px; color: #777; font-size: 12px; }}
+#             </style>
+#         </head>
+#         <body>
+#             <div class="container">
+#                 <div class="header">
+#                     <h1>Payment Confirmed!</h1>
+#                 </div>
+#                 <div class="content">
+#                     <p>Dear {booking.name},</p>
+#                     <p>Thank you for your payment. Your consultation booking is now confirmed.</p>
+                    
+#                     <div class="details">
+#                         <h3>Payment Details</h3>
+#                         <p><strong>Booking ID:</strong> {booking.booking_id}</p>
+#                         <p><strong>Amount Paid:</strong> ₹{booking.price}</p>
+#                         <p><strong>Payment Status:</strong> Completed</p>
+#                         <p><strong>Date:</strong> {timezone.now().strftime('%d %B, %Y %I:%M %p')}</p>
+#                     </div>
+                    
+#                     <div class="details">
+#                         <h3>Appointment Details</h3>
+#                         <p><strong>Date:</strong> {booking.appointment_date.strftime('%A, %d %B, %Y')}</p>
+#                         <p><strong>Time:</strong> {booking.appointment_time.strftime('%I:%M %p')}</p>
+#                         <p><strong>Duration:</strong> {booking.get_duration_display()}</p>
+#                         <p><strong>Mode:</strong> {booking.get_mode_display()}</p>
+#                     </div>
+                    
+#                     <p><strong>Important:</strong> Meeting details will be sent to you 1 hour before the appointment.</p>
+                    
+#                     <p>If you have any questions, please contact us at <a href="mailto:kpregtech@gmail.com">kpregtech@gmail.com</a></p>
+                    
+#                     <p>Best regards,<br>
+#                     <strong>KP RegTech</strong><br>
+#                     </p>
+#                 </div>
+#                 <div class="footer">
+#                     <p>This is an automated email. Please do not reply to this message.</p>
+#                 </div>
+#             </div>
+#         </body>
+#         </html>
+#         """
+        
+#         # Send email
+#         email = EmailMessage(
+#             subject=subject,
+#             body=html_content,
+#             from_email=settings.DEFAULT_FROM_EMAIL,
+#             to=[booking.email],
+#         )
+#         email.content_subtype = "html"
+#         email.send()
+        
+#         logger.info(f"Payment confirmation email sent to {booking.email}")
+        
+#         return True
+        
+#     except Exception as e:
+#         logger.error(f"Error sending payment confirmation email: {str(e)}")
+#         return False
+
 
 # ══════════════════════════════════════════════════════════════════════════════
-#                                  END OF VIEWS
+#                              TEST PAYMENT VIEWS (NO RAZORPAY)
 # ══════════════════════════════════════════════════════════════════════════════
+
+import random
+from .models import Payment
+# In views.py, update the initiate_payment function:
+def initiate_payment(request, booking_id):
+    """
+    Initiate payment for a booking (TEST MODE).
+    """
+    print(f"Initiating payment for booking: {booking_id}")
+    
+    try:
+        booking = ConsultationBooking.objects.get(booking_id=booking_id)
+        print(f"Booking found: {booking_id}, Name: {booking.name}, Price: {booking.price}")
+        
+        # Check if already paid
+        if booking.is_paid:
+            print(f"Booking already paid: {booking_id}")
+            messages.info(request, 'This booking is already paid.')
+            return redirect('booking_detail', booking_id=booking_id)
+        
+        # Check if payment already exists
+        try:
+            payment = Payment.objects.get(booking=booking)
+            print(f"Existing payment found: {payment.payment_id}, Status: {payment.status}")
+        except Payment.DoesNotExist:
+            # Create new payment record
+            payment = Payment.objects.create(
+                booking=booking,
+                amount=booking.price,
+                method='upi',  # Default
+                status='pending'
+            )
+            print(f"New payment created: {payment.payment_id}")
+        
+        context = {
+            'booking': booking,
+            'payment': payment,
+            'is_test_mode': True,
+        }
+        
+        print(f"Rendering payment test page for booking: {booking_id}")
+        return render(request, 'payment/payment_test_fixed.html', context)
+        
+    except ConsultationBooking.DoesNotExist:
+        print(f"Booking not found: {booking_id}")
+        messages.error(request, 'Booking not found.')
+        return redirect('/')
+    except Exception as e:
+        print(f"Error initiating payment: {e}")
+        messages.error(request, f'Error: {str(e)}')
+        return redirect('/')
+
+
+# In views.py, update process_test_payment:
+# In views.py, update process_test_payment function:
+
+
+def process_test_payment(request, payment_id):
+    """Process test payment (simulates payment gateway)."""
+    print(f"Processing test payment: {payment_id}")
+    
+    try:
+        payment = Payment.objects.get(payment_id=payment_id)
+        booking = payment.booking
+        
+        print(f"Payment found: {payment_id}, Status: {payment.status}, Booking: {booking.booking_id}")
+        
+        # Prevent duplicate processing
+        if payment.status == 'success' and booking.is_paid:
+            messages.info(request, 'Payment already completed.')
+            return redirect('booking_detail', booking_id=booking.booking_id)
+        
+        if request.method == 'POST':
+            payment_method = request.POST.get('payment_method', payment.method)
+            simulate_success = request.POST.get('simulate_success') == 'true'
+            cash_verified = request.POST.get('cash_verified') == 'true'
+            
+            print(f"Processing: method={payment_method}, success={simulate_success}, cash_verified={cash_verified}")
+            
+            if simulate_success:
+                if payment_method == 'cash':
+                    if cash_verified:
+                        # Cash verified by admin
+                        if not payment.cash_payment_verified:
+                            payment.mark_as_paid(
+                                verified_by=request.user if request.user.is_authenticated else None,
+                                notes="Verified by admin"
+                            )
+                            print(f"Cash payment verified: {payment_id}")
+                            messages.success(request, 'Cash payment verified! Booking confirmed.')
+                        else:
+                            messages.info(request, 'Cash payment already verified.')
+                    else:
+                        # Cash payment recorded but not verified yet
+                        if payment.status != 'pending':
+                            payment.status = 'pending'
+                            payment.transaction_id = f"CASH-{int(time.time())}"
+                            payment.save()
+                            
+                            # Update booking status but keep as pending
+                            booking.status = 'pending'
+                            booking.payment_id = payment.payment_id
+                            booking.is_paid = False
+                            booking.save()
+                            
+                            print(f"Cash payment recorded (pending verification): {payment_id}")
+                            send_cash_payment_pending_email(payment)
+                            
+                            messages.info(request, 'Cash payment recorded. Your booking will be confirmed after payment verification.')
+                else:
+                    # Online payment
+                    if payment.status != 'success':
+                        payment.status = 'success'
+                        payment.completed_at = timezone.now()
+                        payment.transaction_id = f"TXN{int(time.time())}{random.randint(1000, 9999)}"
+                        payment.method = payment_method
+                        payment.save()
+                        
+                        # Update booking
+                        booking.is_paid = True
+                        booking.payment_id = payment.payment_id
+                        booking.status = 'confirmed'
+                        booking.confirmed_at = timezone.now()
+                        booking.save()
+                        
+                        print(f"Online payment marked as success: {payment_id}")
+                        payment.send_payment_confirmation()
+                        
+                        messages.success(request, 'Payment successful! Booking confirmed.')
+                    else:
+                        messages.info(request, 'Payment already completed.')
+                
+                # Redirect to booking detail page after successful payment
+                return redirect('booking_detail', booking_id=booking.booking_id)
+                
+            else:
+                # Simulate failed payment
+                if payment.status != 'failed':
+                    payment.status = 'failed'
+                    payment.save()
+                    print(f"Payment marked as failed: {payment_id}")
+                    
+                    send_payment_failed_email(payment)
+                    messages.error(request, 'Payment failed. Please try again.')
+                else:
+                    messages.info(request, 'Payment already marked as failed.')
+                
+                return redirect('payment_failed_test')
+        
+        # If not POST, redirect back to payment page
+        return redirect('initiate_payment', booking_id=booking.booking_id)
+        
+    except Payment.DoesNotExist:
+        print(f"Payment not found: {payment_id}")
+        messages.error(request, 'Payment record not found.')
+        return redirect('payment_failed_test')
+    except Exception as e:
+        print(f"Error in process_test_payment: {e}")
+        messages.error(request, f'Error: {str(e)}')
+        return redirect('payment_failed_test')
+
+
+def send_payment_confirmation_email_test(payment):
+    """
+    Send test payment confirmation email to client.
+    """
+    try:
+        booking = payment.booking
+        subject = f'TEST MODE - Payment Confirmed - Booking {booking.booking_id}'
+        
+        # Create HTML email content
+        html_content = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+                body {{ font-family: Arial, sans-serif; line-height: 1.6; color: #333; }}
+                .container {{ max-width: 600px; margin: 0 auto; padding: 20px; }}
+                .header {{ background-color: #28a745; color: white; padding: 20px; text-align: center; }}
+                .content {{ padding: 20px; background-color: #f9f9f9; }}
+                .details {{ background-color: white; padding: 20px; border-radius: 5px; margin: 20px 0; }}
+                .test-note {{ background-color: #fff3cd; padding: 15px; border-left: 4px solid #ffc107; margin: 20px 0; }}
+                .footer {{ text-align: center; padding: 20px; color: #777; font-size: 12px; }}
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1>TEST MODE - Payment Confirmed!</h1>
+                </div>
+                <div class="content">
+                    <p>Dear {booking.name},</p>
+                    
+                    <div class="test-note">
+                        <strong>⚠️ TEST MODE ⚠️</strong>
+                        <p>This is a test payment confirmation. No real money was charged.</p>
+                    </div>
+                    
+                    <div class="details">
+                        <h3>Payment Details</h3>
+                        <p><strong>Payment ID:</strong> {payment.payment_id}</p>
+                        <p><strong>Transaction ID:</strong> {payment.transaction_id or 'N/A'}</p>
+                        <p><strong>Amount:</strong> ₹{payment.amount}</p>
+                        <p><strong>Method:</strong> {payment.get_method_display()}</p>
+                        <p><strong>Status:</strong> {payment.get_status_display()}</p>
+                        <p><strong>Date:</strong> {payment.completed_at.strftime('%d %B, %Y %I:%M %p') if payment.completed_at else 'N/A'}</p>
+                    </div>
+                    
+                    <div class="details">
+                        <h3>Appointment Details</h3>
+                        <p><strong>Booking ID:</strong> {booking.booking_id}</p>
+                        <p><strong>Date:</strong> {booking.appointment_date.strftime('%A, %d %B, %Y')}</p>
+                        <p><strong>Time:</strong> {booking.appointment_time.strftime('%I:%M %p')}</p>
+                        <p><strong>Duration:</strong> {booking.get_duration_display()}</p>
+                        <p><strong>Mode:</strong> {booking.get_mode_display()}</p>
+                    </div>
+                    
+                    <p><strong>Note:</strong> This was a test transaction. Your consultation is confirmed.</p>
+                    
+                    <p>Best regards,<br>
+                    <strong>KP RegTech</strong><br>
+                    </p>
+                </div>
+                <div class="footer">
+                    <p>This is an automated email from test system. Please do not reply.</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        """
+        
+        # In a real app, use EmailMessage
+        print(f"TEST EMAIL: Payment confirmation would be sent to {booking.email}")
+        print(f"TEST EMAIL: Subject: {subject}")
+        
+        return True
+        
+    except Exception as e:
+        print(f"Error sending test payment email: {e}")
+        return False
+# In views.py, update the payment_success_test function:
+def payment_success_test(request, payment_id):
+    """
+    Show payment success page (TEST MODE).
+    """
+    print(f"Showing success page for payment: {payment_id}")
+    
+    try:
+        # Get payment with related booking
+        payment = Payment.objects.select_related('booking').get(payment_id=payment_id)
+        booking = payment.booking
+        
+        print(f"Success - Payment: {payment_id}, Booking: {booking.booking_id}, Status: {payment.status}")
+        
+        context = {
+            'payment': payment,
+            'booking': booking,
+            'is_test_mode': True,
+        }
+        
+        return render(request, 'payment/success_test.html', context)
+        
+    except Payment.DoesNotExist:
+        print(f"Payment not found for success page: {payment_id}")
+        messages.error(request, 'Payment not found.')
+        return redirect('payment_failed_test')
+    except Exception as e:
+        print(f"Error loading success page: {e}")
+        messages.error(request, f'Error: {str(e)}')
+        return redirect('payment_failed_test')
+
+# In views.py, update the payment_failed_test function:
+def payment_failed_test(request):
+    """
+    Show payment failed page (TEST MODE).
+    """
+    print("Showing payment failed page")
+    
+    context = {
+        'is_test_mode': True,
+    }
+    
+    return render(request, 'payment/failed_test.html', context)
+
+
+def booking_detail(request, booking_id):
+    """
+    View booking details and payment status.
+    """
+    booking = get_object_or_404(ConsultationBooking, booking_id=booking_id)
+    
+    context = {
+        'booking': booking,
+        'has_payment': hasattr(booking, 'payment'),
+    }
+    
+    return render(request, 'booking/detail.html', context)
+# # ══════════════════════════════════════════════════════════════════════════════
+# #                                  END OF VIEWS
+# # ══════════════════════════════════════════════════════════════════════════════
+
+def test_booking_flow(request):
+    """Test endpoint to check booking flow."""
+    return JsonResponse({
+        'status': 'test_ok',
+        'message': 'Booking endpoint is reachable',
+        'expected_redirect': '/booking/{booking_id}/payment-test/'
+    })
+
+# In views.py, add this view:
+def debug_payment_state(request):
+    """
+    Debug view to check payment and booking state.
+    """
+    from django.db import connection
+    
+    html = "<h1>Payment Debug Information</h1>"
+    
+    # Check all payments
+    html += "<h2>All Payments</h2>"
+    payments = Payment.objects.all().select_related('booking')
+    html += f"<p>Total payments: {payments.count()}</p>"
+    html += "<table border='1'><tr><th>Payment ID</th><th>Booking ID</th><th>Amount</th><th>Status</th><th>Method</th><th>Created</th></tr>"
+    for p in payments:
+        html += f"<tr><td>{p.payment_id}</td><td>{p.booking.booking_id if p.booking else 'N/A'}</td><td>{p.amount}</td><td>{p.status}</td><td>{p.method}</td><td>{p.created_at}</td></tr>"
+    html += "</table>"
+    
+    # Check all bookings
+    html += "<h2>All Bookings</h2>"
+    bookings = ConsultationBooking.objects.all()
+    html += f"<p>Total bookings: {bookings.count()}</p>"
+    html += "<table border='1'><tr><th>Booking ID</th><th>Name</th><th>Email</th><th>Amount</th><th>Paid</th><th>Status</th><th>Appointment Date</th></tr>"
+    for b in bookings:
+        html += f"<tr><td>{b.booking_id}</td><td>{b.name}</td><td>{b.email}</td><td>{b.price}</td><td>{b.is_paid}</td><td>{b.status}</td><td>{b.appointment_date}</td></tr>"
+    html += "</table>"
+    
+    # Check database tables
+    html += "<h2>Database Tables</h2>"
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
+        tables = cursor.fetchall()
+        html += "<ul>"
+        for table in tables:
+            html += f"<li>{table[0]}</li>"
+        html += "</ul>"
+    
+    return HttpResponse(html)
+
+
+# In views.py, add:
+def test_payment_flow(request):
+    """
+    Test endpoint to create a test booking and payment.
+    """
+    try:
+        # Create a test booking
+        from datetime import datetime, timedelta
+        from django.utils import timezone
+        
+        booking = ConsultationBooking.objects.create(
+            duration='30-min',
+            price=1000,
+            appointment_date=timezone.now().date() + timedelta(days=1),
+            appointment_time=(datetime.now() + timedelta(hours=1)).time(),
+            mode='video',
+            name='Test User',
+            email='test@example.com',
+            phone='9876543210',
+            topic='Test consultation',
+            status='pending'
+        )
+        
+        # Create a test payment
+        payment = Payment.objects.create(
+            booking=booking,
+            amount=booking.price,
+            method='upi',
+            status='pending'
+        )
+        
+        return JsonResponse({
+            'status': 'success',
+            'booking_id': str(booking.booking_id),
+            'payment_id': payment.payment_id,
+            'payment_url': f'/booking/{booking.booking_id}/payment-test/',
+            'process_url': f'/payment/test/process/{payment.payment_id}/',
+            'success_url': f'/payment/test/success/{payment.payment_id}/'
+        })
+        
+    except Exception as e:
+        return JsonResponse({
+            'status': 'error',
+            'error': str(e)
+        })
+    
+# In views.py, add:
+from django.contrib.admin.views.decorators import staff_member_required
+
+@staff_member_required
+def admin_verify_cash_payment(request, payment_id):
+    """Admin view to verify cash payments."""
+    try:
+        payment = Payment.objects.get(payment_id=payment_id, method='cash')
+        
+        if request.method == 'POST':
+            notes = request.POST.get('notes', '')
+            
+            # Verify the cash payment
+            payment.mark_as_paid(verified_by=request.user, notes=notes)
+            
+            # Update booking status
+            payment.booking.is_paid = True
+            payment.booking.status = 'confirmed'
+            payment.booking.save()
+            
+            messages.success(request, f'Cash payment verified for {payment.booking.name}')
+            return redirect('admin_booking_management')
+        
+        context = {
+            'payment': payment,
+            'booking': payment.booking,
+        }
+        
+        return render(request, 'admin/verify_cash_payment.html', context)
+        
+    except Payment.DoesNotExist:
+        messages.error(request, 'Payment not found.')
+        return redirect('admin_booking_management')
+
+
+# Add these functions in views.py:
+
+def send_cash_payment_pending_email(payment):
+    """
+    Send email for cash payment pending verification.
+    """
+    try:
+        booking = payment.booking
+        subject = f'Cash Payment Recorded - Booking {booking.booking_id}'
+        
+        html_content = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+                body {{ font-family: Arial, sans-serif; line-height: 1.6; color: #333; }}
+                .container {{ max-width: 600px; margin: 0 auto; padding: 20px; }}
+                .header {{ background-color: #ffc107; color: #856404; padding: 20px; text-align: center; }}
+                .content {{ padding: 20px; background-color: #f9f9f9; }}
+                .details {{ background-color: white; padding: 20px; border-radius: 5px; margin: 20px 0; }}
+                .action-buttons {{ text-align: center; margin: 20px 0; }}
+                .btn {{ display: inline-block; padding: 10px 20px; margin: 5px; text-decoration: none; border-radius: 5px; }}
+                .btn-online {{ background-color: #28a745; color: white; }}
+                .btn-contact {{ background-color: #007bff; color: white; }}
+                .footer {{ text-align: center; padding: 20px; color: #777; font-size: 12px; }}
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1>Cash Payment Recorded</h1>
+                </div>
+                <div class="content">
+                    <p>Dear {booking.name},</p>
+                    <p>Thank you for choosing cash/offline payment for your consultation booking.</p>
+                    
+                    <div class="details">
+                        <h3>Booking Details</h3>
+                        <p><strong>Booking ID:</strong> {booking.booking_id}</p>
+                        <p><strong>Amount:</strong> ₹{booking.price}</p>
+                        <p><strong>Payment Method:</strong> Cash/Offline</p>
+                        <p><strong>Payment Status:</strong> Pending Verification</p>
+                        <p><strong>Date:</strong> {booking.appointment_date.strftime('%A, %d %B, %Y')}</p>
+                        <p><strong>Time:</strong> {booking.appointment_time.strftime('%I:%M %p')}</p>
+                    </div>
+                    
+                    <p><strong>Important:</strong> Your booking is confirmed, but you need to complete the payment before your appointment.</p>
+                    
+                    <div class="action-buttons">
+                        <a href="https://anjali-bansal.com/booking/{booking.booking_id}/payment-test/" class="btn btn-online">
+                            Switch to Online Payment
+                        </a>
+                        <a href="mailto:kpregtech@gmail.com" class="btn btn-contact">
+                            Contact for Payment Details
+                        </a>
+                    </div>
+                    
+                    <h4>Payment Options:</h4>
+                    <ul>
+                        <li><strong>Office Payment:</strong> Visit our office with Booking ID</li>
+                        <li><strong>Bank Transfer:</strong> Transfer to our bank account</li>
+                        <li><strong>Switch to Online:</strong> Use the button above to pay online</li>
+                    </ul>
+                    
+                    <p>Once payment is received, you'll receive a confirmation email.</p>
+                    
+                    <p>Best regards,<br>
+                    <strong>KP RegTech</strong><br>
+                    </p>
+                </div>
+                <div class="footer">
+                    <p>This is an automated email. Please do not reply to this message.</p>
+                    <p>© {timezone.now().year} KP RegTech. All rights reserved.</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        """
+        
+        # In a real app, use EmailMessage
+        print(f"CASH PAYMENT EMAIL: Sent to {booking.email}")
+        print(f"CASH PAYMENT EMAIL: Subject: {subject}")
+        
+        return True
+        
+    except Exception as e:
+        print(f"Error sending cash payment email: {e}")
+        return False
+
+def send_payment_failed_email(payment):
+    """
+    Send email for failed payment.
+    """
+    try:
+        booking = payment.booking
+        subject = f'Payment Failed - Booking {booking.booking_id}'
+        
+        html_content = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+                body {{ font-family: Arial, sans-serif; line-height: 1.6; color: #333; }}
+                .container {{ max-width: 600px; margin: 0 auto; padding: 20px; }}
+                .header {{ background-color: #dc3545; color: white; padding: 20px; text-align: center; }}
+                .content {{ padding: 20px; background-color: #f9f9f9; }}
+                .details {{ background-color: white; padding: 20px; border-radius: 5px; margin: 20px 0; }}
+                .action-buttons {{ text-align: center; margin: 20px 0; }}
+                .btn {{ display: inline-block; padding: 10px 20px; margin: 5px; text-decoration: none; border-radius: 5px; }}
+                .btn-retry {{ background-color: #28a745; color: white; }}
+                .btn-cash {{ background-color: #007bff; color: white; }}
+                .btn-contact {{ background-color: #6c757d; color: white; }}
+                .footer {{ text-align: center; padding: 20px; color: #777; font-size: 12px; }}
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1>Payment Failed</h1>
+                </div>
+                <div class="content">
+                    <p>Dear {booking.name},</p>
+                    <p>We were unable to process your payment for the consultation booking.</p>
+                    
+                    <div class="details">
+                        <h3>Booking Details</h3>
+                        <p><strong>Booking ID:</strong> {booking.booking_id}</p>
+                        <p><strong>Amount:</strong> ₹{booking.price}</p>
+                        <p><strong>Payment Method:</strong> {payment.get_method_display()}</p>
+                        <p><strong>Payment Status:</strong> Failed</p>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <a href="https://anjali-bansal.com/booking/{booking.booking_id}/payment-test/" class="btn btn-retry">
+                            Retry Payment
+                        </a>
+                        <a href="https://anjali-bansal.com/booking/{booking.booking_id}/payment-test/?method=cash" class="btn btn-cash">
+                            Switch to Cash Payment
+                        </a>
+                        <a href="mailto:kpregtech@gmail.com" class="btn btn-contact">
+                            Contact Support
+                        </a>
+                    </div>
+                    
+                    <p><strong>Your booking is still reserved for:</strong></p>
+                    <ul>
+                        <li><strong>Date:</strong> {booking.appointment_date.strftime('%A, %d %B, %Y')}</li>
+                        <li><strong>Time:</strong> {booking.appointment_time.strftime('%I:%M %p')}</li>
+                        <li><strong>Duration:</strong> {booking.get_duration_display()}</li>
+                    </ul>
+                    
+                    <p>Please complete the payment to confirm your booking.</p>
+                    
+                    <p>Best regards,<br>
+                    <strong>KP RegTech</strong><br>
+                    </p>
+                </div>
+                <div class="footer">
+                    <p>This is an automated email. Please do not reply to this message.</p>
+                    <p>© {timezone.now().year} KP RegTech. All rights reserved.</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        """
+        
+        # In a real app, use EmailMessage
+        print(f"FAILED PAYMENT EMAIL: Sent to {booking.email}")
+        print(f"FAILED PAYMENT EMAIL: Subject: {subject}")
+        
+        return True
+        
+    except Exception as e:
+        print(f"Error sending failed payment email: {e}")
+        return False
+    
+@staff_member_required
+def admin_process_refund(request, booking_id):
+    """Admin view to process refunds."""
+    booking = get_object_or_404(ConsultationBooking, booking_id=booking_id)
+    
+    if request.method == 'POST':
+        reason = request.POST.get('reason', '')
+        refund_amount = request.POST.get('refund_amount', booking.price)
+        
+        # Create refund record
+        refund = razorpay.Refund.objects.create(
+            booking=booking,
+            payment=booking.payment,
+            amount=refund_amount,
+            reason=reason,
+            status='requested'
+        )
+        
+        # Send refund request email to admin
+        send_refund_request_email(refund)
+        
+        messages.success(request, f'Refund request created for booking {booking_id}')
+        return redirect('admin_booking_management')
+    
+    context = {
+        'booking': booking,
+    }
+    return render(request, 'admin/process_refund.html', context)
+
+def send_refund_request_email(refund):
+    """Send refund request email."""
+    try:
+        subject = f'Refund Request - Booking {refund.booking.booking_id}'
+        
+        html_content = f"""
+        <!DOCTYPE html>
+        <html>
+        <body>
+            <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+                <h2>Refund Request Submitted</h2>
+                <p>Dear {refund.booking.name},</p>
+                <p>Your refund request has been submitted successfully.</p>
+                
+                <div style="background: #f9f9f9; padding: 15px; margin: 15px 0;">
+                    <h3>Refund Details</h3>
+                    <p><strong>Refund ID:</strong> {refund.refund_id}</p>
+                    <p><strong>Booking ID:</strong> {refund.booking.booking_id}</p>
+                    <p><strong>Amount:</strong> ₹{refund.amount}</p>
+                    <p><strong>Reason:</strong> {refund.reason}</p>
+                    <p><strong>Status:</strong> Pending Approval</p>
+                </div>
+                
+                <p>We will review your request and get back to you within 3-5 business days.</p>
+                
+                <p>Best regards,<br>
+                <strong>KP RegTech</strong></p>
+            </div>
+        </body>
+        </html>
+        """
+        
+        email = EmailMessage(
+            subject=subject,
+            body=html_content,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            to=[refund.booking.email],
+        )
+        email.content_subtype = "html"
+        email.send()
+        
+        logger.info(f"Refund request email sent to {refund.booking.email}")
+        return True
+    except Exception as e:
+        logger.error(f"Error sending refund email: {str(e)}")
+        return False
+    
+from django.http import HttpResponse
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
+from reportlab.lib.styles import getSampleStyleSheet
+import csv
+
+
+def download_booking_details(request, booking_id):
+    """Download booking details as PDF - FIXED VERSION"""
+    booking = get_object_or_404(ConsultationBooking, booking_id=booking_id)
+    
+    # Check permission
+    if not request.user.is_staff and booking.email != request.user.email:
+        messages.error(request, 'You are not authorized to download these details.')
+        return redirect('booking_detail', booking_id=booking_id)
+    
+    format_type = request.GET.get('format', 'pdf')
+    
+    try:
+        if format_type == 'csv':
+            return download_booking_csv(booking)
+        else:
+            return download_booking_pdf(booking)
+    except Exception as e:
+        print(f"Error downloading booking: {e}")
+        messages.error(request, f'Error generating download: {str(e)}')
+        return redirect('booking_detail', booking_id=booking_id)
+
+def download_booking_pdf(booking):
+    """Download booking details as PDF - FIXED VERSION"""
+    from reportlab.lib import colors
+    from reportlab.lib.pagesizes import letter
+    from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
+    from reportlab.lib.styles import getSampleStyleSheet
+    from io import BytesIO
+    
+    buffer = BytesIO()
+    
+    doc = SimpleDocTemplate(buffer, pagesize=letter)
+    styles = getSampleStyleSheet()
+    story = []
+    
+    # Title
+    story.append(Paragraph("Booking Confirmation - KP RegTech", styles['Title']))
+    story.append(Spacer(1, 12))
+    
+    # Get payment if exists
+    try:
+        payment = Payment.objects.get(booking=booking)
+        has_payment = True
+    except Payment.DoesNotExist:
+        has_payment = False
+        payment = None
+    
+    # Booking Information
+    story.append(Paragraph(f"Booking ID: {booking.booking_id}", styles['Normal']))
+    story.append(Paragraph(f"Date Created: {booking.created_at.strftime('%Y-%m-%d %H:%M:%S')}", styles['Normal']))
+    story.append(Spacer(1, 12))
+    
+    # Client Information
+    client_data = [
+        ['Client Information', ''],
+        ['Name:', booking.name],
+        ['Email:', booking.email],
+        ['Phone:', booking.phone],
+        ['Company:', booking.company or 'N/A'],
+        ['Designation:', booking.designation or 'N/A']
+    ]
+    
+    client_table = Table(client_data, colWidths=[150, 300])
+    client_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (1, 0), colors.grey),
+        ('TEXTCOLOR', (0, 0), (1, 0), colors.whitesmoke),
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, 0), 12),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+        ('GRID', (0, 0), (-1, -1), 1, colors.black),
+        ('PADDING', (0, 0), (-1, -1), 6),
+    ]))
+    
+    story.append(client_table)
+    story.append(Spacer(1, 12))
+    
+    # Appointment Details
+    appointment_data = [
+        ['Appointment Details', ''],
+        ['Date:', booking.appointment_date.strftime('%A, %d %B, %Y')],
+        ['Time:', booking.appointment_time.strftime('%I:%M %p')],
+        ['Duration:', booking.get_duration_display()],
+        ['Mode:', booking.get_mode_display()],
+        ['Amount:', f'₹{booking.price}'],
+        ['Payment Status:', 'Paid' if booking.is_paid else 'Pending']
+    ]
+    
+    if has_payment and payment:
+        appointment_data.append(['Payment Method:', payment.get_method_display()])
+        appointment_data.append(['Payment ID:', payment.payment_id])
+        if payment.method == 'cash':
+            appointment_data.append(['Cash Verified:', 'Yes' if payment.cash_payment_verified else 'No'])
+    
+    appointment_table = Table(appointment_data, colWidths=[150, 300])
+    appointment_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (1, 0), colors.grey),
+        ('TEXTCOLOR', (0, 0), (1, 0), colors.whitesmoke),
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, 0), 12),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+        ('GRID', (0, 0), (-1, -1), 1, colors.black),
+        ('PADDING', (0, 0), (-1, -1), 6),
+    ]))
+    
+    story.append(appointment_table)
+    story.append(Spacer(1, 12))
+    
+    # Consultation Topic
+    if booking.topic:
+        story.append(Paragraph("Consultation Topic:", styles['Heading2']))
+        story.append(Paragraph(booking.topic, styles['Normal']))
+        story.append(Spacer(1, 12))
+    
+    # Footer
+    story.append(Paragraph("KP RegTech - ", styles['Normal']))
+    story.append(Paragraph("Email: kpregtech@gmail.com", styles['Normal']))
+    story.append(Paragraph(f"Generated on: {timezone.now().strftime('%Y-%m-%d %H:%M:%S')}", styles['Normal']))
+    
+    doc.build(story)
+    
+    buffer.seek(0)
+    
+    response = HttpResponse(buffer.getvalue(), content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="booking_{booking.booking_id}.pdf"'
+    
+    return response
+
+def download_booking_csv(booking):
+    """Download booking details as CSV."""
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename="booking_{booking.booking_id}.csv"'
+    
+    writer = csv.writer(response)
+    writer.writerow(['KP RegTech - Booking Confirmation'])
+    writer.writerow([])
+    writer.writerow(['Client Information'])
+    writer.writerow(['Name', booking.name])
+    writer.writerow(['Email', booking.email])
+    writer.writerow(['Phone', booking.phone])
+    writer.writerow(['Company', booking.company or 'N/A'])
+    writer.writerow(['Designation', booking.designation or 'N/A'])
+    writer.writerow([])
+    writer.writerow(['Appointment Details'])
+    writer.writerow(['Booking ID', booking.booking_id])
+    writer.writerow(['Date', booking.appointment_date.strftime('%Y-%m-%d')])
+    writer.writerow(['Time', booking.appointment_time.strftime('%H:%M')])
+    writer.writerow(['Duration', booking.get_duration_display()])
+    writer.writerow(['Mode', booking.get_mode_display()])
+    writer.writerow(['Amount', f'₹{booking.price}'])
+    writer.writerow(['Payment Status', 'Paid' if booking.is_paid else 'Pending'])
+    
+    if hasattr(booking, 'payment'):
+        writer.writerow(['Payment Method', booking.payment.get_method_display()])
+        writer.writerow(['Payment ID', booking.payment.payment_id])
+    
+    writer.writerow([])
+    writer.writerow(['Consultation Topic'])
+    writer.writerow([booking.topic])
+    writer.writerow([])
+    writer.writerow(['Generated on', timezone.now().strftime('%Y-%m-%d %H:%M:%S')])
+    
+    return response
+
+# Django view example
+from django.http import JsonResponse
+import traceback
+
+def submit_booking(request):
+    try:
+        if request.method == 'POST':
+            # Process your form data
+            # ...
+            
+            if success:
+                return JsonResponse({
+                    'success': True,
+                    'booking_id': booking.id,
+                    'message': 'Booking confirmed successfully'
+                })
+            else:
+                return JsonResponse({
+                    'success': False,
+                    'error': 'Specific error message here'
+                }, status=400)
+                
+    except Exception as e:
+        # Log the error for debugging
+        print(traceback.format_exc())
+        return JsonResponse({
+            'success': False,
+            'error': 'An internal server error occurred'
+        }, status=500)
+    
+def test_json_response(request):
+    """Simple test endpoint to verify JSON responses work."""
+    return JsonResponse({
+        'success': True,
+        'message': 'JSON response is working',
+        'timestamp': timezone.now().isoformat()
+    })
+
+def debug_subscription(request):
+    """Debug view to check subscription status"""
+    from .models import BlogSubscriber
+    
+    subscribers = BlogSubscriber.objects.all()
+    
+    return JsonResponse({
+        'total_subscribers': subscribers.count(),
+        'subscribers': list(subscribers.values())
+    })
+
+def test_subscription_form(request):
+    """Test subscription form"""
+    subscribers = BlogSubscriber.objects.all()
+    
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        if email:
+            try:
+                subscriber = BlogSubscriber.objects.get(email=email)
+                message = f"Already subscribed: {subscriber}"
+            except BlogSubscriber.DoesNotExist:
+                subscriber = BlogSubscriber.objects.create(email=email)
+                message = f"Created new subscriber: {subscriber}"
+            
+            return render(request, 'test_subscription.html', {
+                'message': message,
+                'subscribers': subscribers
+            })
+    
+    return render(request, 'test_subscription.html', {
+        'subscribers': subscribers
+    })
+
+# In views.py
+from django.core.mail import send_mail
+from django.http import JsonResponse
+
+def test_email_send(request):
+    """Test email sending"""
+    try:
+        print("sending email")
+        send_mail(
+            subject='Test Email from Django',
+            message='This is a test email from your Django application.',
+            from_email='KP RegTech <jangratushar348@gmail.com>',
+            recipient_list=['jangratushar348@gmail.com'],
+            fail_silently=False,
+        )
+        print("done")
+        return JsonResponse({'success': True, 'message': 'Test email sent!'})
+        
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)})
+
+
+from django.core.mail import send_mail
+from django.http import JsonResponse
+
+def test_email_send(request):
+    """Test email sending"""
+    try:
+        send_mail(
+            subject='Test Email from Django',
+            message='This is a test email from your Django application.',
+            from_email='KP RegTech <jangratushar348@gmail.com>',
+            recipient_list=['jangratushar348@gmail.com'],
+            fail_silently=False,
+        )
+        return JsonResponse({'success': True, 'message': 'Test email sent!'})
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)})

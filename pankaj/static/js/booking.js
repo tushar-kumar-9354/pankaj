@@ -218,7 +218,6 @@ async function checkMonthAvailability(year, month) {
 }
 
 // Update loadAvailableSlots function
-// Update loadAvailableSlots function in booking.js
 async function loadAvailableSlots(dateStr) {
     console.log(`Loading slots for date: ${dateStr}`);
     
@@ -299,6 +298,7 @@ async function loadAvailableSlots(dateStr) {
         `;
     }
 }
+
 // Update checkMonthAvailability function
 async function checkMonthAvailability(year, month) {
     console.log(`Checking availability for ${year}-${month + 1}`);
@@ -396,7 +396,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Fix the selectDate function - Add this at the top
+// Fix the selectDate function
 function selectDate(dateStr) {
     console.log('Date selected:', dateStr);
     
@@ -541,42 +541,6 @@ function updateTimeSlotsDisplay(slots) {
     }
 }
 
-function selectTime(dateStr, timeStr) {
-    console.log('Time selected:', timeStr);
-    selectedTime = timeStr;
-    
-    // Update UI
-    document.querySelectorAll('.time-slot.selected').forEach(el => {
-        el.classList.remove('selected');
-    });
-    
-    document.querySelectorAll('.time-slot').forEach(el => {
-        if (el.dataset.time === timeStr) {
-            el.classList.add('selected');
-        }
-    });
-    
-    // Update summary
-    const timeDisplay = document.getElementById('summaryTime');
-    const [hours, minutes] = timeStr.split(':');
-    const timeObj = new Date();
-    timeObj.setHours(hours, minutes);
-    timeDisplay.textContent = timeObj.toLocaleTimeString('en-US', { 
-        hour: 'numeric', 
-        minute: '2-digit',
-        hour12: true 
-    });
-    
-    // Update hidden fields
-    document.getElementById('selectedDate').value = dateStr;
-    document.getElementById('selectedTime').value = timeStr;
-    
-    // Show appointment summary
-    const summary = document.getElementById('appointmentSummary');
-    summary.style.display = 'block';
-    summary.style.opacity = '1';
-}
-
 function clearSelection() {
     console.log('Clearing selection');
     selectedDate = null;
@@ -606,59 +570,100 @@ function clearSelection() {
     summary.style.display = 'none';
     summary.style.opacity = '0';
 }
-async function submitBookingForm(form) {
-    const formData = new FormData(form);
-    const submitButton = form.querySelector('.btn-submit');
+function submitBookingForm(form) {
+    console.log('Form submission started...');
     
-    // Validate required fields
-    if (!validateForm()) {
-        return;
+    // Get CSRF token
+    const csrfToken = getCookie('csrftoken') || document.querySelector('[name=csrfmiddlewaretoken]')?.value;
+    
+    // Create FormData
+    const formData = new FormData(form);
+    
+    // Get selected date/time
+    const selectedDate = document.getElementById('selectedDate').value;
+    const selectedTime = document.getElementById('selectedTime').value;
+    
+    if (!selectedDate || !selectedTime) {
+        alert('Please select a date and time for your appointment');
+        return false;
     }
     
     // Disable submit button
-    submitButton.disabled = true;
-    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalHtml = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+    submitBtn.disabled = true;
     
-    try {
-        const response = await fetch(form.action, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-            }
-        });
+    // Send AJAX request
+    fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRF-Token': csrfToken
+        },
+        credentials: 'same-origin'
+    })
+    .then(response => {
+        console.log('Response status:', response.status);
+        console.log('Response headers:', response.headers.get('content-type'));
         
-        const result = await response.json();
-        console.log('Submission result:', result);
-        
-        if (result.success) {
-            // Show success modal with booking details
-            showConfirmationModal(
-                result.booking_id,
-                selectedDate,
-                selectedTime
-            );
-            
-            // Reset form
-            form.reset();
-            clearSelection();
-            
-            // Update character count
-            document.getElementById('charCount').textContent = '0';
-            document.getElementById('fileList').innerHTML = '';
-            
-        } else {
-            alert('Error: ' + result.error);
+        // Check if response is JSON
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            return response.text().then(text => {
+                console.error('Received HTML instead of JSON:', text.substring(0, 200));
+                throw new Error('Server returned HTML instead of JSON. Status: ' + response.status);
+            });
         }
-    } catch (error) {
-        alert('An error occurred. Please try again.');
+        return response.json();
+    })
+    .then(data => {
+        console.log('Response data:', data);
+        
+        if (data.success) {
+            // Redirect to payment page
+            if (data.redirect_url) {
+                window.location.href = data.redirect_url;
+            } else if (data.booking_id) {
+                window.location.href = `/booking/${data.booking_id}/payment-test/`;
+            } else {
+                alert('Booking successful but no redirect URL provided.');
+                submitBtn.innerHTML = originalHtml;
+                submitBtn.disabled = false;
+            }
+        } else {
+            alert(data.error || 'Booking submission failed. Please try again.');
+            submitBtn.innerHTML = originalHtml;
+            submitBtn.disabled = false;
+        }
+    })
+    .catch(error => {
         console.error('Submission error:', error);
-    } finally {
-        // Re-enable submit button
-        submitButton.disabled = false;
-        submitButton.innerHTML = '<i class="fas fa-calendar-check"></i> Confirm & Schedule Consultation';
-    }
+        alert('An error occurred while submitting the booking: ' + error.message);
+        submitBtn.innerHTML = originalHtml;
+        submitBtn.disabled = false;
+    });
+    
+    return false;
 }
+
+// Helper function to get CSRF token
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
 
 function validateForm() {
     // Check if date and time are selected
@@ -694,6 +699,7 @@ function validateForm() {
     
     return true;
 }
+
 function showConfirmationModal(bookingId, appointmentDate, appointmentTime) {
     const modal = document.getElementById('confirmationModal');
     
@@ -803,6 +809,7 @@ function showConfirmationModal(bookingId, appointmentDate, appointmentTime) {
         addToCalendar();
     });
 }
+
 function addToCalendar() {
     // Get appointment datetime from hidden input in modal
     const modal = document.getElementById('confirmationModal');
@@ -820,7 +827,7 @@ function addToCalendar() {
     }
     
     const appointmentDatetime = appointmentInput.value;
-    const title = document.querySelector('.page-title')?.textContent || 'Consultation with Anjali Bansal & Associates';
+    const title = document.querySelector('.page-title')?.textContent || 'Consultation with KP RegTech';
     const description = document.querySelector('.page-subtitle')?.textContent || 'Professional consultation session';
     
     // Calculate end time
@@ -839,16 +846,16 @@ function addToCalendar() {
     // Create ICS file content
     const icsContent = `BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//Anjali Bansal & Associates//Consultation Booking//EN
+PRODID:-//KP RegTech//Consultation Booking//EN
 CALSCALE:GREGORIAN
 BEGIN:VEVENT
-UID:${Date.now()}@anjali-bansal.com
+UID:${Date.now()}kpregtech@gmail.com
 DTSTAMP:${formatDateForICS(new Date())}
 DTSTART:${formatDateForICS(startDate)}
 DTEND:${formatDateForICS(endDate)}
 SUMMARY:${title}
 DESCRIPTION:${description}\\n\\nBooking details will be sent via email.
-LOCATION:Consultation with Anjali Bansal & Associates (Mode: ${document.querySelector('[name="mode"]:checked')?.value || 'video'})
+LOCATION:Consultation with KP RegTech (Mode: ${document.querySelector('[name="mode"]:checked')?.value || 'video'})
 STATUS:CONFIRMED
 SEQUENCE:0
 BEGIN:VALARM
@@ -873,6 +880,7 @@ END:VCALENDAR`;
     // Optional: Show confirmation
     alert('Calendar event downloaded. You can now import it into your calendar.');
 }
+
 function getEndTime(startTime) {
     const start = new Date(startTime);
     const duration = parseInt(document.querySelector('[name="duration_minutes"]').value);
@@ -897,3 +905,16 @@ function testAPI() {
         })
         .catch(error => console.error('API test failed:', error));
 }
+
+// Add this function and call it on page load
+function testServerConnection() {
+    fetch('/booking/test-json/')
+        .then(response => response.json())
+        .then(data => console.log('Server connection test:', data))
+        .catch(error => console.error('Server connection failed:', error));
+}
+
+// Call it when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    testServerConnection();
+});

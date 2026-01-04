@@ -50,7 +50,7 @@ p {
     transition: all 0.4s ease;
     border: 2px solid #000;
     cursor: pointer;
-    text-transform: uppercase;
+   
     letter-spacing: 1px;
     font-size: 0.9rem;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
@@ -95,7 +95,7 @@ p {
     position: relative;
     display: inline-block;
     padding-bottom: 20px;
-    text-transform: uppercase;
+   
     letter-spacing: 2px;
 }
 
@@ -156,7 +156,7 @@ header {
     color: #000;
     line-height: 1.2;
     letter-spacing: 1.5px;
-    text-transform: uppercase;
+   
 }
 
 .logo-text p {
@@ -181,7 +181,7 @@ nav ul li a {
     color: #333;
     font-weight: 500;
     transition: all 0.3s;
-    text-transform: uppercase;
+   
     font-size: 0.9rem; /* Slightly smaller font */
     letter-spacing: 1px;
     padding: 8px 0;
@@ -283,7 +283,7 @@ nav ul li a:hover::after {
 .hero h2 {
     font-size: 3.5rem;
     margin-bottom: 30px;
-    text-transform: uppercase;
+   
     letter-spacing: 3px;
     font-weight: 700;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
@@ -381,7 +381,7 @@ nav ul li a:hover::after {
     margin: 40px 30px 20px;
     padding-bottom: 15px;
     border-bottom: 2px solid rgba(0,0,0,0.1);
-    text-transform: uppercase;
+   
     letter-spacing: 1px;
     position: relative;
 }
@@ -450,7 +450,7 @@ nav ul li a:hover::after {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100');
+
     background-size: cover;
     background-position: center;
     opacity: 0.3;
@@ -570,7 +570,7 @@ nav ul li a:hover::after {
     font-size: 1.6rem;
     color: #000;
     margin-bottom: 20px;
-    text-transform: uppercase;
+   
     letter-spacing: 1px;
 }
 
@@ -738,7 +738,7 @@ nav ul li a:hover::after {
     font-weight: 600;
     color: #fff;
     font-size: 1.2rem;
-    text-transform: uppercase;
+   
     letter-spacing: 1px;
     margin-bottom: 10px;
 }
@@ -891,7 +891,7 @@ footer {
     color: #ddd;
     text-decoration: none;
     transition: all 0.3s;
-    text-transform: uppercase;
+   
     font-size: 0.9rem;
     letter-spacing: 1px;
     padding: 5px 10px;
@@ -1121,7 +1121,7 @@ footer p {
 }
 
 /* Add image loading optimization */
-.expertise-bg, .article-img, .testimonial-bg, .belief-bg {
+.expertise-bg, .article-img, .testimonial-bg{
     image-rendering: -webkit-optimize-contrast;
     image-rendering: crisp-edges;
     will-change: transform;

@@ -1,0 +1,336 @@
+/* Payment Container */
+.payment-container {
+    padding: 40px 0;
+    background: #f8f9fa;
+    min-height: 100vh;
+}
+
+.payment-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.payment-header h1 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.payment-status-badge {
+    margin-top: 15px;
+}
+
+.badge {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.badge.paid {
+    background: #28a745;
+    color: white;
+}
+
+.badge.pending {
+    background: #ffc107;
+    color: #856404;
+}
+
+.badge.unpaid {
+    background: #dc3545;
+    color: white;
+}
+
+/* Payment Wrapper */
+.payment-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+@media (max-width: 992px) {
+    .payment-wrapper {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Booking Summary Card */
+.booking-summary-card {
+    background: white;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+}
+
+.booking-summary-card h3 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f8f9fa;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.summary-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.summary-item .label {
+    color: #6c757d;
+    font-size: 14px;
+    display: block;
+}
+
+.summary-item .value {
+    font-weight: 500;
+    color: #2c3e50;
+    display: block;
+    margin-top: 5px;
+}
+
+.amount-section {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.amount-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+}
+
+.amount {
+    color: #28a745;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Payment Actions Card */
+.payment-actions-card {
+    background: white;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+}
+
+.payment-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 12px;
+    background: #f8f9fa;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.tab-btn.active {
+    background: #007bff;
+    color: white;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Payment Methods */
+.payment-methods {
+    margin-bottom: 25px;
+}
+
+.method-option {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.method-option:hover,
+.method-option.selected {
+    border-color: #007bff;
+    background: #f8f9ff;
+}
+
+.method-icon {
+    font-size: 24px;
+    color: #007bff;
+    margin-right: 15px;
+}
+
+.method-info {
+    flex: 1;
+}
+
+.method-info h4 {
+    margin: 0;
+    color: #2c3e50;
+}
+
+.method-info p {
+    margin: 5px 0 0;
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.method-select input {
+    transform: scale(1.2);
+}
+
+/* Buttons */
+.online-payment-actions,
+.cash-payment-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.btn-simulate-success,
+.btn-simulate-fail,
+.btn-record-cash {
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 16px;
+}
+
+.btn-simulate-success {
+    background: #28a745;
+    color: white;
+}
+
+.btn-simulate-success:hover {
+    background: #218838;
+}
+
+.btn-simulate-fail {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-simulate-fail:hover {
+    background: #c82333;
+}
+
+.btn-record-cash {
+    background: #ffc107;
+    color: #856404;
+}
+
+.btn-record-cash:hover {
+    background: #e0a800;
+}
+
+.btn-view-booking {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+/* Already Paid */
+.already-paid {
+    text-align: center;
+    padding: 30px;
+}
+
+.success-message {
+    color: #28a745;
+    font-size: 18px;
+}
+
+/* Test Mode Notice */
+.test-mode-notice {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.test-mode-notice i {
+    font-size: 24px;
+    color: #ffc107;
+}
+
+.test-mode-notice h4 {
+    margin: 0;
+    color: #856404;
+}
+
+.test-mode-notice p {
+    margin: 5px 0 0;
+    color: #856404;
+}
+
+/* Status Badges */
+.status-paid {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.status-pending {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+.status-unpaid {
+    color: #dc3545;
+    font-weight: bold;
+}
+.action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn-download {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.btn-download:hover {
+    background-color: #218838;
+}
+
+.btn-download i {
+    margin-right: 5px;
+}

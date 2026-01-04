@@ -1,0 +1,55 @@
+{% for testimonial in testimonials %}
+<div class="testimonial-card">
+    <div class="featured-badge">
+        <i class="fas fa-star me-1"></i>FEATURED
+    </div>
+    
+    <div class="testimonial-header">
+        {% if testimonial.client_image %}
+        <div class="client-image">
+            <img src="{{ testimonial.client_image.url }}" alt="{{ testimonial.client_name }}">
+        </div>
+        {% else %}
+        <div class="client-image default">
+            <i class="fas fa-user-circle"></i>
+        </div>
+        {% endif %}
+        <div class="client-info">
+            <h4>{{ testimonial.client_name }}</h4>
+            <p class="client-position">{{ testimonial.position }}</p>
+            <p class="client-company">{{ testimonial.company }}</p>
+            {% if testimonial.industry and testimonial.industry != 'NA' and testimonial.industry != 'Other' %}
+            <span class="client-industry">{{ testimonial.industry }}</span>
+            {% endif %}
+        </div>
+        <div class="testimonial-rating">
+            <div class="stars">
+                {% for i in "12345"|make_list %}
+                    {% if forloop.counter <= testimonial.rating %}
+                        <i class="fas fa-star"></i>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <span>{{ testimonial.rating }}.0</span>
+        </div>
+    </div>
+    <div class="testimonial-content">
+        <i class="fas fa-quote-left"></i>
+        <p>"{{ testimonial.content|truncatewords:50 }}"</p>
+    </div>
+    <div class="testimonial-footer">
+        {% if testimonial.services %}
+        <div class="service-tags">
+            <span>{{ testimonial.services }}</span>
+        </div>
+        {% endif %}
+        <div class="testimonial-date">{{ testimonial.date_added|date:"M Y" }}</div>
+    </div>
+</div>
+{% empty %}
+<div class="empty-testimonial">
+    <i class="fas fa-comments"></i>
+    <h4>No Featured {{ industry_name }} Testimonials Yet</h4>
+    <p>Check back soon for featured testimonials from this category!</p>
+</div>
+{% endfor %}

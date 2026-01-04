@@ -1,0 +1,147 @@
+<!-- templates/admin/verify_cash_payment.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Cash Payment</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: #3498db;
+            color: white;
+            padding: 20px;
+            border-radius: 8px 8px 0 0;
+            margin: -30px -30px 30px -30px;
+        }
+        
+        .details-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            min-height: 100px;
+            font-family: inherit;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-verify {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-cancel {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-back {
+            background: #3498db;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-money-bill-wave"></i> Verify Cash Payment</h1>
+        </div>
+        
+        <div class="details-card">
+            <h3>Payment Information</h3>
+            <p><strong>Payment ID:</strong> {{ payment.payment_id }}</p>
+            <p><strong>Amount:</strong> ₹{{ payment.amount }}</p>
+            <p><strong>Status:</strong> {{ payment.get_status_display }}</p>
+            <p><strong>Created:</strong> {{ payment.created_at|date:"F d, Y H:i" }}</p>
+        </div>
+        
+        <div class="details-card">
+            <h3>Client Information</h3>
+            <p><strong>Name:</strong> {{ booking.name }}</p>
+            <p><strong>Email:</strong> {{ booking.email }}</p>
+            <p><strong>Phone:</strong> {{ booking.phone }}</p>
+            <p><strong>Company:</strong> {{ booking.company|default:"N/A" }}</p>
+        </div>
+        
+        <div class="details-card">
+            <h3>Booking Details</h3>
+            <p><strong>Booking ID:</strong> {{ booking.booking_id }}</p>
+            <p><strong>Date:</strong> {{ booking.appointment_date|date:"F d, Y" }}</p>
+            <p><strong>Time:</strong> {{ booking.appointment_time|time:"g:i A" }}</p>
+            <p><strong>Duration:</strong> {{ booking.get_duration_display }}</p>
+            <p><strong>Mode:</strong> {{ booking.get_mode_display }}</p>
+            <p><strong>Paid:</strong> {% if booking.is_paid %}✅ Yes{% else %}❌ No{% endif %}</p>
+        </div>
+        
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="notes"><i class="fas fa-sticky-note"></i> Verification Notes</label>
+                <textarea id="notes" name="notes" placeholder="Enter verification notes (e.g., cash received, bank transfer details, etc.)"></textarea>
+            </div>
+            
+            <div class="actions">
+                <button type="submit" class="btn btn-verify">
+                    <i class="fas fa-check-circle"></i> Verify Payment
+                </button>
+                <a href="{% url 'admin_booking_management' %}" class="btn btn-cancel">
+                    <i class="fas fa-times"></i> Cancel
+                </a>
+            </div>
+        </form>
+        
+        <div style="margin-top: 30px;">
+            <a href="{% url 'admin_booking_management' %}" class="btn btn-back">
+                <i class="fas fa-arrow-left"></i> Back to Booking Management
+            </a>
+        </div>
+    </div>
+</body>
+</html>

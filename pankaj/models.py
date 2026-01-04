@@ -3,15 +3,17 @@
 #                              IMPORTS
 # ══════════════════════════════════════════════════════════════════════════════
 
+import random
 import uuid  # For generating unique identifiers
-from datetime import datetime, timedelta  # For date/time manipulation
+from datetime import datetime, time, timedelta  # For date/time manipulation
+from chromadb import logger
 from django.core.validators import MinValueValidator, MaxValueValidator  # For field validation
 from django.db import models  # Django's ORM for database models
 from django.utils import timezone  # Timezone-aware datetime handling
 from django.utils.text import slugify
 from jsonschema import ValidationError  # For creating URL-friendly slugs
-
-
+import razorpay
+from django.conf import settings
 # ══════════════════════════════════════════════════════════════════════════════
 #                              BLOG POST MODEL
 # ══════════════════════════════════════════════════════════════════════════════
@@ -254,6 +256,180 @@ def get_category_image(self):
         'Compliance': 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100',
     }
     return category_images.get(self.category, 'https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100')
+
+
+# Subscription Model
+class BlogSubscriber(models.Model):
+    """
+    Stores email subscriptions for blog notifications.
+    """
+    email = models.EmailField(unique=True)
+    subscribed_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
+    verification_token = models.CharField(max_length=100, blank=True, null=True)
+    is_verified = models.BooleanField(default=False)
+    unsubscribed_at = models.DateTimeField(blank=True, null=True)
+    
+    def __str__(self):
+        return f"{self.email} ({'Active' if self.is_active else 'Inactive'})"
+    def send_verification_email(self):
+        """Send verification email to subscriber."""
+        from django.core.mail import send_mail
+        from django.conf import settings
+        
+        if not self.verification_token:
+            import secrets
+            self.verification_token = secrets.token_urlsafe(32)
+            self.save()
+        
+        # Get SITE_URL from settings
+        site_url = getattr(settings, 'SITE_URL', 'http://127.0.0.1:8000')
+        verification_url = f"{site_url}/blogs/verify-subscription/{self.verification_token}/"
+        
+        subject = 'Verify Your Subscription - KP RegTech Blogs'
+        
+        # HTML email
+        html_message = f"""
+        <html>
+        <body style="font-family: Arial, sans-serif; line-height: 1.6;">
+            <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+                <h2 style="color: #333;">Verify Your Email</h2>
+                <p>Hi there,</p>
+                <p>Thank you for subscribing to KP RegTech blogs!</p>
+                <p>Please click the button below to verify your email address:</p>
+                <div style="text-align: center; margin: 30px 0;">
+                    <a href="{verification_url}" 
+                    style="background-color: #000; color: white; padding: 12px 30px; 
+                            text-decoration: none; border-radius: 5px; font-weight: bold;">
+                        Verify Email
+                    </a>
+                </div>
+                <p>Or copy and paste this link:</p>
+                <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px; 
+                        word-break: break-all;">
+                    {verification_url}
+                </p>
+                <p>If you didn't request this subscription, you can safely ignore this email.</p>
+                <p>Best regards,<br>
+                <strong>KP RegTech Team</strong></p>
+            </div>
+        </body>
+        </html>
+        """
+        
+        # Plain text version
+        plain_message = f"""
+        Verify Your Subscription
+        
+        Thank you for subscribing to KP RegTech blogs!
+        
+        Please click this link to verify your email address:
+        {verification_url}
+        
+        If you didn't request this subscription, you can safely ignore this email.
+        
+        Best regards,
+        KP RegTech Team
+        """
+        
+        print(f"DEBUG: Sending verification email to {self.email}")
+        print(f"DEBUG: Verification URL: {verification_url}")
+        
+        try:
+            # Use send_mail for compatibility
+            send_mail(
+                subject=subject,
+                message=plain_message,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[self.email],
+                html_message=html_message,  # HTML version
+                fail_silently=False,  # Don't fail silently for debugging
+            )
+            print(f"DEBUG: Email sent successfully to {self.email}")
+            return True
+        except Exception as e:
+            print(f"DEBUG: Error sending verification email: {e}")
+            return False
+    
+    def send_new_blog_notification(self, blog):
+        """Send notification about new blog post to subscriber."""
+        from django.core.mail import EmailMessage
+        from django.conf import settings
+        
+        subject = f'New Blog Post: {blog.title}'
+        
+        html_content = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+                body {{ font-family: Arial, sans-serif; line-height: 1.6; color: #333; }}
+                .container {{ max-width: 600px; margin: 0 auto; padding: 20px; }}
+                .header {{ background: #000; color: white; padding: 20px; text-align: center; }}
+                .content {{ padding: 20px; background: #f9f9f9; }}
+                .blog-title {{ color: #000; font-size: 24px; margin-bottom: 15px; }}
+                .excerpt {{ color: #555; font-size: 16px; margin-bottom: 20px; }}
+                .cta-button {{ display: inline-block; background: #000; color: white; padding: 12px 24px; 
+                               text-decoration: none; border-radius: 5px; font-weight: bold; }}
+                .footer {{ margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd; 
+                          color: #666; font-size: 14px; }}
+                .unsubscribe {{ color: #999; font-size: 12px; margin-top: 20px; }}
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h2>KP RegTech - New Blog Post</h2>
+                </div>
+                
+                <div class="content">
+                    <h3 class="blog-title">{blog.title}</h3>
+                    
+                    <p class="excerpt">{blog.excerpt or blog.content[:200] + '...'}</p>
+                    
+                    <p><strong>Category:</strong> {blog.category}</p>
+                    <p><strong>Read Time:</strong> {blog.read_time} minutes</p>
+                    
+                    <a href="{settings.SITE_URL}{blog.get_absolute_url()}" class="cta-button">
+                        Read Full Article
+                    </a>
+                </div>
+                
+                <div class="footer">
+                    <p>You received this email because you subscribed to KP RegTech blog updates.</p>
+                    
+                    <div class="unsubscribe">
+                        <p>
+                            <a href="{settings.SITE_URL}/blogs/unsubscribe/{self.verification_token}/">
+                                Unsubscribe from these notifications
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </body>
+        </html>
+        """
+        
+        try:
+            email = EmailMessage(
+                subject=subject,
+                body=html_content,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                to=[self.email],
+            )
+            email.content_subtype = "html"
+            email.send()
+            return True
+        except Exception as e:
+            print(f"Error sending blog notification: {e}")
+            return False
+    
+    class Meta:
+        ordering = ['-subscribed_at']
+        verbose_name = "Blog Subscriber"
+        verbose_name_plural = "Blog Subscribers"
+
 # ══════════════════════════════════════════════════════════════════════════════
 #                              TESTIMONIAL MODEL
 # ══════════════════════════════════════════════════════════════════════════════
@@ -272,6 +448,7 @@ class Testimonial(models.Model):
         ('Healthcare', 'Healthcare'),
         ('Retail', 'Retail'),
         ('Pharmaceuticals', 'Pharmaceuticals'),
+        ('Other', 'Other'),
     ]
     
     # ─── Client Information Fields ──────────────────────────────────────────────
@@ -288,43 +465,30 @@ class Testimonial(models.Model):
     client_image = models.ImageField(upload_to='testimonial_images/', blank=True, null=True)  # Client photo
     image_url = models.URLField(blank=True, null=True)  # Alternative image URL
     
-    video = models.FileField(
-        upload_to="testimonials/videos/",
-        blank=True,
-        null=True
-    )  # Video file upload
-    
-    video_url = models.URLField(
-        blank=True,
-        null=True
-    )  # External video URL
-    
-    video_thumbnail = models.ImageField(
-        upload_to='testimonial_videos/',
-        blank=True,
-        null=True,
-        help_text="Thumbnail image for video testimonial"
-    )  # Thumbnail for video
     
     # ─── Administrative Fields ──────────────────────────────────────────────────
     date_added = models.DateTimeField(auto_now_add=True)  # Auto-set on creation
     is_active = models.BooleanField(default=True)  # Controls visibility
     is_featured = models.BooleanField(default=False)  # Marks featured testimonials
-    
-    # ─── Services Field ─────────────────────────────────────────────────────────
-    services = models.CharField(max_length=200, blank=True)  # Comma-separated services used
+
+    # ─── Services Field ─────────────────────────────────────────────────--------
+    SERVICE_CHOICES1 = [
+        ('FEMA', 'FEMA'),
+        ('SEBI', 'SEBI'),
+        ('Corporate Law', 'Corporate Law'),
+        ('Fundraising', 'Fundraising'),
+        ('Startups', 'Startups'),
+        ('Compliance', 'Compliance'),
+    ]
+    services = models.CharField(
+        max_length=50,
+        choices=SERVICE_CHOICES1,   # 👈 makes it a dropdown
+        blank=True,
+        help_text="Select service used"
+    )  # Comma-separated services used
     
     # ─── Model Methods ──────────────────────────────────────────────────────────
     
-    def get_video_source(self):
-        """Returns the video source URL (local file or external URL)."""
-        if self.video:
-            return self.video.url
-        return self.video_url
-    
-    def is_video(self):
-        """Checks if testimonial has a video component."""
-        return bool(self.video_url)
     
     def get_service_tags(self):
         """Converts comma-separated services string to list of tags."""
@@ -387,12 +551,21 @@ class TestimonialSubmission(models.Model):
     )
     
     # ─── Services Field ─────────────────────────────────────────────────────────
-    services_used = models.CharField(
-        max_length=200,
-        blank=True,
-        help_text="Comma-separated list of services used"
-    )  # Services availed
+    SERVICE_CHOICES = [
+        ('FEMA', 'FEMA'),
+        ('SEBI', 'SEBI'),
+        ('Corporate Law', 'Corporate Law'),
+        ('Fundraising', 'Fundraising'),
+        ('Startups', 'Startups'),
+        ('Compliance', 'Compliance'),
+    ]
     
+    services_used = models.CharField(
+        max_length=50,
+        choices=SERVICE_CHOICES,   # 👈 makes it a dropdown
+        blank=True,
+        help_text="Select service used"
+    )
     # ─── Optional Media Fields ──────────────────────────────────────────────────
     profile_picture = models.ImageField(
         upload_to='testimonial_submissions/profiles/',
@@ -499,6 +672,7 @@ class ConsultationBooking(models.Model):
     # ─── Payment Fields ─────────────────────────────────────────────────────────
     payment_id = models.CharField(max_length=200, blank=True, null=True)  # Payment gateway reference
     
+    
     # ─── Marketing Fields ───────────────────────────────────────────────────────
     newsletter_consent = models.BooleanField(default=False)  # Newsletter subscription consent
     
@@ -528,6 +702,61 @@ class ConsultationBooking(models.Model):
         
         # Allow cancellation up to 24 hours before appointment (86400 seconds)
         return time_until_appointment.total_seconds() > 86400
+    
+    def initiate_payment(self):
+        """
+        Initiate payment through Razorpay.
+        """
+        # Initialize Razorpay client
+        client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+        
+        # Create order data
+        order_data = {
+            'amount': int(self.price * 100),  # Convert to paise
+            'currency': 'INR',
+            'receipt': str(self.booking_id),
+            'notes': {
+                'booking_id': str(self.booking_id),
+                'customer_name': self.name,
+                'customer_email': self.email
+            }
+        }
+        
+        try:
+            # Create Razorpay order
+            order = client.order.create(data=order_data)
+            
+            # Create Payment record
+            payment = Payment.objects.create(
+                booking=self,
+                razorpay_order_id=order['id'],
+                amount=self.price,
+                currency='INR'
+            )
+            
+            return {
+                'order_id': order['id'],
+                'amount': order['amount'],
+                'currency': order['currency'],
+                'key': settings.RAZORPAY_KEY_ID,
+                'name': "KP RegTech",
+                'description': f"Consultation Booking - {self.get_duration_display()}",
+                'prefill': {
+                    'name': self.name,
+                    'email': self.email,
+                    'contact': self.phone
+                },
+                'notes': {
+                    'booking_id': str(self.booking_id)
+                },
+                'theme': {
+                    'color': '#4CAF50'
+                }
+            }
+            
+        except Exception as e:
+            logger.error(f"Error initiating payment for booking {self.booking_id}: {str(e)}")
+            return None
     
     def save(self, *args, **kwargs):
         """
@@ -730,6 +959,368 @@ class TimeSlotManager:
                 return False  # Time slot is not available
         
         return True  # Time slot is available
+    
 # ══════════════════════════════════════════════════════════════════════════════
-#                              END OF MODELS
+#                              PAYMENT MODEL
+# # ══════════════════════════════════════════════════════════════════════════════
+
+# class Payment(models.Model):
+#     """
+#     Tracks payment transactions for consultation bookings.
+#     """
+    
+#     # ─── Status Choices ─────────────────────────────────────────────────────────
+#     STATUS_CHOICES = [
+#         ('pending', 'Pending'),
+#         ('completed', 'Completed'),
+#         ('failed', 'Failed'),
+#         ('refunded', 'Refunded'),
+#     ]
+    
+#     # ─── Payment Method Choices ────────────────────────────────────────────────
+#     METHOD_CHOICES = [
+#         ('upi', 'UPI'),
+#         ('card', 'Credit/Debit Card'),
+#         ('netbanking', 'Net Banking'),
+#         ('wallet', 'Wallet (PayTM/PhonePe)'),
+#         ('cash', 'Cash/Offline'),
+#     ]
+    
+#     # ─── Core Fields ───────────────────────────────────────────────────────────
+#     booking = models.OneToOneField(ConsultationBooking, on_delete=models.CASCADE, related_name='payment')
+#     payment_id = models.CharField(max_length=100, unique=True, blank=True)  # Payment gateway reference
+#     razorpay_order_id = models.CharField(max_length=100, blank=True, null=True)  # Razorpay order ID
+#     razorpay_payment_id = models.CharField(max_length=100, blank=True, null=True)  # Razorpay payment ID
+#     razorpay_signature = models.CharField(max_length=255, blank=True, null=True)  # Razorpay signature
+    
+#     # ─── Payment Details ───────────────────────────────────────────────────────
+#     amount = models.DecimalField(max_digits=10, decimal_places=2)
+#     currency = models.CharField(max_length=3, default='INR')
+#     method = models.CharField(max_length=20, choices=METHOD_CHOICES, blank=True, null=True)
+#     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    
+#     # ─── Additional Details ────────────────────────────────────────────────────
+#     upi_id = models.CharField(max_length=100, blank=True, null=True)  # For UPI payments
+#     card_last4 = models.CharField(max_length=4, blank=True, null=True)  # Last 4 digits of card
+#     bank_name = models.CharField(max_length=100, blank=True, null=True)  # For net banking
+    
+#     # ─── Timestamps ────────────────────────────────────────────────────────────
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
+#     completed_at = models.DateTimeField(blank=True, null=True)
+    
+#     # ─── Error Handling ────────────────────────────────────────────────────────
+#     error_code = models.CharField(max_length=50, blank=True, null=True)
+#     error_description = models.TextField(blank=True, null=True)
+    
+#     def __str__(self):
+#         return f"Payment {self.payment_id} - {self.booking.name} - ₹{self.amount}"
+    
+#     def is_successful(self):
+#         return self.status == 'completed'
+    
+#     def mark_as_completed(self, payment_id=None, method=None, additional_info=None):
+#         self.status = 'completed'
+#         self.completed_at = timezone.now()
+#         if payment_id:
+#             self.payment_id = payment_id
+#         if method:
+#             self.method = method
+#         if additional_info:
+#             if method == 'upi':
+#                 self.upi_id = additional_info.get('upi_id')
+#             elif method == 'card':
+#                 self.card_last4 = additional_info.get('card_last4')
+#             elif method == 'netbanking':
+#                 self.bank_name = additional_info.get('bank_name')
+#         self.save()
+        
+#         # Update booking payment status
+#         self.booking.is_paid = True
+#         self.booking.save()
+    
+#     class Meta:
+#         ordering = ['-created_at']
+#         verbose_name = "Payment"
+#         verbose_name_plural = "Payments"
+
+
 # ══════════════════════════════════════════════════════════════════════════════
+#                              SIMPLE PAYMENT MODEL (TESTING)
+# ══════════════════════════════════════════════════════════════════════════════
+# ══════════════════════════════════════════════════════════════════════════════
+#                              PAYMENT MODEL
+# ══════════════════════════════════════════════════════════════════════════════
+import uuid
+import time
+import random
+from django.db import models
+from django.utils import timezone
+from django.conf import settings
+from django.core.mail import send_mail, EmailMessage
+
+def generate_payment_id():
+    """Generate unique payment ID"""
+    timestamp = int(time.time() * 1000)  # Milliseconds
+    random_num = random.randint(1000, 9999)
+    return f"PAY{timestamp}{random_num}"
+
+class Payment(models.Model):
+    PAYMENT_STATUS = [
+        ('pending', 'Pending'),
+        ('success', 'Success'),
+        ('failed', 'Failed'),
+        ('refunded', 'Refunded'),
+    ]
+    
+    PAYMENT_METHODS = [
+        ('upi', 'UPI'),
+        ('card', 'Card'),
+        ('netbanking', 'Net Banking'),
+        ('wallet', 'Wallet'),
+        ('cash', 'Cash/Offline'),
+    ]
+    
+    booking = models.OneToOneField('ConsultationBooking', on_delete=models.CASCADE, related_name='payment')
+    payment_id = models.CharField(max_length=50, unique=True, default=generate_payment_id)
+    
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    method = models.CharField(max_length=20, choices=PAYMENT_METHODS)
+    status = models.CharField(max_length=20, choices=PAYMENT_STATUS, default='pending')
+    transaction_id = models.CharField(max_length=100, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    completed_at = models.DateTimeField(blank=True, null=True)
+    
+    # Cash payment verification fields
+    cash_payment_verified = models.BooleanField(default=False)
+    cash_payment_verified_by = models.ForeignKey(
+        'auth.User',
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name='verified_payments'
+    )
+    cash_payment_verified_at = models.DateTimeField(blank=True, null=True)
+    cash_payment_notes = models.TextField(blank=True, null=True)
+    
+    class Meta:
+        ordering = ['-created_at']
+    
+    def __str__(self):
+        return f"{self.payment_id} - {self.booking.name} - ₹{self.amount}"
+    
+    def mark_as_paid(self, verified_by=None, notes=None):
+        """Mark payment as paid with appropriate handling"""
+        self.status = 'success'
+        self.completed_at = timezone.now()
+        
+        # For cash payments
+        if self.method == 'cash':
+            self.cash_payment_verified = True
+            self.cash_payment_verified_at = timezone.now()
+            self.cash_payment_verified_by = verified_by
+            if notes:
+                self.cash_payment_notes = notes
+            
+            # Update booking status for cash payments
+            self.booking.is_paid = True
+            self.booking.status = 'confirmed'
+        else:
+            # For online payments
+            self.booking.is_paid = True
+            self.booking.status = 'confirmed'
+        
+        self.booking.payment_id = self.payment_id
+        self.booking.save()
+        self.save()
+        
+        # Send confirmation emails
+        self.send_payment_confirmation()
+        
+        return True
+    
+    def send_payment_confirmation(self):
+        """Send payment confirmation email"""
+        try:
+            # Email to client
+            self._send_client_email()
+            
+            # Email to admin
+            self._send_admin_email()
+            
+            print(f"Payment confirmation emails sent for {self.payment_id}")
+            return True
+        except Exception as e:
+            print(f"Error sending payment emails: {e}")
+            return False
+    
+    def _send_client_email(self):
+        """Send payment confirmation to client"""
+        subject = f'Payment Confirmed - Booking {self.booking.booking_id}'
+        
+        html_content = f"""
+        <!DOCTYPE html>
+        <html>
+        <body>
+            <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+                <h2>Payment Confirmed!</h2>
+                <p>Dear {self.booking.name},</p>
+                <p>Your payment has been successfully processed.</p>
+                
+                <div style="background: #f9f9f9; padding: 15px; margin: 15px 0;">
+                    <h3>Payment Details</h3>
+                    <p><strong>Payment ID:</strong> {self.payment_id}</p>
+                    <p><strong>Transaction ID:</strong> {self.transaction_id or 'N/A'}</p>
+                    <p><strong>Amount:</strong> ₹{self.amount}</p>
+                    <p><strong>Method:</strong> {self.get_method_display()}</p>
+                    <p><strong>Status:</strong> {self.get_status_display()}</p>
+                </div>
+                
+                <p>Your consultation is now confirmed.</p>
+                
+                <p>Best regards,<br>
+                <strong>KP RegTech</strong></p>
+            </div>
+        </body>
+        </html>
+        """
+        
+        email = EmailMessage(
+            subject=subject,
+            body=html_content,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            to=[self.booking.email],
+        )
+        email.content_subtype = "html"
+        email.send()
+    
+    def _send_admin_email(self):
+        """Send payment notification to admin"""
+        subject = f'New Payment Received - {self.booking.name}'
+        
+        message = f"""
+        NEW PAYMENT RECEIVED
+        
+        Payment ID: {self.payment_id}
+        Amount: ₹{self.amount}
+        Method: {self.get_method_display()}
+        Booking ID: {self.booking.booking_id}
+        
+        Client: {self.booking.name}
+        Email: {self.booking.email}
+        Phone: {self.booking.phone}
+        """
+        
+        admin_email = EmailMessage(
+            subject,
+            message,
+            settings.DEFAULT_FROM_EMAIL,
+            [settings.ADMIN_EMAIL]
+        )
+        admin_email.send()
+
+        
+class Refund(models.Model):
+    REFUND_STATUS = [
+        ('requested', 'Requested'),
+        ('approved', 'Approved'),
+        ('rejected', 'Rejected'),
+        ('processed', 'Processed'),
+    ]
+    
+    booking = models.ForeignKey(ConsultationBooking, on_delete=models.CASCADE, related_name='refunds')
+    payment = models.ForeignKey(Payment, on_delete=models.CASCADE, related_name='refunds')
+    refund_id = models.CharField(max_length=50, unique=True, default=generate_payment_id)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    reason = models.TextField()
+    status = models.CharField(max_length=20, choices=REFUND_STATUS, default='requested')
+    requested_by = models.ForeignKey('auth.User', on_delete=models.SET_NULL, null=True, blank=True)
+    requested_at = models.DateTimeField(auto_now_add=True)
+    approved_by = models.ForeignKey('auth.User', on_delete=models.SET_NULL, null=True, blank=True, related_name='approved_refunds')
+    approved_at = models.DateTimeField(null=True, blank=True)
+    processed_at = models.DateTimeField(null=True, blank=True)
+    notes = models.TextField(blank=True, null=True)
+    
+    def __str__(self):
+        return f"Refund {self.refund_id} - {self.booking.name} - ₹{self.amount}"
+    
+    def approve(self, approved_by, notes=None):
+        self.status = 'approved'
+        self.approved_by = approved_by
+        self.approved_at = timezone.now()
+        if notes:
+            self.notes = notes
+        self.save()
+        
+        # Free up the booked slot
+        self.free_booked_slot()
+        
+        # Send approval email
+        self.send_refund_approval_email()
+        
+        return True
+    
+    def free_booked_slot(self):
+        """Free the booked slot when refund is approved."""
+        try:
+            # Mark booking as cancelled
+            self.booking.status = 'cancelled'
+            self.booking.cancelled_at = timezone.now()
+            self.booking.save()
+            
+            # You can add logic here to free up the time slot
+            # For example, if you have a BookedSlot model:
+            # BookedSlot.objects.filter(booking=self.booking).delete()
+            
+            print(f"Booking {self.booking.booking_id} cancelled and slot freed")
+            return True
+        except Exception as e:
+            print(f"Error freeing slot: {e}")
+            return False
+    
+    def send_refund_approval_email(self):
+        """Send refund approval email to client."""
+        try:
+            subject = f'Refund Approved - {self.refund_id}'
+            
+            html_content = f"""
+            <!DOCTYPE html>
+            <html>
+            <body>
+                <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+                    <h2>Refund Approved</h2>
+                    <p>Dear {self.booking.name},</p>
+                    <p>Your refund request has been approved.</p>
+                    
+                    <div style="background: #f9f9f9; padding: 15px; margin: 15px 0;">
+                        <h3>Refund Details</h3>
+                        <p><strong>Refund ID:</strong> {self.refund_id}</p>
+                        <p><strong>Amount:</strong> ₹{self.amount}</p>
+                        <p><strong>Reason:</strong> {self.reason}</p>
+                        <p><strong>Status:</strong> Approved</p>
+                        <p><strong>Booking ID:</strong> {self.booking.booking_id}</p>
+                    </div>
+                    
+                    <p>The refund amount will be credited to your original payment method within 5-7 business days.</p>
+                    
+                    <p>If you have any questions, please contact us.</p>
+                    
+                    <p>Best regards,<br>
+                    <strong>KP RegTech</strong></p>
+                </div>
+            </body>
+            </html>
+            """
+            
+            # In real app, use EmailMessage
+            print(f"Refund approval email sent to {self.booking.email}")
+            return True
+        except Exception as e:
+            print(f"Error sending refund email: {e}")
+            return False
+    
+    class Meta:
+        ordering = ['-requested_at']
+# # ══════════════════════════════════════════════════════════════════════════════
+# #                              END OF MODELS
+# # ══════════════════════════════════════════════════════════════════════════════

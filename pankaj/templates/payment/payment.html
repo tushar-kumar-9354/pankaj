@@ -1,0 +1,275 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make Payment | Anjali Bansal & Associates</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/payment.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    {% include 'includes/header.html' %}
+    
+    <section class="payment-container">
+        <div class="container">
+            <div class="payment-header">
+                <h1><i class="fas fa-lock"></i> Secure Payment</h1>
+                <p class="subtitle">Complete your booking by making payment</p>
+            </div>
+            
+            <div class="payment-wrapper">
+                <!-- Booking Summary -->
+                <div class="booking-summary-card">
+                    <h3>Booking Summary</h3>
+                    <div class="summary-item">
+                        <span>Booking ID:</span>
+                        <strong>{{ booking.booking_id }}</strong>
+                    </div>
+                    <div class="summary-item">
+                        <span>Client Name:</span>
+                        <span>{{ booking.name }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Appointment Date:</span>
+                        <span>{{ booking.appointment_date|date:"d M, Y" }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Appointment Time:</span>
+                        <span>{{ booking.appointment_time|time:"g:i A" }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Duration:</span>
+                        <span>{{ booking.get_duration_display }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Consultation Mode:</span>
+                        <span>{{ booking.get_mode_display }}</span>
+                    </div>
+                    <div class="summary-total">
+                        <span>Total Amount:</span>
+                        <strong class="amount">₹{{ booking.price }}</strong>
+                    </div>
+                </div>
+                
+                <!-- Payment Methods -->
+                <div class="payment-methods-card">
+                    <h3>Select Payment Method</h3>
+                    
+                    <div class="payment-methods">
+                        <!-- UPI Payment -->
+                        <div class="payment-method active" id="upiMethod">
+                            <div class="method-header">
+                                <input type="radio" name="payment_method" value="upi" checked>
+                                <div class="method-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <div class="method-info">
+                                    <h4>UPI</h4>
+                                    <p>Google Pay, PhonePe, PayTM</p>
+                                </div>
+                            </div>
+                            <div class="method-details">
+                                <div class="upi-qr">
+                                    <div id="upiQrCode"></div>
+                                    <p class="upi-note">Scan QR code with any UPI app</p>
+                                </div>
+                                <div class="upi-id">
+                                    <label>UPI ID:</label>
+                                    <div class="upi-input-group">
+                                        <input type="text" id="upiId" placeholder="yourname@upi" value="{{ booking.email|slice:':10' }}@ybl">
+                                        <button type="button" class="btn-copy" onclick="copyUpiId()">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                    <small>Enter your UPI ID to receive payment request</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Card Payment -->
+                        <div class="payment-method" id="cardMethod">
+                            <div class="method-header">
+                                <input type="radio" name="payment_method" value="card">
+                                <div class="method-icon">
+                                    <i class="fas fa-credit-card"></i>
+                                </div>
+                                <div class="method-info">
+                                    <h4>Credit/Debit Card</h4>
+                                    <p>Visa, Mastercard, Rupay</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Net Banking -->
+                        <div class="payment-method" id="netbankingMethod">
+                            <div class="method-header">
+                                <input type="radio" name="payment_method" value="netbanking">
+                                <div class="method-icon">
+                                    <i class="fas fa-university"></i>
+                                </div>
+                                <div class="method-info">
+                                    <h4>Net Banking</h4>
+                                    <p>All major Indian banks</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Wallet -->
+                        <div class="payment-method" id="walletMethod">
+                            <div class="method-header">
+                                <input type="radio" name="payment_method" value="wallet">
+                                <div class="method-icon">
+                                    <i class="fas fa-wallet"></i>
+                                </div>
+                                <div class="method-info">
+                                    <h4>Wallet</h4>
+                                    <p>PayTM, PhonePe, Amazon Pay</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Payment Button -->
+                    <div class="payment-actions">
+                        <button type="button" class="btn-back" onclick="window.history.back()">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                        <button type="button" class="btn-pay" id="payButton">
+                            <i class="fas fa-lock"></i> Pay ₹{{ booking.price }}
+                        </button>
+                    </div>
+                    
+                    <!-- Security Badges -->
+                    <div class="security-badges">
+                        <div class="badge">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>SSL Secured</span>
+                        </div>
+                        <div class="badge">
+                            <i class="fas fa-lock"></i>
+                            <span>100% Safe</span>
+                        </div>
+                        <div class="badge">
+                            <i class="fas fa-user-shield"></i>
+                            <span>PCI DSS Compliant</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Payment Info -->
+            <div class="payment-info">
+                <h4><i class="fas fa-info-circle"></i> Payment Information</h4>
+                <ul>
+                    <li>All payments are processed through Razorpay's secure payment gateway</li>
+                    <li>Your card details are never stored on our servers</li>
+                    <li>You will receive a payment confirmation email immediately</li>
+                    <li>For refunds, please contact us within 24 hours of payment</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    {% include 'includes/footer.html' %}
+    
+{{ payment_data|json_script:"payment-data-json" }}
+
+// Update the JavaScript section in payment_test.html
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const paymentMethods = document.querySelectorAll('.payment-method');
+        const cashPaymentInfo = document.getElementById('cashPaymentInfo');
+        const regularPaymentActions = document.getElementById('regularPaymentActions');
+        const cashOption = document.getElementById('cashOption');
+        const btnMarkAsPaid = document.getElementById('btnMarkAsPaid');
+        const btnSwitchToOnline = document.getElementById('btnSwitchToOnline');
+        const form = document.getElementById('paymentForm');
+        
+        // Handle payment method selection
+        paymentMethods.forEach(method => {
+            method.addEventListener('click', function() {
+                // Remove selected class from all
+                paymentMethods.forEach(m => m.classList.remove('selected'));
+                // Add to clicked
+                this.classList.add('selected');
+                // Check the radio button
+                const radio = this.querySelector('input[type="radio"]');
+                if (radio) radio.checked = true;
+                
+                // Show/hide cash payment instructions
+                if (radio && radio.value === 'cash') {
+                    cashPaymentInfo.classList.add('show');
+                    regularPaymentActions.style.display = 'none';
+                } else {
+                    cashPaymentInfo.classList.remove('show');
+                    regularPaymentActions.style.display = 'flex';
+                }
+            });
+        });
+        
+        // Set selected method based on current payment method
+        const currentMethod = "{{ payment.method }}";
+        if (currentMethod === 'cash') {
+            cashPaymentInfo.classList.add('show');
+            regularPaymentActions.style.display = 'none';
+            if (cashOption) {
+                cashOption.parentElement.classList.add('selected');
+            }
+        }
+        
+        // Handle "Record Cash Payment" button
+        if (btnMarkAsPaid) {
+            btnMarkAsPaid.addEventListener('click', function() {
+                if (confirm('Are you recording a cash payment? This will confirm your booking but payment will be verified later.')) {
+                    // Set hidden inputs for cash payment
+                    setFormInput('payment_method', 'cash');
+                    setFormInput('simulate_success', 'true');
+                    setFormInput('cash_verified', 'false');
+                    
+                    // Submit form
+                    form.submit();
+                }
+            });
+        }
+        
+        // Handle "Switch to Online Payment" button
+        if (btnSwitchToOnline) {
+            btnSwitchToOnline.addEventListener('click', function() {
+                // Select UPI option
+                const upiOption = document.querySelector('input[value="upi"]');
+                if (upiOption) {
+                    upiOption.checked = true;
+                    upiOption.parentElement.classList.add('selected');
+                    
+                    // Hide cash info, show regular actions
+                    cashPaymentInfo.classList.remove('show');
+                    regularPaymentActions.style.display = 'flex';
+                }
+            });
+        }
+        
+        // Helper function to set form inputs
+        function setFormInput(name, value) {
+            let input = form.querySelector(`input[name="${name}"]`);
+            if (!input) {
+                input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = name;
+                form.appendChild(input);
+            }
+            input.value = value;
+        }
+        
+        // Initialize - set first method as selected if none selected
+        if (!document.querySelector('.payment-method.selected') && paymentMethods.length > 0) {
+            paymentMethods[0].classList.add('selected');
+        }
+    });
+</script>
+</body>
+</html>

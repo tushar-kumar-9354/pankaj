@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Testimonials | Anjali Bansal & Associates | Company Secretaries</title>
+    <title>Testimonials | KP RegTech | </title>
     <link rel="stylesheet" href="{% static 'css/testimonials.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -22,8 +22,8 @@
         <div class="logo">
             <img src="{% static 'images/kplogo.png' %}" alt="Company Logo" class="logo-image">
             <div class="logo-text">
-                <h1>ANJALI BANSAL & ASSOCIATES</h1>
-                <p>COMPANY SECRETARIES</p>
+                <h1>KP RegTech</h1>
+                <p></p>
             </div>
         </div>
         
@@ -216,9 +216,9 @@
                             <p>"{{ testimonial.testimonial_text|truncatewords:30 }}"</p>
                         </div>
                         <div class="testimonial-footer">
-                            {% if testimonial.services_used.exists or testimonial.other_services %}
+                            {% if testimonial.service.exists or testimonial.other_services %}
                             <div class="service-tags">
-                                {% for service in testimonial.services_used.all|slice:":2" %}
+                                {% for service in testimonial.service.all|slice:":2" %}
                                 <span>{{ service.name }}</span>
                                 {% endfor %}
                                 {% if testimonial.other_services %}
@@ -233,7 +233,7 @@
                     <div class="empty-testimonial">
                         <i class="fas fa-comments"></i>
                         <h4>No Testimonials Yet</h4>
-                        <p>Be the first to share your experience with Anjali Bansal & Associates!</p>
+                        <p>Be the first to share your experience with KP RegTech!</p>
                         <a href="{% url 'submit_testimonial' %}" class="btn-primary mt-3">
                             <i class="fas fa-plus-circle me-2"></i>Submit Your Testimonial
                         </a>
@@ -257,49 +257,7 @@
         </div>
     </div>
 </section>
-    <!-- Video Testimonials -->
-    <section class="video-testimonials parallax-section"
-        style="background: 
-            linear-gradient(rgba(248, 249, 250, 0.9), rgba(255, 255, 255, 0.9)),
-            url('https://images.unsplash.com/photo-1559136555-9303baea8ebd?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') 
-            center/cover no-repeat fixed;">
-        <div class="container">
-            <div class="section-title">
-                <h2>Video Testimonials</h2>
-                <p class="section-subtitle">
-                    Hear our clients share their experiences in their own words
-                </p>
-            </div>
 
-            <div class="video-grid">
-                {% for testimonial in video_testimonials %}
-                <div class="video-item">
-                    <div class="video-thumbnail"
-                        data-video="{{ testimonial.get_video_source }}"
-                        data-title="{{ testimonial.client_name }}, {{ testimonial.company }}">
-                        {% if testimonial.video_thumbnail %}
-                            <img src="{{ testimonial.video_thumbnail.url }}" alt="">
-                        {% else %}
-                            <img src="{% static 'img/video-placeholder.jpg' %}" alt="">
-                        {% endif %}
-                        <div class="play-button">
-                            <i class="fas fa-play"></i>
-                        </div>
-                        <div class="video-overlay">
-                            <p>{{ testimonial.content|truncatewords:15 }}</p>
-                        </div>
-                    </div>
-                    <div class="video-info">
-                        <h4>{{ testimonial.client_name }}, {{ testimonial.company }}</h4>
-                        <p>{{ testimonial.industry }}</p>
-                    </div>
-                </div>
-                {% empty %}
-                <p style="text-align:center;">No video testimonials available.</p>
-                {% endfor %}
-            </div>
-        </div>
-    </section>
     <!-- Simple Centered CTA -->
 <section class="submit-cta-section" style="padding: 60px 0; background: #f8f9fa;">
     <div class="container">
@@ -415,7 +373,7 @@
         <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;">
             
             <div style="flex: 1; min-width: 250px;">
-                <h3 style="color: #4CAF50; margin-bottom: 15px;">Your Brand Name</h3>
+                <h3 style="; margin-bottom: 15px;">KP RegTech</h3>
                 <p style="font-size: 14px; line-height: 1.6; color: #cccccc;">
                     Providing quality services with transparency and integrity. Follow us on our journey to excellence.
                 </p>
@@ -445,7 +403,7 @@
         <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0;">
 
         <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 13px; color: #888;">
-            <p>&copy; 2025 Your Brand Name. All Rights Reserved.</p>
+            <p>&copy; 2025 KP RegTech. All Rights Reserved.</p>
             <div style="display: flex; gap: 15px;">
                 <a href="#" style="color: #888; text-decoration: none;">Twitter</a>
                 <a href="#" style="color: #888; text-decoration: none;">LinkedIn</a>

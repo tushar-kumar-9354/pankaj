@@ -820,7 +820,7 @@ function addToCalendar() {
     }
     
     const appointmentDatetime = appointmentInput.value;
-    const title = document.querySelector('.page-title')?.textContent || 'Consultation with Anjali Bansal & Associates';
+    const title = document.querySelector('.page-title')?.textContent || 'Consultation with KP RegTech';
     const description = document.querySelector('.page-subtitle')?.textContent || 'Professional consultation session';
     
     // Calculate end time
@@ -839,16 +839,16 @@ function addToCalendar() {
     // Create ICS file content
     const icsContent = `BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//Anjali Bansal & Associates//Consultation Booking//EN
+PRODID:-//KP RegTech//Consultation Booking//EN
 CALSCALE:GREGORIAN
 BEGIN:VEVENT
-UID:${Date.now()}@anjali-bansal.com
+UID:${Date.now()}kpregtech@gmail.com
 DTSTAMP:${formatDateForICS(new Date())}
 DTSTART:${formatDateForICS(startDate)}
 DTEND:${formatDateForICS(endDate)}
 SUMMARY:${title}
 DESCRIPTION:${description}\\n\\nBooking details will be sent via email.
-LOCATION:Consultation with Anjali Bansal & Associates (Mode: ${document.querySelector('[name="mode"]:checked')?.value || 'video'})
+LOCATION:Consultation with KP RegTech (Mode: ${document.querySelector('[name="mode"]:checked')?.value || 'video'})
 STATUS:CONFIRMED
 SEQUENCE:0
 BEGIN:VALARM

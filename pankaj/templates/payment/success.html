@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful | KP RegTech</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/payment.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="payment-status success">
+        <div class="status-container">
+            <div class="status-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h1>Payment Successful!</h1>
+            <p class="status-message">Your payment has been processed successfully.</p>
+            
+            <div class="booking-details">
+                <h3>Booking Details</h3>
+                <div class="detail-row">
+                    <span>Booking ID:</span>
+                    <strong>{{ booking.booking_id }}</strong>
+                </div>
+                <div class="detail-row">
+                    <span>Amount Paid:</span>
+                    <strong>₹{{ payment.amount }}</strong>
+                </div>
+                <div class="detail-row">
+                    <span>Payment ID:</span>
+                    <span>{{ payment.payment_id }}</span>
+                </div>
+                <div class="detail-row">
+                    <span>Appointment Date:</span>
+                    <span>{{ booking.appointment_date|date:"d M, Y" }}</span>
+                </div>
+                <div class="detail-row">
+                    <span>Appointment Time:</span>
+                    <span>{{ booking.appointment_time|time:"g:i A" }}</span>
+                </div>
+            </div>
+            
+            <div class="status-actions">
+                <a href="/" class="btn-home">
+                    <i class="fas fa-home"></i> Go to Home
+                </a>
+                <a href="/services" class="btn-book-again">
+                    <i class="fas fa-calendar-plus"></i> Book Another Consultation
+                </a>
+                <button class="btn-download-receipt" onclick="downloadReceipt()">
+                    <i class="fas fa-download"></i> Download Receipt
+                </button>
+            </div>
+            
+            <div class="status-note">
+                <p><i class="fas fa-info-circle"></i> A confirmation email has been sent to {{ booking.email }}. Meeting details will be sent 1 hour before the appointment.</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function downloadReceipt() {
+            // In a real implementation, generate and download PDF receipt
+            alert('Receipt will be downloaded. This feature requires backend implementation.');
+        }
+        
+        // Auto-redirect after 10 seconds
+        setTimeout(() => {
+            window.location.href = '/';
+        }, 10000);
+    </script>
+</body>
+</html>

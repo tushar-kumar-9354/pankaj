@@ -1,8 +1,12 @@
-# admin.py - Fixed version with proper indentation
+
+# admin.py - Updated version with TestimonialSubmission commented out
+
 from traceback import format_tb
 from django.contrib import admin
 from flask import redirect
-from .models import BlogPost, Testimonial, TestimonialSubmission, ConsultationBooking, AvailableSlot
+from .models import BlogPost, Testimonial, ConsultationBooking, AvailableSlot
+# Comment out TestimonialSubmission since we're disabling user submissions
+# from .models import TestimonialSubmission
 from django.utils import timezone
 from django.core.mail import send_mail
 from django.conf import settings
@@ -165,18 +169,22 @@ class TestimonialAdmin(admin.ModelAdmin):
         }),
     )
     
-    
+
+"""
+# COMMENTED OUT: TestimonialSubmission admin since user submissions are disabled
+# Admin can still add testimonials directly via Testimonial model
+
 @admin.register(TestimonialSubmission)
 class TestimonialSubmissionAdmin(admin.ModelAdmin):
-    list_display = ['full_name', 'company_name', 'industry', 'status', 'submitted_date', 'has_profile_picture', 'has_testimonial']
+    list_display = ['full_name', 'company', 'industry', 'status', 'submitted_date', 'has_profile_picture', 'has_testimonial']
     list_filter = ['status', 'industry', 'submitted_date']
-    search_fields = ['full_name', 'company_name', 'email', 'testimonial_text']
+    search_fields = ['full_name', 'company', 'email', 'testimonial_text']
     readonly_fields = ['submitted_date', 'approved_date', 'approved_testimonial']
     actions = ['approve_selected', 'reject_selected', 'create_missing_testimonials']
     
     fieldsets = (
         ('Client Information', {
-            'fields': ('full_name', 'email', 'phone', 'company_name', 'position', 'industry')
+            'fields': ('full_name', 'email', 'phone', 'company', 'position', 'industry')
         }),
         ('Testimonial Content', {
             'fields': ('testimonial_text', 'rating', 'services_used')
@@ -213,7 +221,7 @@ class TestimonialSubmissionAdmin(admin.ModelAdmin):
             # Always create a new Testimonial object for approved submissions
             testimonial = Testimonial.objects.create(
                 client_name=submission.full_name,
-                company=submission.company_name,
+                company=submission.company,
                 position=submission.position,
                 content=submission.testimonial_text,
                 industry=submission.industry,
@@ -301,7 +309,7 @@ KP RegTech''',
         self.message_user(request, f"{rejected_count} testimonials rejected.")
     
     def create_missing_testimonials(self, request, queryset):
-        """Create Testimonial objects for approved submissions that don't have them"""
+        """'''Create Testimonial objects for approved submissions that don't have them"""
         created_count = 0
         for submission in queryset.filter(status='approved', approved_testimonial__isnull=True):
             print(f"Creating missing testimonial for: {submission.full_name}")
@@ -309,7 +317,7 @@ KP RegTech''',
             # Create new testimonial
             testimonial = Testimonial.objects.create(
                 client_name=submission.full_name,
-                company=submission.company_name,
+                company=submission.company,
                 position=submission.position,
                 content=submission.testimonial_text,
                 industry=submission.industry,
@@ -344,7 +352,7 @@ KP RegTech''',
                 # Create testimonial
                 testimonial = Testimonial.objects.create(
                     client_name=obj.full_name,
-                    company=obj.company_name,
+                    company=obj.company,
                     position=obj.position,
                     content=obj.testimonial_text,
                     industry=obj.industry,
@@ -374,21 +382,25 @@ KP RegTech''',
     approve_selected.short_description = "Approve selected submissions"
     reject_selected.short_description = "Reject selected submissions"
     create_missing_testimonials.short_description = "Create Testimonial objects for approved submissions"
+"""
+'''
+
 
 @admin.register(ConsultationBooking)
 class ConsultationBookingAdmin(admin.ModelAdmin):
     list_display = ('booking_id_short', 'name', 'email', 'phone', 'appointment_date', 
                    'appointment_time', 'duration_display', 'mode_display', 'status', 
-                   'is_paid', 'created_at', 'cancellable_badge')
+                   'created_at', 'cancellable_badge')  # Removed 'is_paid' from display
     
-    list_filter = ('status', 'duration', 'mode', 'appointment_date', 'is_paid', 'created_at')
+    list_filter = ('status', 'duration', 'mode', 'appointment_date', 'created_at')  # Removed 'is_paid'
     search_fields = ('name', 'email', 'phone', 'company', 'booking_id', 'topic')
     readonly_fields = ('booking_id', 'created_at', 'updated_at', 'confirmed_at', 
                       'cancelled_at', 'pending_at', 'completed_at', 'booking_details', 
                       'cancellation_reason_display', 'is_cancellable_display')
-    list_editable = ('status', 'is_paid')
+    list_editable = ('status',)  # Removed 'is_paid'
     date_hierarchy = 'appointment_date'
     actions = ['mark_as_confirmed', 'mark_as_completed', 'cancel_selected_bookings', 'download_selected_bookings']
+    
     def download_selected_bookings(self, request, queryset):
         """Generate PDF for selected bookings."""
         if queryset.count() == 1:
@@ -403,7 +415,7 @@ class ConsultationBookingAdmin(admin.ModelAdmin):
     
     fieldsets = (
         ('Booking Information', {
-            'fields': ('booking_id', 'duration', 'price', 'status', 'is_paid', 'payment_id')
+            'fields': ('booking_id', 'duration', 'price', 'status')  # Removed 'is_paid', 'payment_id'
         }),
         ('Appointment Details', {
             'fields': ('appointment_date', 'appointment_time', 'mode')
@@ -605,37 +617,10 @@ class AvailableSlotAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         return super().get_queryset(request).order_by('day', 'start_time')
 
-# from .models import Payment
 
-# @admin.register(Payment)
-# class PaymentAdmin(admin.ModelAdmin):
-#     list_display = ('payment_id', 'booking', 'amount', 'method', 'status', 'created_at')
-#     list_filter = ('status', 'method', 'created_at')
-#     search_fields = ('payment_id', 'booking__booking_id', 'booking__name', 'booking__email')
-#     readonly_fields = ('created_at', 'updated_at', 'completed_at')
-#     list_editable = ('status',)
-    
-#     fieldsets = (
-#         ('Payment Information', {
-#             'fields': ('booking', 'payment_id', 'razorpay_order_id', 'razorpay_payment_id')
-#         }),
-#         ('Payment Details', {
-#             'fields': ('amount', 'currency', 'method', 'status')
-#         }),
-#         ('Payment Method Details', {
-#             'fields': ('upi_id', 'card_last4', 'bank_name'),
-#             'classes': ('collapse',)
-#         }),
-#         ('Timestamps', {
-#             'fields': ('created_at', 'updated_at', 'completed_at'),
-#             'classes': ('collapse',)
-#         }),
-#         ('Error Information', {
-#             'fields': ('error_code', 'error_description'),
-#             'classes': ('collapse',)
-#         }),
-#     )
 
+'''Payment Admin Configuration'''
+'''
 from django.utils.html import format_html
 from .models import Payment
 @admin.register(Payment)
@@ -688,3 +673,4 @@ class PaymentAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
     )
+'''

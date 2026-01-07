@@ -4,192 +4,308 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terms & Conditions | KP RegTech | </title>
-    <link rel="stylesheet" href="{% static 'css/terms and conditions.css' %}">
+    <title>Terms & Conditions | KP RegTech</title>
+    <link rel="stylesheet" href="{% static 'css/about.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap">
+    
+    <style>
+        .terms-body {
+            padding: 60px 0;
+            background-color: #fff;
+        }
+        .terms-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .legal-item {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #eee;
+        }
+        .legal-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        .legal-icon {
+            flex-shrink: 0;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #000, #4a6491);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .legal-icon i {
+            font-size: 28px;
+            color: white;
+        }
+        .legal-content {
+            flex: 1;
+        }
+        .legal-content h2 {
+            color: #000;
+            margin-bottom: 15px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .legal-content p {
+            margin-bottom: 15px;
+            color: #555;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+        .legal-content ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        .legal-content li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+        .policy-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #eee;
+        }
+        .policy-header h1 {
+            color: #000;
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+        .policy-header .last-updated {
+            color: #7f8c8d;
+            font-size: 16px;
+            font-style: italic;
+        }
+        .print-button-container {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0 20px;
+        }
+        .btn-print {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #000, #333);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .btn-print:hover {
+            background: linear-gradient(135deg, #333, #555);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        @media (max-width: 768px) {
+            .legal-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            .legal-icon {
+                margin: 0 auto 20px;
+            }
+            .policy-header h1 {
+                font-size: 28px;
+            }
+        }
+        @media print {
+            header, .about-hero, footer, .print-button-container {
+                display: none !important;
+            }
+            .terms-body { padding: 20px 0 !important; }
+            .terms-card { 
+                box-shadow: none !important; 
+                border-radius: 0 !important; 
+                padding: 0 !important; 
+                margin: 0 !important; 
+            }
+            .legal-item { page-break-inside: avoid; }
+            .legal-icon { display: none !important; }
+        }
+    </style>
 </head>
 <body>
+
     <!-- Header -->
-<header>
-    <div class="container header-container">
-        <button class="mobile-menu-btn" id="mobileMenuBtn">
-            <i class="fas fa-bars"></i>
-        </button>
-        
-        <div class="logo">
-            <img src="{% static 'images/kplogo.png' %}" alt="Company Logo" class="logo-image">
-            <div class="logo-text">
-                <h1>KP RegTech</h1>
-                <p></p>
+    <header>
+        <div class="container header-container">
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="logo">
+                <img src="{% static 'images/kplogo.png' %}" alt="Company Logo" class="logo-image">
+                <div class="logo-text">
+                    <a href="/" class="logo-link" style="text-decoration: none;">
+                        <h1>KP RegTech</h1>
+                    </a>
+                    <p></p>
+                </div>
             </div>
+            <nav class="nav-menu" id="navMenu">
+                <ul>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/services">Expertise</a></li>
+                    <li><a href="/#testimonials">Testimonials</a></li>
+                    <li><a href="/blogs">Blogs</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </nav>
         </div>
-        
-        <nav class="nav-menu" id="navMenu">
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/our_expertise">Expertise</a></li>
-                <li><a href="/testimonials">Testimonials</a></li>
-                <li><a href="/blogs">Blogs</a></li>
-                <li><a href="/contact">Contact</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
+    </header>
+
     <!-- Hero Section -->
-    <!-- Hero Banner -->
-<section class="privacy-hero">
-    <div class="container">
-        <div class="privacy-hero-content">
-            <h1 class="page-title">Terms & Conditions</h1>
-            <p class="page-subtitle">Please read these terms and conditions carefully before using our website and services.</p>
-            </div>
-    </div>
-</section>
-    <!-- Terms Content -->
-    <section class="terms-body">
+    <section class="about-hero">
         <div class="container">
-            <div class="terms-card">
-                <div class="legal-item">
-                    <div class="legal-icon">
-                        <i class="fas fa-balance-scale"></i>
-                    </div>
-                    <div class="legal-content">
-                        <h2>Professional Standard</h2>
-                        <p>KP RegTech operates as a firm of practicing  registered under the Institute of  of India (ICSI). All information provided on this website is for general awareness purposes only and does not constitute legal opinion, professional advice, or establish an attorney-client relationship. We adhere strictly to the Code of Conduct, ethical guidelines, and professional standards set by the ICSI.</p>
-                        <p>Engagement of our professional services requires a formal agreement outlining scope, deliverables, fees, and terms specific to each assignment.</p>
-                    </div>
-                </div>
-
-                <div class="legal-item">
-                    <div class="legal-icon">
-                        <i class="fas fa-copyright"></i>
-                    </div>
-                    <div class="legal-content">
-                        <h2>Intellectual Property Rights</h2>
-                        <p>All content, materials, designs, proprietary logos, trademarks, and intellectual property displayed on this website are the exclusive property of KP RegTech unless otherwise stated. This includes but is not limited to website design, text content, graphics, articles, whitepapers, and downloadable resources.</p>
-                        <p>Any unauthorized reproduction, distribution, modification, or commercial use of our intellectual property without prior written consent is strictly prohibited and may result in legal action under applicable intellectual property laws.</p>
-                    </div>
-                </div>
-
-                <div class="legal-item">
-                    <div class="legal-icon">
-                        <i class="fas fa-exclamation-triangle"></i>
-                    </div>
-                    <div class="legal-content">
-                        <h2>Service Disclaimer</h2>
-                        <p>While we endeavor to provide accurate, current, and comprehensive information, the regulatory and legal landscape in India undergoes frequent changes. The firm expressly disclaims all liability for any actions taken or not taken based on information found on this website without formal consultation with our qualified professionals.</p>
-                        <p>Website content is provided "as is" without warranties of any kind, either express or implied. We do not warrant that the information will be uninterrupted, error-free, or that defects will be corrected. Users are advised to seek formal professional advice for their specific situations.</p>
-                    </div>
-                </div>
-
-                <div class="legal-item">
-                    <div class="legal-icon">
-                        <i class="fas fa-gavel"></i>
-                    </div>
-                    <div class="legal-content">
-                        <h2>Governing Law & Jurisdiction</h2>
-                        <p>These Terms & Conditions are governed by and construed in accordance with the laws of India. Any disputes, claims, or controversies arising from or relating to the use of this website, our services, or these terms shall be subject to the exclusive jurisdiction of the courts in Bengaluru, Karnataka, India.</p>
-                        <p>In the event any provision of these terms is found to be invalid or unenforceable, the remaining provisions shall remain in full force and effect, and the invalid provision shall be deemed modified to the minimum extent necessary to make it valid and enforceable.</p>
-                    </div>
-                </div>
-
-                <div class="legal-item">
-                    <div class="legal-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <div class="legal-content">
-                        <h2>Client Confidentiality</h2>
-                        <p>We maintain strict confidentiality regarding all client information and engagements in accordance with professional standards and applicable laws. Information shared during consultations or service engagements is protected under attorney-client privilege to the fullest extent permitted by law.</p>
-                        <p>We implement appropriate technical and organizational measures to protect personal and business information from unauthorized access, disclosure, alteration, or destruction.</p>
-                    </div>
-                </div>
-
-                <div class="legal-item">
-                    <div class="legal-icon">
-                        <i class="fas fa-sync-alt"></i>
-                    </div>
-                    <div class="legal-content">
-                        <h2>Modifications & Updates</h2>
-                        <p>KP RegTech reserves the right to modify, update, or revise these Terms & Conditions at any time without prior notice. Changes will be effective immediately upon posting on this website. Users are responsible for regularly reviewing these terms to stay informed of updates.</p>
-                        <p>The "Last Updated" date at the bottom of this page indicates when these terms were last revised. Continued use of this website following any changes constitutes acceptance of the modified terms.</p>
-                    </div>
-                </div>
+            <div class="about-hero-content">
+                <h1 class="page-title">Terms & Conditions</h1>
+                <p class="page-subtitle">Terms governing the use of our website and professional services</p>
             </div>
         </div>
+        <div class="hero-overlay"></div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="about-cta">
+    <!-- Terms & Conditions Content -->
+    <section class="terms-body">
         <div class="container">
-            <div class="cta-content">
-                <div class="cta-text">
-                    <h3>Partner with Industry Leaders</h3>
-                    <p>Join hundreds of successful businesses who trust us for their compliance and corporate secretarial needs. Let's discuss how we can contribute to your success story with professional excellence and dedicated service.</p>
-                    <div class="contact-info">
-                        <p><i class="fas fa-phone"></i> +91 9148973085</p>
-                        <p><i class="fas fa-envelope"></i>kpregtech@gmail.com</p>
+            <div class="policy-header">
+                <h1>Terms & Conditions</h1>
+                <p class="last-updated">Last Updated: January 06, 2026</p>
+            </div>
+            
+            <div class="terms-card">
+
+                <div class="print-button-container">
+                    <button class="btn-print" onclick="window.print()">
+                        <i class="fas fa-print"></i> Print Terms & Conditions
+                    </button>
+                </div>
+
+                <div class="legal-item">
+                    <div class="legal-icon"><i class="fas fa-balance-scale"></i></div>
+                    <div class="legal-content">
+                        <h2>1. Professional Standard</h2>
+                        <p>KP RegTech operates as a firm of practicing professionals registered under the Institute of Company Secretaries of India (ICSI). All information provided on this website is for general awareness purposes only and does not constitute legal opinion, professional advice, or establish an attorney-client relationship.</p>
+                        <p>We adhere strictly to the Code of Conduct, ethical guidelines, and professional standards set by the ICSI. Engagement of our professional services requires a formal agreement outlining scope, deliverables, fees, and terms specific to each assignment.</p>
                     </div>
                 </div>
-                <div class="cta-buttons">
-                    <a href="/booking/45-min" class="btn-cta btn-primary">
-                        <i class="fas fa-handshake"></i>
-                        <span>Schedule Consultation</span>
-                    </a>
-                    <a href="/services" class="btn-cta btn-secondary">
-                        <i class="fas fa-chart-line"></i>
-                        <span>View Our Services</span>
-                    </a>
-                    <a href="/contact" class="btn-cta btn-secondary">
-                        <i class="fas fa-envelope"></i>
-                        <span>Contact Us</span>
-                    </a>
+
+                <div class="legal-item">
+                    <div class="legal-icon"><i class="fas fa-copyright"></i></div>
+                    <div class="legal-content">
+                        <h2>2. Intellectual Property Rights</h2>
+                        <p>All content, materials, designs, proprietary logos, trademarks, and intellectual property displayed on this website are the exclusive property of KP RegTech unless otherwise stated. This includes website design, text, graphics, articles, whitepapers, and downloadable resources.</p>
+                        <p>Any unauthorized reproduction, distribution, modification, or commercial use without prior written consent is strictly prohibited and may result in legal action under applicable intellectual property laws.</p>
+                    </div>
                 </div>
+
+                <div class="legal-item">
+                    <div class="legal-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    <div class="legal-content">
+                        <h2>3. Service Disclaimer</h2>
+                        <p>While we strive to provide accurate, current, and comprehensive information, the regulatory and legal landscape in India changes frequently. KP RegTech expressly disclaims all liability for any actions taken or not taken based on information from this website without formal consultation.</p>
+                        <p>Website content is provided "as is" without warranties of any kind, express or implied. We do not guarantee uninterrupted or error-free access. Users must seek specific professional advice for their individual circumstances.</p>
+                    </div>
+                </div>
+
+                <div class="legal-item">
+                    <div class="legal-icon"><i class="fas fa-gavel"></i></div>
+                    <div class="legal-content">
+                        <h2>4. Governing Law & Jurisdiction</h2>
+                        <p>These Terms & Conditions are governed by and construed in accordance with the laws of India. Any disputes arising from or relating to this website or our services shall be subject to the exclusive jurisdiction of the courts in Bengaluru, Karnataka, India.</p>
+                        <p>If any provision is held invalid or unenforceable, the remaining provisions shall remain in full force and effect.</p>
+                    </div>
+                </div>
+
+                <div class="legal-item">
+                    <div class="legal-icon"><i class="fas fa-shield-alt"></i></div>
+                    <div class="legal-content">
+                        <h2>5. Client Confidentiality</h2>
+                        <p>We maintain strict confidentiality of all client information and engagements in accordance with professional standards and applicable laws. Information shared during consultations or services is protected to the fullest extent permitted by law.</p>
+                        <p>Appropriate technical and organizational measures are implemented to safeguard personal and business information.</p>
+                    </div>
+                </div>
+
+                <div class="legal-item">
+                    <div class="legal-icon"><i class="fas fa-sync-alt"></i></div>
+                    <div class="legal-content">
+                        <h2>6. Modifications & Updates</h2>
+                        <p>KP RegTech reserves the right to modify, update or revise these Terms & Conditions at any time without prior notice. Changes become effective immediately upon posting on the website.</p>
+                        <p>Users are responsible for regularly reviewing these terms. Continued use of the website after changes constitutes acceptance of the updated terms.</p>
+                    </div>
+                </div>
+
+                <div class="print-button-container">
+                    <button class="btn-print" onclick="window.print()">
+                        <i class="fas fa-print"></i> Print Terms & Conditions
+                    </button>
+                </div>
+
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-<footer style="background-color: #1a1a1a; color: #ffffff; padding: 40px 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;">
-        
-        <div style="flex: 1; min-width: 250px;">
-            <h3 style="color: white; margin-bottom: 15px;">KP RegTech</h3>
-            <p style="font-size: 14px; line-height: 1.6; color: #cccccc;">
-                Providing quality services with transparency and integrity. Follow us on our journey to excellence.
-            </p>
+    <footer style="background-color: #1a1a1a; color: #ffffff; padding: 40px 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;">
+            <div style="flex: 1; min-width: 250px;">
+                <h3 style="color: #ffffff; margin-bottom: 15px;">KP RegTech</h3>
+                <p style="font-size: 14px; line-height: 1.6; color: #cccccc;">
+                    Providing quality services with transparency and integrity. Follow us on our journey to excellence.
+                </p>
+            </div>
+            <div style="flex: 1; min-width: 150px;">
+                <h4 style="margin-bottom: 15px; font-size: 18px;">Quick Links</h4>
+                <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                    <li><a href="/" style="color: #cccccc; text-decoration: none;">Home</a></li>
+                    <li><a href="/about" style="color: #cccccc; text-decoration: none;">About Us</a></li>
+                    <li><a href="/services" style="color: #cccccc; text-decoration: none;">Services</a></li>
+                    <li><a href="/contact" style="color: #cccccc; text-decoration: none;">Contact</a></li>
+                </ul>
+            </div>
+            <div style="flex: 1; min-width: 150px;">
+                <h4 style="margin-bottom: 15px; font-size: 18px;">Legal Support</h4>
+                <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                    <li><a href="/privacy-policy" style="color: #cccccc; text-decoration: none;">Privacy Policy</a></li>
+                    <li><a href="/terms and conditions" style="color: #ffffff; text-decoration: none; font-weight: bold;">Terms & Conditions</a></li>
+                    <li><a href="/refund-policy" style="color: #cccccc; text-decoration: none;">Refund Policy</a></li>
+                    <li><a href="/disclaimer" style="color: #cccccc; text-decoration: none;">Disclaimer</a></li>
+                </ul>
+            </div>
         </div>
-
-        <div style="flex: 1; min-width: 150px;">
-            <h4 style="margin-bottom: 15px; font-size: 18px;">Quick Links</h4>
-            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
-                <li><a href="/" style="color: #cccccc; text-decoration: none;">Home</a></li>
-                <li><a href="/about" style="color: #cccccc; text-decoration: none;">About Us</a></li>
-                <li><a href="/services" style="color: #cccccc; text-decoration: none;">Services</a></li>
-                <li><a href="/contact" style="color: #cccccc; text-decoration: none;">Contact</a></li>
-            </ul>
+        <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0;">
+        <div style="max-width: 1200px; margin: 0 auto; text-align: center; font-size: 13px; color: #888;">
+            <p>© 2026 KP RegTech. All Rights Reserved.</p>
         </div>
+    </footer>
 
-        <div style="flex: 1; min-width: 150px;">
-            <h4 style="margin-bottom: 15px; font-size: 18px;">Legal Support</h4>
-            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
-                <li><a href="/privacy-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Privacy Policy</a></li>
-                <li><a href="/terms and conditions" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Terms & Conditions</a></li>
-                <li><a href="/refund-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Refund Policy</a></li>
-                <li><a href="/disclaimer" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Disclaimer</a></li>
-            </ul>
-        </div>
-    </div>
-
-    <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0;">
-
-    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 13px; color: #888;">
-        <p>&copy; 2025 KP RegTech. All Rights Reserved.</p>
-        
-    </div>
-</footer>
-    <!-- JavaScript Files -->
-    <script src="{% static 'js/terms and conditions.js' %}"></script>
+    <!-- JavaScript -->
+    <script src="{% static 'js/about.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const printButtons = document.querySelectorAll('.btn-print');
+            printButtons.forEach(button => {
+                button.addEventListener('click', () => window.print());
+            });
+        });
+    </script>
 </body>
 </html>

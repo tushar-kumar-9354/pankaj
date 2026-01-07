@@ -24,14 +24,7 @@ class BlogPost(models.Model):
     
     # ─── Category Choices ───────────────────────────────────────────────────────
     # Defines the allowed categories for blog posts
-    CATEGORY_CHOICES = [
-        ('FEMA', 'FEMA'),
-        ('SEBI', 'SEBI'),
-        ('Corporate Law', 'Corporate Law'),
-        ('Fundraising', 'Fundraising'),
-        ('Startups', 'Startups'),
-        ('Compliance', 'Compliance'),
-    ]
+   
     
     # ─── Core Content Fields ────────────────────────────────────────────────────
     title = models.CharField(max_length=200)  # Title of the blog post
@@ -40,7 +33,7 @@ class BlogPost(models.Model):
     excerpt = models.TextField(max_length=300, blank=True)  # Short summary/teaser
     
     # ─── Metadata Fields ────────────────────────────────────────────────────────
-    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)  # Post category
+    category = models.CharField(max_length=50, blank=True, null=True)  # Post category
     featured_image = models.ImageField(upload_to='blog_images/', blank=True, null=True)  # Main image
     image_url = models.URLField(blank=True, null=True)  # Alternative image URL
     date_published = models.DateTimeField(default=timezone.now)  # Publication date
@@ -158,6 +151,7 @@ class BlogPost(models.Model):
     
     class Meta:
         ordering = ['-date_published']
+
 def clean(self):
     """Validation before save"""
     super().clean()
@@ -170,6 +164,7 @@ def clean(self):
     if not self.slug or str(self.slug).strip() == '':
         # Don't raise error, just note that slug will be auto-generated
         pass
+
 def save(self, *args, **kwargs):
     """
     Override save method to ALWAYS ensure a valid slug exists
@@ -231,6 +226,7 @@ def save(self, *args, **kwargs):
     
     # Call parent save
     super().save(*args, **kwargs)
+
 def get_absolute_url(self):
     """Always return a valid URL for the blog post"""
     # Ensure slug is not empty
@@ -244,6 +240,7 @@ def get_absolute_url(self):
     except:
         # Emergency fallback
         return f"/blogs/{self.slug}/"
+
 # Add this method to your BlogPost model in models.py
 def get_category_image(self):
     """Return a default image URL based on blog category."""
@@ -260,7 +257,7 @@ def get_category_image(self):
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-#                              TESTIMONIAL MODEL
+#                              TESTIMONIAL MODEL (KEEP ACTIVE)
 # ══════════════════════════════════════════════════════════════════════════════
 
 class Testimonial(models.Model):
@@ -269,25 +266,20 @@ class Testimonial(models.Model):
     """
     
     # ─── Industry Choices ───────────────────────────────────────────────────────
-    INDUSTRY_CHOICES = [
-        ('Technology', 'Technology'),
-        ('Manufacturing', 'Manufacturing'),
-        ('Finance', 'Finance'),
-        ('Startups', 'Startups'),
-        ('Healthcare', 'Healthcare'),
-        ('Retail', 'Retail'),
-        ('Pharmaceuticals', 'Pharmaceuticals'),
-        ('Other', 'Other'),
-    ]
+    
     
     # ─── Client Information Fields ──────────────────────────────────────────────
     client_name = models.CharField(max_length=100)  # Name of the client
-    company = models.CharField(max_length=100)  # Client's company name
-    position = models.CharField(max_length=100)  # Client's position/role
+    company = models.CharField(max_length=100, blank=True, null=True)  # Client's company name
+    position = models.CharField(max_length=100, blank=True, null=True)  # Client's position/role  # Client's position/role
     content = models.TextField(blank=True)  # Testimonial text content
     
     # ─── Categorization Fields ──────────────────────────────────────────────────
-    industry = models.CharField(max_length=50, choices=INDUSTRY_CHOICES)  # Industry sector
+    industry = models.CharField(
+        max_length=100,
+        blank=True,
+        help_text="e.g. Technology, Finance, Healthcare"
+    )  # Industry sector
     rating = models.IntegerField(default=5, choices=[(i, i) for i in range(1, 6)])  # 1-5 star rating
     
     # ─── Media Fields ───────────────────────────────────────────────────────────
@@ -300,7 +292,7 @@ class Testimonial(models.Model):
     is_active = models.BooleanField(default=True)  # Controls visibility
     is_featured = models.BooleanField(default=False)  # Marks featured testimonials
 
-    # ─── Services Field ─────────────────────────────────────────────────--------
+    # ─── Services Field ─────────────────────────────────────────────────────────
     SERVICE_CHOICES1 = [
         ('FEMA', 'FEMA'),
         ('SEBI', 'SEBI'),
@@ -326,8 +318,9 @@ class Testimonial(models.Model):
         return []
     
     def __str__(self):
-        """String representation for admin interface and debugging."""
-        return f"{self.client_name} - {self.company}"
+        company = f" | {self.company}" if self.company else ""
+        return f"{self.client_name}{company}"
+
     
     # ─── Meta Configuration ─────────────────────────────────────────────────────
     class Meta:
@@ -335,51 +328,60 @@ class Testimonial(models.Model):
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-#                              TESTIMONIAL SUBMISSION MODEL
+#                     TESTIMONIAL SUBMISSION MODEL - COMMENTED OUT
 # ══════════════════════════════════════════════════════════════════════════════
 
+"""
+# COMMENTED OUT: User testimonial submission model
+# Admin can still add testimonials directly via Testimonial model
+
+from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
+
 class TestimonialSubmission(models.Model):
-    """
+    ""
     Represents user-submitted testimonials awaiting admin approval.
-    """
-    
+    ""
+
     # ─── Status Choices ─────────────────────────────────────────────────────────
     STATUS_CHOICES = [
         ('pending', 'Pending Review'),
         ('approved', 'Approved'),
         ('rejected', 'Rejected'),
     ]
-    
-    # ─── Industry Choices (Extended) ────────────────────────────────────────────
-    INDUSTRY_CHOICES = [
-        ('Technology', 'Technology'),
-        ('Manufacturing', 'Manufacturing'),
-        ('Finance', 'Finance'),
-        ('Startups', 'Startups'),
-        ('Healthcare', 'Healthcare'),
-        ('Retail', 'Retail'),
-        ('Pharmaceuticals', 'Pharmaceuticals'),
-        ('Other', 'Other'),
-    ]
-    
+
     # ─── User Details Fields ────────────────────────────────────────────────────
-    full_name = models.CharField(max_length=100)  # Submitter's full name
-    email = models.EmailField()  # Submitter's email address
-    phone = models.CharField(max_length=15, blank=True, null=True)  # Contact phone
-    
-    # ─── Company Details Fields ─────────────────────────────────────────────────
-    company_name = models.CharField(max_length=100)  # Company name
-    position = models.CharField(max_length=100)  # Position in company
-    industry = models.CharField(max_length=50, choices=INDUSTRY_CHOICES)  # Industry sector
-    
+    full_name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.CharField(max_length=15, blank=True, null=True)
+
+    # ─── Company Details Fields (OPTIONAL) ──────────────────────────────────────
+    company = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
+    position = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
+
+    # 🔥 INDUSTRY — TEXT INPUT, NOT DROPDOWN
+    industry = models.CharField(
+        max_length=100,
+        blank=True,
+        help_text="e.g. Technology, Finance, Healthcare"
+    )
+
     # ─── Testimonial Content Fields ─────────────────────────────────────────────
-    testimonial_text = models.TextField()  # The testimonial content
+    testimonial_text = models.TextField()
     rating = models.IntegerField(
         default=5,
-        validators=[MinValueValidator(1), MaxValueValidator(5)]  # Ensure rating is 1-5
+        validators=[MinValueValidator(1), MaxValueValidator(5)]
     )
-    
-    # ─── Services Field ─────────────────────────────────────────────────────────
+
+    # ─── Services Field (Dropdown stays) ────────────────────────────────────────
     SERVICE_CHOICES = [
         ('FEMA', 'FEMA'),
         ('SEBI', 'SEBI'),
@@ -388,57 +390,57 @@ class TestimonialSubmission(models.Model):
         ('Startups', 'Startups'),
         ('Compliance', 'Compliance'),
     ]
-    
+
     services_used = models.CharField(
         max_length=50,
-        choices=SERVICE_CHOICES,   # 👈 makes it a dropdown
+        choices=SERVICE_CHOICES,
         blank=True,
         help_text="Select service used"
     )
-    # ─── Optional Media Fields ──────────────────────────────────────────────────
+
+    # ─── Optional Media ─────────────────────────────────────────────────────────
     profile_picture = models.ImageField(
         upload_to='testimonial_submissions/profiles/',
         blank=True,
         null=True
-    )  # Optional profile picture
-    
-    # ─── Administrative Fields ──────────────────────────────────────────────────
+    )
+
+    # ─── Admin Fields ───────────────────────────────────────────────────────────
     status = models.CharField(
         max_length=20,
         choices=STATUS_CHOICES,
         default='pending'
-    )  # Current status of submission
-    
-    admin_notes = models.TextField(blank=True)  # Internal notes from admin
-    submitted_date = models.DateTimeField(auto_now_add=True)  # Auto-set on submission
-    approved_date = models.DateTimeField(blank=True, null=True)  # Date of approval
-    is_public = models.BooleanField(default=False)  # Visibility flag
-    
-    # ─── Relationship Field ─────────────────────────────────────────────────────
+    )
+    admin_notes = models.TextField(blank=True)
+    submitted_date = models.DateTimeField(auto_now_add=True)
+    approved_date = models.DateTimeField(blank=True, null=True)
+    is_public = models.BooleanField(default=False)
+
+    # ─── Relationship ───────────────────────────────────────────────────────────
     approved_testimonial = models.OneToOneField(
         'Testimonial',
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
         related_name='submission'
-    )  # Link to approved testimonial if converted
-    
-    # ─── Model Methods ──────────────────────────────────────────────────────────
-    
-    def __str__(self):
-        """String representation for admin interface and debugging."""
-        return f"{self.full_name} - {self.company_name} ({self.status})"
-    
-    # ─── Meta Configuration ─────────────────────────────────────────────────────
-    class Meta:
-        ordering = ['-submitted_date']  # Order by most recent submission
-        verbose_name = "Testimonial Submission"  # Singular name for admin
-        verbose_name_plural = "Testimonial Submissions"  # Plural name for admin
+    )
 
+    # ─── Model Methods ──────────────────────────────────────────────────────────
+    def __str__(self):
+        return f"{self.full_name} - {self.company or ' '} ({self.status})"
+
+    # ─── Meta ───────────────────────────────────────────────────────────────────
+    class Meta:
+        ordering = ['-submitted_date']
+        verbose_name = "Testimonial Submission"
+        verbose_name_plural = "Testimonial Submissions"
+"""
 
 # ══════════════════════════════════════════════════════════════════════════════
 #                              CONSULTATION BOOKING MODEL
 # ══════════════════════════════════════════════════════════════════════════════
+
+# In models.py, update the ConsultationBooking model by removing payment-related methods:
 
 class ConsultationBooking(models.Model):
     """
@@ -449,7 +451,6 @@ class ConsultationBooking(models.Model):
     MODE_CHOICES = [
         ('video', 'Video Call'),
         ('phone', 'Phone Call'),
-        
     ]
     
     # ─── Status Choices ─────────────────────────────────────────────────────────
@@ -494,13 +495,13 @@ class ConsultationBooking(models.Model):
     confirmed_at = models.DateTimeField(blank=True, null=True)  # When booking was confirmed
     cancelled_at = models.DateTimeField(blank=True, null=True)  # When booking was cancelled
     cancellation_reason = models.TextField(blank=True, null=True)  # Reason for cancellation
-    is_paid = models.BooleanField(default=False)  # Payment status
     pending_at = models.DateTimeField(blank=True, null=True)  # When booking entered pending state
     completed_at = models.DateTimeField(blank=True, null=True)  # When consultation completed
     
     # ─── Payment Fields ─────────────────────────────────────────────────────────
-    payment_id = models.CharField(max_length=200, blank=True, null=True)  # Payment gateway reference
-    
+    # NOTE: Payment will be handled manually, so we keep is_paid field but no longer create Payment objects
+    is_paid = models.BooleanField(default=False)  # Payment status (will be updated manually by admin)
+    payment_id = models.CharField(max_length=200, blank=True, null=True)  # Optional: for manual payment reference
     
     # ─── Marketing Fields ───────────────────────────────────────────────────────
     newsletter_consent = models.BooleanField(default=False)  # Newsletter subscription consent
@@ -532,60 +533,13 @@ class ConsultationBooking(models.Model):
         # Allow cancellation up to 24 hours before appointment (86400 seconds)
         return time_until_appointment.total_seconds() > 86400
     
-    def initiate_payment(self):
-        """
-        Initiate payment through Razorpay.
-        """
-        # Initialize Razorpay client
-        client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
-        
-        # Create order data
-        order_data = {
-            'amount': int(self.price * 100),  # Convert to paise
-            'currency': 'INR',
-            'receipt': str(self.booking_id),
-            'notes': {
-                'booking_id': str(self.booking_id),
-                'customer_name': self.name,
-                'customer_email': self.email
-            }
-        }
-        
-        try:
-            # Create Razorpay order
-            order = client.order.create(data=order_data)
-            
-            # Create Payment record
-            payment = Payment.objects.create(
-                booking=self,
-                razorpay_order_id=order['id'],
-                amount=self.price,
-                currency='INR'
-            )
-            
-            return {
-                'order_id': order['id'],
-                'amount': order['amount'],
-                'currency': order['currency'],
-                'key': settings.RAZORPAY_KEY_ID,
-                'name': "KP RegTech",
-                'description': f"Consultation Booking - {self.get_duration_display()}",
-                'prefill': {
-                    'name': self.name,
-                    'email': self.email,
-                    'contact': self.phone
-                },
-                'notes': {
-                    'booking_id': str(self.booking_id)
-                },
-                'theme': {
-                    'color': '#4CAF50'
-                }
-            }
-            
-        except Exception as e:
-            logger.error(f"Error initiating payment for booking {self.booking_id}: {str(e)}")
-            return None
+    # REMOVE THE INITIATE_PAYMENT METHOD since payments are now manual
+    # def initiate_payment(self):
+    #     """
+    #     Initiate payment through Razorpay.
+    #     """
+    #     # This method is no longer needed since payment is manual
+    #     pass
     
     def save(self, *args, **kwargs):
         """
@@ -604,6 +558,35 @@ class ConsultationBooking(models.Model):
         verbose_name = "Consultation Booking"  # Singular name for admin
         verbose_name_plural = "Consultation Bookings"  # Plural name for admin
 
+# In models.py, COMMENT OUT or REMOVE the entire Payment and Refund model sections:
+
+"""
+# ══════════════════════════════════════════════════════════════════════════════
+#                              PAYMENT MODEL - COMMENTED OUT
+# ══════════════════════════════════════════════════════════════════════════════
+
+# Payment functionality is now manual, so Payment model is no longer needed
+
+import uuid
+import time
+import random
+from django.db import models
+from django.utils import timezone
+from django.conf import settings
+from django.core.mail import send_mail, EmailMessage
+
+def generate_payment_id():
+    \"\"\"Generate unique payment ID\"\"\"
+    timestamp = int(time.time() * 1000)  # Milliseconds
+    random_num = random.randint(1000, 9999)
+    return f"PAY{timestamp}{random_num}"
+
+class Payment(models.Model):
+    # ... [Entire Payment model code removed] ...
+    
+class Refund(models.Model):
+    # ... [Entire Refund model code removed] ...
+"""
 
 # ══════════════════════════════════════════════════════════════════════════════
 #                              AVAILABLE SLOT MODEL
@@ -695,7 +678,7 @@ class TimeSlotManager:
         Args:
             date_obj (date): The date to check availability for
             duration_minutes (int): Duration of desired appointment in minutes
-            
+        
         Returns:
             list: List of dictionaries with available time slots
         """
@@ -761,7 +744,7 @@ class TimeSlotManager:
             date_obj (date): The date to check
             start_time (time): The desired start time
             duration_minutes (int): Duration of appointment in minutes
-            
+        
         Returns:
             bool: True if time slot is available, False otherwise
         """
@@ -788,98 +771,11 @@ class TimeSlotManager:
                 return False  # Time slot is not available
         
         return True  # Time slot is available
-    
-# ══════════════════════════════════════════════════════════════════════════════
-#                              PAYMENT MODEL
-# # ══════════════════════════════════════════════════════════════════════════════
 
-# class Payment(models.Model):
-#     """
-#     Tracks payment transactions for consultation bookings.
-#     """
-    
-#     # ─── Status Choices ─────────────────────────────────────────────────────────
-#     STATUS_CHOICES = [
-#         ('pending', 'Pending'),
-#         ('completed', 'Completed'),
-#         ('failed', 'Failed'),
-#         ('refunded', 'Refunded'),
-#     ]
-    
-#     # ─── Payment Method Choices ────────────────────────────────────────────────
-#     METHOD_CHOICES = [
-#         ('upi', 'UPI'),
-#         ('card', 'Credit/Debit Card'),
-#         ('netbanking', 'Net Banking'),
-#         ('wallet', 'Wallet (PayTM/PhonePe)'),
-#         ('cash', 'Cash/Offline'),
-#     ]
-    
-#     # ─── Core Fields ───────────────────────────────────────────────────────────
-#     booking = models.OneToOneField(ConsultationBooking, on_delete=models.CASCADE, related_name='payment')
-#     payment_id = models.CharField(max_length=100, unique=True, blank=True)  # Payment gateway reference
-#     razorpay_order_id = models.CharField(max_length=100, blank=True, null=True)  # Razorpay order ID
-#     razorpay_payment_id = models.CharField(max_length=100, blank=True, null=True)  # Razorpay payment ID
-#     razorpay_signature = models.CharField(max_length=255, blank=True, null=True)  # Razorpay signature
-    
-#     # ─── Payment Details ───────────────────────────────────────────────────────
-#     amount = models.DecimalField(max_digits=10, decimal_places=2)
-#     currency = models.CharField(max_length=3, default='INR')
-#     method = models.CharField(max_length=20, choices=METHOD_CHOICES, blank=True, null=True)
-#     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
-    
-#     # ─── Additional Details ────────────────────────────────────────────────────
-#     upi_id = models.CharField(max_length=100, blank=True, null=True)  # For UPI payments
-#     card_last4 = models.CharField(max_length=4, blank=True, null=True)  # Last 4 digits of card
-#     bank_name = models.CharField(max_length=100, blank=True, null=True)  # For net banking
-    
-#     # ─── Timestamps ────────────────────────────────────────────────────────────
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-#     completed_at = models.DateTimeField(blank=True, null=True)
-    
-#     # ─── Error Handling ────────────────────────────────────────────────────────
-#     error_code = models.CharField(max_length=50, blank=True, null=True)
-#     error_description = models.TextField(blank=True, null=True)
-    
-#     def __str__(self):
-#         return f"Payment {self.payment_id} - {self.booking.name} - ₹{self.amount}"
-    
-#     def is_successful(self):
-#         return self.status == 'completed'
-    
-#     def mark_as_completed(self, payment_id=None, method=None, additional_info=None):
-#         self.status = 'completed'
-#         self.completed_at = timezone.now()
-#         if payment_id:
-#             self.payment_id = payment_id
-#         if method:
-#             self.method = method
-#         if additional_info:
-#             if method == 'upi':
-#                 self.upi_id = additional_info.get('upi_id')
-#             elif method == 'card':
-#                 self.card_last4 = additional_info.get('card_last4')
-#             elif method == 'netbanking':
-#                 self.bank_name = additional_info.get('bank_name')
-#         self.save()
-        
-#         # Update booking payment status
-#         self.booking.is_paid = True
-#         self.booking.save()
-    
-#     class Meta:
-#         ordering = ['-created_at']
-#         verbose_name = "Payment"
-#         verbose_name_plural = "Payments"
-
-
-# ══════════════════════════════════════════════════════════════════════════════
-#                              SIMPLE PAYMENT MODEL (TESTING)
-# ══════════════════════════════════════════════════════════════════════════════
-# ══════════════════════════════════════════════════════════════════════════════
+'''# ══════════════════════════════════════════════════════════════════════════════
 #                              PAYMENT MODEL
 # ══════════════════════════════════════════════════════════════════════════════
+
 import uuid
 import time
 import random
@@ -1150,6 +1046,8 @@ class Refund(models.Model):
     
     class Meta:
         ordering = ['-requested_at']
-# # ══════════════════════════════════════════════════════════════════════════════
-# #                              END OF MODELS
-# # ══════════════════════════════════════════════════════════════════════════════
+
+        '''
+# ══════════════════════════════════════════════════════════════════════════════
+#                              END OF MODELS
+# ══════════════════════════════════════════════════════════════════════════════

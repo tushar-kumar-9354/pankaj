@@ -1,4 +1,4 @@
-// terms-and-conditions.js
+// terms and conditions.js
 // Terms & Conditions Page JavaScript
 
 // DOM Elements
@@ -222,58 +222,32 @@ function initSmoothScrolling() {
 
 // Print functionality
 function initPrintFunctionality() {
-    // Create print button if not exists
-    if (!document.getElementById('printBtn')) {
-        const printBtn = document.createElement('button');
-        printBtn.id = 'printBtn';
-        printBtn.className = 'print-btn';
-        printBtn.innerHTML = '<i class="fas fa-print"></i> Print Terms';
-        printBtn.style.cssText = `
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: var(--accent);
-            color: var(--white);
-            border: none;
-            padding: 12px 20px;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: var(--shadow-lg);
-            z-index: 999;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        `;
-        
-        printBtn.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-3px)';
-            this.style.boxShadow = '0 8px 25px rgba(0,0,0,0.2)';
-        });
-        
-        printBtn.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
-            this.style.boxShadow = 'var(--shadow-lg)';
-        });
-        
-        printBtn.addEventListener('click', function() {
+    // Create print buttons if they don't exist
+    const existingPrintButtons = document.querySelectorAll('.btn-print');
+    
+    // Add click event to all print buttons
+    existingPrintButtons.forEach(button => {
+        button.addEventListener('click', function() {
             window.print();
         });
-        
-        document.body.appendChild(printBtn);
-        
-        // Hide on print
-        const printStyle = document.createElement('style');
-        printStyle.textContent = `
-            @media print {
-                .print-btn {
-                    display: none !important;
-                }
-            }
-        `;
-        document.head.appendChild(printStyle);
-    }
+    });
+    
+    // Add keyboard shortcut for printing (Ctrl/Cmd + P)
+    document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+            e.preventDefault();
+            window.print();
+        }
+    });
+    
+    // Add print confirmation
+    window.addEventListener('beforeprint', function() {
+        console.log('Printing Terms & Conditions...');
+    });
+    
+    window.addEventListener('afterprint', function() {
+        console.log('Print completed or cancelled');
+    });
 }
 
 // Accessibility features
@@ -311,7 +285,7 @@ function initAccessibility() {
     }
     
     // Add aria labels to buttons
-    const buttons = document.querySelectorAll('button, .btn-cta');
+    const buttons = document.querySelectorAll('button, .btn-cta, .btn-print');
     buttons.forEach((button, index) => {
         if (!button.getAttribute('aria-label')) {
             const text = button.textContent || button.innerText;
@@ -319,6 +293,12 @@ function initAccessibility() {
                 button.setAttribute('aria-label', text.trim());
             }
         }
+    });
+    
+    // Add aria labels to print buttons specifically
+    const printButtons = document.querySelectorAll('.btn-print');
+    printButtons.forEach(button => {
+        button.setAttribute('aria-label', 'Print Terms & Conditions');
     });
 }
 

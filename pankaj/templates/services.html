@@ -21,17 +21,17 @@
         <div class="logo">
             <img src="{% static 'images/kplogo.png' %}" alt="Company Logo" class="logo-image">
             <div class="logo-text">
-                <h1>KP RegTech</h1>
+                <a href="/" class="logo-link" style="text-decoration: none;"><h1>KP RegTech</h1></a>
                 <p></p>
             </div>
         </div>
         
         <nav class="nav-menu" id="navMenu">
             <ul>
-                <li><a href="/">Home</a></li>
+                
                 <li><a href="/about">About</a></li>
-                <li><a href="/our_expertise">Expertise</a></li>
-                <li><a href="/testimonials">Testimonials</a></li>
+                <li><a href="/services">Expertise</a></li>
+                <li><a href="/#testimonials">Testimonials</a></li>
                 <li><a href="/blogs">Blogs</a></li>
                 <li><a href="/contact">Contact</a></li>
             </ul>
@@ -39,18 +39,31 @@
     </div>
 </header>
     <!-- Hero Banner -->
-    <section class="services-hero">
-        <div class="container">
-            <div class="services-hero-content">
-                <h1 class="page-title">Our Professional Services</h1>
-                <p class="page-subtitle">Comprehensive corporate secretarial solutions tailored to meet your business compliance needs and drive sustainable growth</p>
-                
-                    
-                </div>
+<!-- Hero Banner with Parallax -->
+<section class="services-hero parallax-hero">
+    <div class="parallax-bg"></div>
+    
+    <div class="hero-overlay"></div>
+    
+    <div class="container">
+        <div class="services-hero-content">
+            <h1 class="page-title">Our Professional Services</h1>
+            <p class="page-subtitle">
+                Comprehensive corporate secretarial solutions tailored to meet your business 
+                compliance needs and drive sustainable growth
+            </p>
+            
+            <!-- Optional: you can keep breadcrumb here if you want -->
+            <!--
+            <div class="breadcrumb">
+                <a href="/">Home</a>
+                <span>›</span>
+                <span>Services</span>
             </div>
+            -->
         </div>
-        
-    </section>
+    </div>
+</section>
 
     <!-- Services Overview -->
     <section class="services-overview">
@@ -232,12 +245,12 @@
                     </div>
                 </div>
                 
-                <div class="tab-content" id="tab-fema">
+               <div class="tab-content" id="tab-fema">
                     <div class="service-detail">
                         <div class="service-header">
                             <div class="service-icon">
                                 <i class="fas fa-globe"></i>
-                            </div>
+                            </div> 
                             <div class="service-title">
                                 <h3>FEMA & International Transactions</h3>
                                 <p class="service-subtitle">Expert guidance on cross-border transactions and foreign exchange regulations</p>
@@ -663,6 +676,17 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(link, { attributes: true });
     });
 });
+
+// Lightweight smooth parallax for services hero
+document.addEventListener('scroll', function() {
+    const bg = document.querySelector('.parallax-bg');
+    if (!bg) return;
+    
+    const scroll = window.pageYOffset;
+    const speed = 0.38; // adjust this value (0.3–0.6 feels natural)
+    
+    bg.style.transform = `translateY(${scroll * speed}px)`;
+}, { passive: true });
 </script>
 
     <script src="{% static 'js/services.js' %}"></script>

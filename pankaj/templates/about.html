@@ -12,7 +12,7 @@
 </head>
 <body>
     <!-- Header -->
-    <header>
+<header>
     <div class="container header-container">
         <button class="mobile-menu-btn" id="mobileMenuBtn">
             <i class="fas fa-bars"></i>
@@ -21,24 +21,23 @@
         <div class="logo">
             <img src="{% static 'images/kplogo.png' %}" alt="Company Logo" class="logo-image">
             <div class="logo-text">
-                <h1>KP RegTech</h1>
+                <a href="/" class="logo-link" style="text-decoration: none;"><h1>KP RegTech</h1></a>
                 <p></p>
             </div>
         </div>
         
         <nav class="nav-menu" id="navMenu">
             <ul>
-                <li><a href="/">Home</a></li>
+                
                 <li><a href="/about">About</a></li>
-                <li><a href="/our_expertise">Expertise</a></li>
-                <li><a href="/testimonials">Testimonials</a></li>
+                <li><a href="/services">Expertise</a></li>
+                <li><a href="/#testimonials">Testimonials</a></li>
                 <li><a href="/blogs">Blogs</a></li>
                 <li><a href="/contact">Contact</a></li>
             </ul>
         </nav>
     </div>
 </header>
-
     <!-- Hero Banner -->
     <section class="about-hero">
         <div class="container">
@@ -87,40 +86,82 @@
                 <h2>Our Guiding Principles</h2>
                 <p class="section-subtitle">The foundation upon which we build lasting client relationships</p>
             </div>
-            
             <div class="mv-container">
-                <div class="mission-card">
-                    <div class="mv-icon">
-                        <i class="fas fa-bullseye"></i>
-                    </div>
-                    <div class="mv-content">
-                        <h3>Our Mission</h3>
-                        <p>To empower organizations with comprehensive corporate secretarial solutions that ensure regulatory compliance, mitigate risks, and foster sustainable business growth through strategic partnerships.</p>
-                        <ul class="mission-points">
-                            <li><i class="fas fa-check-circle"></i> Deliver unparalleled compliance expertise</li>
-                            <li><i class="fas fa-check-circle"></i> Provide strategic advisory services</li>
-                            <li><i class="fas fa-check-circle"></i> Foster long-term client relationships</li>
-                            <li><i class="fas fa-check-circle"></i> Drive business excellence through governance</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="vision-card">
-                    <div class="mv-icon">
-                        <i class="fas fa-eye"></i>
-                    </div>
-                    <div class="mv-content">
-                        <h3>Our Vision</h3>
-                        <p>To be recognized as India's most trusted corporate secretarial firm, setting industry benchmarks for excellence in regulatory compliance and becoming the preferred strategic partner for businesses navigating complex governance landscapes.</p>
-                        <ul class="vision-points">
-                            <li><i class="fas fa-star"></i> Industry leadership in compliance solutions</li>
-                            <li><i class="fas fa-star"></i> Nationwide recognition for excellence</li>
-                            <li><i class="fas fa-star"></i> Innovation in corporate governance</li>
-                            <li><i class="fas fa-star"></i> Global standards with local expertise</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+
+    <!-- Mission Card -->
+    <div class="mission-card">
+        <div class="mv-icon">
+            <i class="fas fa-bullseye"></i>
+        </div>
+
+        <div class="mv-content">
+            <h3>Our Mission</h3>
+
+            <p>
+                To empower businesses to navigate regulatory complexity with absolute clarity, confidence, and control.
+            </p>
+
+            <ul class="mission-points">
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    Partner with clients as proactive advisors by anticipating regulatory risks
+                </li>
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    Strengthen governance frameworks through structured compliance practices
+                </li>
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    Ensure seamless regulatory compliance for sustainable growth and innovation
+                </li>
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    Enable clients to focus on value creation and long-term business success
+                </li>
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    Uphold the highest standards of integrity, transparency, and corporate governance
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Vision Card -->
+    <div class="vision-card">
+        <div class="mv-icon">
+            <i class="fas fa-eye"></i>
+        </div>
+
+        <div class="mv-content">
+            <h3>Our Vision</h3>
+
+            <p>
+                To be a trusted regulatory partner for our clients by setting benchmarks in compliance quality, governance standards, and regulatory discipline.
+            </p>
+
+            <ul class="vision-points">
+                <li>
+                    <i class="fas fa-star"></i>
+                    Build a compliance ecosystem rooted in clarity, transparency, and confidence
+                </li>
+                <li>
+                    <i class="fas fa-star"></i>
+                    Support businesses with structured processes and robust documentation
+                </li>
+                <li>
+                    <i class="fas fa-star"></i>
+                    Enable informed and strategic regulatory decision-making
+                </li>
+                <li>
+                    <i class="fas fa-star"></i>
+                    Be the long-term governance and compliance partner for growing enterprises
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
         </div>
     </section>
 
@@ -456,8 +497,39 @@
         
     </div>
 </footer>
+<script>
+// Fix for testimonials navigation from About page
+document.addEventListener('DOMContentLoaded', function() {
+    const testimonialLinks = document.querySelectorAll('a[href*="testimonials"], a[href="#testimonials"]');
+    
+    testimonialLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            
+            // If it's a testimonials link
+            if (href.includes('testimonials')) {
+                e.preventDefault();
+                
+                // If we're on homepage, scroll to testimonials
+                if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+                    const testimonialsSection = document.getElementById('testimonials');
+                    if (testimonialsSection) {
+                        const headerHeight = document.querySelector('header').offsetHeight;
+                        window.scrollTo({
+                            top: testimonialsSection.offsetTop - headerHeight,
+                            behavior: 'smooth'
+                        });
+                    }
+                } else {
+                    // We're on another page (like About), redirect to homepage testimonials
+                    window.location.href = '/#testimonials';
+                }
+            }
+        });
+    });
+});
+</script>
 
     <script src="{% static 'js/about.js' %}"></script>
-    <script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>

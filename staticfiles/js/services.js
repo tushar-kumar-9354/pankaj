@@ -204,3 +204,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+// Very lightweight parallax for .parallax-bg
+document.addEventListener('scroll', function() {
+    const parallax = document.querySelector('.parallax-bg');
+    if (!parallax) return;
+    
+    let scrollPosition = window.pageYOffset;
+    parallax.style.transform = `translateY(${scrollPosition * 0.4}px)`; // 0.4 = parallax speed
+});

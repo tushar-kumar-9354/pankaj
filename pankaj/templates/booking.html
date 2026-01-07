@@ -21,17 +21,17 @@
         <div class="logo">
             <img src="{% static 'images/kplogo.png' %}" alt="Company Logo" class="logo-image">
             <div class="logo-text">
-                <h1>KP RegTech</h1>
+                <a href="/" class="logo-link" style="text-decoration: none;"><h1>KP RegTech</h1></a>
                 <p></p>
             </div>
         </div>
         
         <nav class="nav-menu" id="navMenu">
             <ul>
-                <li><a href="/">Home</a></li>
+                
                 <li><a href="/about">About</a></li>
-                <li><a href="/our_expertise">Expertise</a></li>
-                <li><a href="/testimonials">Testimonials</a></li>
+                <li><a href="/services">Expertise</a></li>
+                <li><a href="/#testimonials">Testimonials</a></li>
                 <li><a href="/blogs">Blogs</a></li>
                 <li><a href="/contact">Contact</a></li>
             </ul>
@@ -482,157 +482,48 @@
 
     <!-- Confirmation Modal -->
     <div id="confirmationModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <i class="fas fa-check-circle"></i>
-                <h3>Booking Confirmed!</h3>
-                <button class="modal-close">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p>Thank you for booking your consultation. Your session details have been scheduled.</p>
-                <div class="booking-summary">
-                    <div class="summary-item">
-                        <strong>Package:</strong>
-                        <span>{{ title }}</span>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>Booking Confirmed!</h3>
+                        <button class="modal-close">&times;</button>
                     </div>
-                    <div class="summary-item">
-                        <strong>Duration:</strong>
-                        <span>{{ duration_minutes }} minutes</span>
+                    <div class="modal-body">
+                        <p>Thank you for booking your consultation. Your session details have been scheduled.</p>
+                        <div class="booking-summary">
+                            <div class="summary-item">
+                                <strong>Package:</strong>
+                                <span>{{ title }}</span>
+                            </div>
+                            <div class="summary-item">
+                                <strong>Duration:</strong>
+                                <span>{{ duration_minutes }} minutes</span>
+                            </div>
+                            <div class="summary-item">
+                                <strong>Amount:</strong>
+                                <span>{{ price }}</span>
+                            </div>
+                        </div>
+                        <p class="confirmation-note">
+                            <i class="fas fa-info-circle"></i>
+                            You will receive a confirmation email with meeting details within 15 minutes. Please check your spam folder if you don't see it.
+                        </p>
                     </div>
-                    <div class="summary-item">
-                        <strong>Amount:</strong>
-                        <span>{{ price }}</span>
+                    <div class="modal-footer">
+                        <button class="btn-modal-close">Return to Services</button>
+                        <button class="btn-modal-calendar">
+                            <i class="fas fa-calendar-plus"></i> Add to Calendar
+                        </button>
                     </div>
                 </div>
-                <p class="confirmation-note">
-                    <i class="fas fa-info-circle"></i>
-                    You will receive a confirmation email with meeting details within 15 minutes. Please check your spam folder if you don't see it.
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn-modal-close">Return to Services</button>
-                <button class="btn-modal-calendar">
-                    <i class="fas fa-calendar-plus"></i> Add to Calendar
-                </button>
-            </div>
-        </div>
-    </div>
+            </div> 
 
     <script src="{% static 'js/script.js' %}"></script>
     <script src="{% static 'js/booking.js' %}"></script>
 
 <!-- In booking.html, update the form section -->
 <!-- Replace the existing form submission script with this: -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const bookingForm = document.getElementById('bookingForm');
-    
-    if (bookingForm) {
-        bookingForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            console.log('Form submission started...');
-            
-            // Validate form
-            if (!validateForm()) {
-                return false;
-            }
-            
-            // Get all required data
-            const selectedDate = document.getElementById('selectedDate').value;
-            const selectedTime = document.getElementById('selectedTime').value;
-            const appointmentDatetime = document.getElementById('appointmentDatetime').value;
-            
-            console.log('Date/time data:', {
-                selectedDate,
-                selectedTime,
-                appointmentDatetime
-            });
-            
-            // Check if date/time is selected
-            if (!selectedDate || !selectedTime) {
-                alert('Please select a date and time for your appointment');
-                return false;
-            }
-            
-            // If appointmentDatetime is not set, create it
-            if (!appointmentDatetime && selectedDate && selectedTime) {
-                const datetimeStr = `${selectedDate}T${selectedTime}:00`;
-                document.getElementById('appointmentDatetime').value = datetimeStr;
-                console.log('Created datetime:', datetimeStr);
-            }
-            
-            // Show loading state
-            const submitBtn = this.querySelector('.btn-submit');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-            submitBtn.disabled = true;
-            
-            try {
-                // Create FormData object
-                const formData = new FormData(this);
-                
-                // Debug: Log form data
-                console.log('Submitting form data:');
-                for (let pair of formData.entries()) {
-                    console.log(pair[0] + ': ' + pair[1]);
-                }
-                
-                // Submit via AJAX
-                const response = await fetch(this.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-                    }
-                });
-                
-                const data = await response.json();
-                console.log('Server response:', data);
-                
-                if (data.success) {
-                    console.log('Booking created successfully, redirecting to payment...');
-                    // Redirect to payment page
-                    window.location.href = data.redirect_url;
-                } else {
-                    alert('Error: ' + (data.error || 'Unknown error occurred'));
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.disabled = false;
-                }
-            } catch (error) {
-                console.error('Submission error:', error);
-                alert('An error occurred. Please try again.');
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            }
-        });
-    }
-    
-    function validateForm() {
-        const requiredFields = ['name', 'email', 'phone', 'topic'];
-        let isValid = true;
-        
-        for (const fieldName of requiredFields) {
-            const field = document.querySelector(`[name="${fieldName}"]`);
-            if (field && !field.value.trim()) {
-                alert(`Please fill in ${fieldName.replace('_', ' ')}`);
-                field.focus();
-                isValid = false;
-                break;
-            }
-        }
-        
-        // Check terms
-        const terms = document.getElementById('terms');
-        if (!terms.checked) {
-            alert('Please agree to the Terms of Service and Privacy Policy');
-            terms.focus();
-            isValid = false;
-        }
-        
-        return isValid;
-    }
-});
-</script>
+
+
 </body>
 </html>

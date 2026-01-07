@@ -4,485 +4,576 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy | KP RegTech | </title>
-    <link rel="stylesheet" href="{% static 'css/privacy-policy.css' %}">
+    <title>Privacy Policy | KP RegTech</title>
+    <link rel="stylesheet" href="{% static 'css/about.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap">
+    <style>
+        /* Add this CSS to fix Privacy Policy in box shape and remove duplicates */
+        .terms-body {
+            padding: 60px 0;
+            background-color: #fff;
+        }
+
+        .terms-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .legal-item {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .legal-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .legal-icon {
+            flex-shrink: 0;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #000, #4a6491);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .legal-icon i {
+            font-size: 28px;
+            color: white;
+        }
+
+        .legal-content {
+            flex: 1;
+        }
+
+        .legal-content h2 {
+            color: #000;
+            margin-bottom: 15px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .legal-content p {
+            margin-bottom: 15px;
+            color: #555;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .legal-content ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .legal-content li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .policy-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .policy-header h1 {
+            color: #000;
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .policy-header .last-updated {
+            color: #7f8c8d;
+            font-size: 16px;
+            font-style: italic;
+        }
+
+        /* Print Button Styles */
+        .print-button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        .btn-print {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #000, #333);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-print:hover {
+            background: linear-gradient(135deg, #333, #555);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Fix CTA section */
+        .about-cta {
+            background: linear-gradient(135deg, #000, #1a252f);
+            color: white;
+            padding: 70px 0;
+        }
+
+        .cta-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .cta-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .cta-text h3 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .cta-text p {
+            font-size: 17px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            color: #ddd;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .contact-info p {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            margin-bottom: 0;
+        }
+
+        .contact-info i {
+            color: #4a9eff;
+        }
+
+        .cta-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .btn-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            min-width: 220px;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: #4a9eff;
+            color: white;
+            border: 2px solid #4a9eff;
+        }
+
+        .btn-primary:hover {
+            background: #2c8aff;
+            border-color: #2c8aff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid #4a9eff;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(74, 158, 255, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 992px) {
+            .cta-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .cta-buttons {
+                justify-content: center;
+            }
+            
+            .contact-info {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .legal-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .legal-icon {
+                margin: 0 auto 20px;
+            }
+            
+            .btn-cta {
+                min-width: 100%;
+            }
+            
+            .policy-header h1 {
+                font-size: 28px;
+            }
+            
+            .cta-text h3 {
+                font-size: 26px;
+            }
+            
+            .btn-print {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            header, .about-hero, .about-cta, footer, .print-button-container {
+                display: none !important;
+            }
+            
+            .terms-body {
+                padding: 20px 0 !important;
+                margin: 0 !important;
+            }
+            
+            .terms-card {
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            
+            body {
+                font-size: 12pt !important;
+                line-height: 1.5 !important;
+                color: #000 !important;
+                background: #fff !important;
+            }
+            
+            .legal-item {
+                page-break-inside: avoid;
+                margin-bottom: 20px !important;
+                padding-bottom: 20px !important;
+            }
+            
+            .legal-icon {
+                display: none !important;
+            }
+            
+            .policy-header {
+                margin-bottom: 30px !important;
+            }
+            
+            .policy-header h1 {
+                font-size: 24pt !important;
+                color: #000 !important;
+            }
+            
+            .legal-content h2 {
+                font-size: 14pt !important;
+                color: #000 !important;
+            }
+            
+            .legal-content p, .legal-content li {
+                font-size: 11pt !important;
+                color: #000 !important;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <div class="container header-container">
-        <button class="mobile-menu-btn" id="mobileMenuBtn">
-            <i class="fas fa-bars"></i>
-        </button>
-        
-        <div class="logo">
-            <img src="{% static 'images/kplogo.png' %}" alt="Company Logo" class="logo-image">
-            <div class="logo-text">
-                <h1>KP RegTech</h1>
-                <p></p>
-            </div>
-        </div>
-        
-        <nav class="nav-menu" id="navMenu">
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/our_expertise">Expertise</a></li>
-                <li><a href="/testimonials">Testimonials</a></li>
-                <li><a href="/blogs">Blogs</a></li>
-                <li><a href="/contact">Contact</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
-    <!-- Hero Banner -->
-    <section class="privacy-hero">
-        <div class="container">
-            <div class="privacy-hero-content">
-                <h1 class="page-title">Privacy Policy</h1>
-                <p class="page-subtitle">Your privacy is our priority. Learn how we collect, use, and protect your personal information</p>
-                
-            </div>
-        </div>
-        
-    </section>
-
-    <!-- Introduction -->
-    <section class="privacy-intro">
-        <div class="container">
-            <div class="section-intro">
-                <h2>Your Privacy Matters to Us</h2>
-                <p class="intro-text">KP RegTech respects your privacy and is committed to protecting your personal information. This Privacy Policy outlines how we collect, use, disclose, and safeguard your information when you visit our website or use our services. We adhere to the highest standards of data protection in accordance with applicable laws.</p>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="logo">
+                <img src="{% static 'images/kplogo.png' %}" alt="Company Logo" class="logo-image">
+                <div class="logo-text">
+                    <a href="/" class="logo-link" style="text-decoration: none;"><h1>KP RegTech</h1></a>
+                    <p></p>
+                </div>
             </div>
             
-            <div class="last-updated">
-                <i class="fas fa-calendar-alt"></i>
-                <p><strong>Last Updated:</strong> <span id="currentDate">December 2023</span></p>
+            <nav class="nav-menu" id="navMenu">
+                <ul>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/services">Expertise</a></li>
+                    <li><a href="/#testimonials">Testimonials</a></li>
+                    <li><a href="/blogs">Blogs</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="about-hero">
+        <div class="container">
+            <div class="about-hero-content">
+                <h1 class="page-title">Privacy Policy</h1>
+                <p class="page-subtitle">Your privacy is important to us. Learn how we protect and handle your personal information.</p>
             </div>
         </div>
+        <div class="hero-overlay"></div>
     </section>
 
-    <!-- Information Collection -->
-    <section class="privacy-section">
+    <!-- Privacy Policy Content -->
+    <section class="terms-body">
         <div class="container">
-            <div class="privacy-card">
-                <div class="privacy-icon">
-                    <i class="fas fa-database"></i>
+            <div class="policy-header">
+                <h1>Privacy Policy</h1>
+                <p class="last-updated">Last Updated: 13 November 2025</p>
+            </div>
+            
+            <div class="terms-card">
+                <!-- Print Button -->
+                <div class="print-button-container">
+                    <button class="btn-print" onclick="window.print()">
+                        <i class="fas fa-print"></i>
+                        Print This Policy
+                    </button>
                 </div>
-                <div class="privacy-content">
-                    <h3>Information We Collect</h3>
-                    <p>We may collect the following types of personal information to provide you with our services:</p>
-                    
-                    <div class="collection-grid">
-                        <div class="collection-item">
-                            <div class="collection-icon">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <div class="collection-details">
-                                <h4>Personal Information</h4>
-                                <p>Name, email address, phone number, designation, and other contact details provided during consultation bookings or inquiries.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="collection-item">
-                            <div class="collection-icon">
-                                <i class="fas fa-building"></i>
-                            </div>
-                            <div class="collection-details">
-                                <h4>Professional Details</h4>
-                                <p>Company name, industry, business size, and other professional information relevant to our service delivery.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="collection-item">
-                            <div class="collection-icon">
-                                <i class="fas fa-laptop"></i>
-                            </div>
-                            <div class="collection-details">
-                                <h4>Usage Data</h4>
-                                <p>Information about how you interact with our website, including IP address, browser type, device information, and pages visited.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="collection-item">
-                            <div class="collection-icon">
-                                <i class="fas fa-file-contract"></i>
-                            </div>
-                            <div class="collection-details">
-                                <h4>Service Information</h4>
-                                <p>Details about the services you've inquired about or engaged, including consultation topics and documents shared.</p>
-                            </div>
-                        </div>
+
+                <!-- Your Privacy Policy items here -->
+                <div class="legal-item">
+                    <div class="legal-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div class="legal-content">
+                        <h2>Introduction & Scope</h2>
+                        <p>KP RegTech ("KP RegTech", "we", "our", or "us") is committed to protecting the privacy and confidentiality of personal data shared with us through our website [www.kpregtech.com] ("Website"). This Privacy Policy explains how we collect, use, store, disclose, and protect information in accordance with applicable Indian data protection laws.</p>
+                        <p>By accessing or using our Website, you consent to the collection and use of information in accordance with this Privacy Policy.</p>
+                        <p><strong>Applicability:</strong> This Privacy Policy applies to visitors to our Website, individuals who contact us through forms, email, or other digital channels, and clients/professional associates. It does not apply to information collected offline or through contractual engagements governed by separate confidentiality agreements.</p>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- How We Use Information -->
-    <section class="privacy-section alt-bg">
-        <div class="container">
-            <div class="privacy-card">
-                <div class="privacy-icon">
-                    <i class="fas fa-cogs"></i>
-                </div>
-                <div class="privacy-content">
-                    <h3>How We Use Your Information</h3>
-                    <p>We use your personal information responsibly for the following purposes:</p>
-                    
-                    <div class="usage-steps">
-                        <div class="usage-step">
-                            <div class="step-number">01</div>
-                            <div class="step-content">
-                                <h4>Service Delivery</h4>
-                                <p>To provide and improve our professional services, respond to inquiries, schedule consultations, and fulfill contractual obligations.</p>
-                            </div>
-                        </div>
+                <div class="legal-item">
+                    <div class="legal-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="legal-content">
+                        <h2>Information We Collect</h2>
+                        <p><strong>Personal Data Provided Voluntarily:</strong></p>
+                        <ul>
+                            <li>Name, email address, mobile number</li>
+                            <li>Organization name and designation</li>
+                            <li>Professional details relevant to regulatory or compliance services</li>
+                            <li>Any information shared through contact forms, emails, or inquiries</li>
+                        </ul>
                         
-                        <div class="usage-step">
-                            <div class="step-number">02</div>
-                            <div class="step-content">
-                                <h4>Communication</h4>
-                                <p>To send you important updates, service notifications, regulatory insights, and occasional marketing communications (with your consent).</p>
-                            </div>
-                        </div>
-                        
-                        <div class="usage-step">
-                            <div class="step-number">03</div>
-                            <div class="step-content">
-                                <h4>Compliance & Security</h4>
-                                <p>To ensure compliance with legal obligations, prevent fraud, protect our rights, and maintain the security of our systems and services.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="usage-step">
-                            <div class="step-number">04</div>
-                            <div class="step-content">
-                                <h4>Business Improvement</h4>
-                                <p>To analyze website usage patterns, improve our services, and develop new offerings that better serve our clients' needs.</p>
-                            </div>
-                        </div>
+                        <p><strong>Automatically Collected Information:</strong></p>
+                        <ul>
+                            <li>IP address, browser type and version</li>
+                            <li>Device information</li>
+                            <li>Pages visited, time spent, and navigation patterns</li>
+                            <li>Cookies and similar tracking technologies</li>
+                        </ul>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Data Sharing & Security -->
-    <section class="privacy-section">
-        <div class="container">
-            <div class="privacy-grid">
-                <div class="privacy-grid-item">
-                    <div class="grid-icon">
+                <div class="legal-item">
+                    <div class="legal-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <div class="legal-content">
+                        <h2>Purpose & Legal Basis for Processing</h2>
+                        <p>We collect and process personal data for the following lawful purposes:</p>
+                        <ul>
+                            <li>Responding to inquiries and service requests</li>
+                            <li>Providing compliance, registration, and advisory services</li>
+                            <li>Communicating regulatory updates, insights, or newsletters (where consented)</li>
+                            <li>Improving Website functionality and user experience</li>
+                            <li>Fulfilling legal, regulatory, and contractual obligations</li>
+                        </ul>
+                        <p><strong>We do not sell, rent, or trade personal data.</strong></p>
+                        <p><strong>Legal Basis:</strong> Personal data is processed based on consent, performance of a lawful contract, compliance with applicable laws, or legitimate business interests consistent with data protection principles.</p>
+                    </div>
+                </div>
+
+                <div class="legal-item">
+                    <div class="legal-icon">
+                        <i class="fas fa-cookie-bite"></i>
+                    </div>
+                    <div class="legal-content">
+                        <h2>Cookies Policy</h2>
+                        <p>Our Website may use cookies and similar technologies to enhance browsing experience and analyze Website traffic and usage trends.</p>
+                        <p>You may control or disable cookies through your browser settings. Disabling cookies may affect certain Website functionalities.</p>
+                    </div>
+                </div>
+
+                <div class="legal-item">
+                    <div class="legal-icon">
                         <i class="fas fa-share-alt"></i>
                     </div>
-                    <h3>Data Sharing & Disclosure</h3>
-                    <p>We may share your information with trusted third parties in these circumstances:</p>
-                    <ul class="privacy-list">
-                        <li><i class="fas fa-check-circle"></i> <strong>Service Providers:</strong> IT partners for website maintenance and security</li>
-                        <li><i class="fas fa-check-circle"></i> <strong>Professional Advisors:</strong> Legal and financial consultants as needed</li>
-                        <li><i class="fas fa-check-circle"></i> <strong>Legal Requirements:</strong> When required by law or to protect our rights</li>
-                        <li><i class="fas fa-check-circle"></i> <strong>Business Transfers:</strong> In connection with mergers or acquisitions</li>
-                    </ul>
-                    <div class="privacy-note">
-                        <i class="fas fa-exclamation-circle"></i>
-                        <p>We do not sell, trade, or rent your personal information to third parties for marketing purposes.</p>
+                    <div class="legal-content">
+                        <h2>Data Sharing, Storage & Security</h2>
+                        <p><strong>Data Sharing:</strong> We may share personal data only with trusted service providers (IT hosting, analytics, communication tools) under confidentiality obligations, or where required by law, court order, regulatory authority, or government agency. All disclosures are made strictly on a need-to-know and lawful basis.</p>
+                        
+                        <p><strong>Data Security:</strong> We implement reasonable security practices including access controls, authentication mechanisms, secure servers, encrypted communications, and periodic internal reviews. While we strive to protect personal data, no system can guarantee absolute security.</p>
+                        
+                        <p><strong>Data Retention:</strong> Personal data is retained only for as long as necessary to fulfil the purposes for which it was collected or comply with legal obligations. Data that is no longer required is securely deleted or anonymised.</p>
                     </div>
                 </div>
-                
-                <div class="privacy-grid-item">
-                    <div class="grid-icon">
-                        <i class="fas fa-shield-alt"></i>
+
+                <div class="legal-item">
+                    <div class="legal-icon">
+                        <i class="fas fa-user-check"></i>
                     </div>
-                    <h3>Data Security</h3>
-                    <p>We implement robust security measures to protect your information:</p>
-                    <div class="security-features">
-                        <div class="security-item">
-                            <i class="fas fa-lock"></i>
-                            <div>
-                                <h5>Encryption</h5>
-                                <p>Secure data transmission using industry-standard encryption</p>
-                            </div>
-                        </div>
-                        <div class="security-item">
-                            <i class="fas fa-user-shield"></i>
-                            <div>
-                                <h5>Access Controls</h5>
-                                <p>Restricted access to personal information within our organization</p>
-                            </div>
-                        </div>
-                        <div class="security-item">
-                            <i class="fas fa-sync-alt"></i>
-                            <div>
-                                <h5>Regular Audits</h5>
-                                <p>Ongoing security assessments and system updates</p>
-                            </div>
-                        </div>
-                        <div class="security-item">
-                            <i class="fas fa-hard-hat"></i>
-                            <div>
-                                <h5>Employee Training</h5>
-                                <p>Regular training on data protection and privacy practices</p>
-                            </div>
-                        </div>
+                    <div class="legal-content">
+                        <h2>Your Rights & Other Provisions</h2>
+                        <p><strong>Rights of Data Principals:</strong> Subject to applicable law, you have the right to:</p>
+                        <ul>
+                            <li>Access personal data held by us</li>
+                            <li>Request correction or updating of inaccurate data</li>
+                            <li>Withdraw consent (where processing is consent-based)</li>
+                            <li>Request erasure of personal data, subject to legal obligations</li>
+                        </ul>
+                        
+                        <p><strong>Third-Party Links:</strong> Our Website may contain links to third-party websites. KP RegTech is not responsible for the privacy practices or content of such external sites.</p>
+                        
+                        <p><strong>Children's Privacy:</strong> Our Website is not intended for individuals below 18 years of age. We do not knowingly collect personal data from children.</p>
+                        
+                        <p><strong>Policy Updates:</strong> We reserve the right to modify or update this Privacy Policy at any time. Changes will be effective upon posting on the Website.</p>
                     </div>
+                </div>
+
+                <!-- Print Button at bottom as well -->
+                <div class="print-button-container">
+                    <button class="btn-print" onclick="window.print()">
+                        <i class="fas fa-print"></i>
+                        Print This Policy
+                    </button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Your Rights -->
-    <section class="rights-section">
-        <div class="container">
-            <div class="section-title">
-                <h2>Your Privacy Rights</h2>
-                <p class="section-subtitle">You have control over your personal information</p>
-            </div>
-            
-            <div class="rights-grid">
-                <div class="right-item">
-                    <div class="right-icon">
-                        <i class="fas fa-eye"></i>
-                    </div>
-                    <h4>Right to Access</h4>
-                    <p>Request access to the personal information we hold about you and receive a copy.</p>
-                </div>
-                
-                <div class="right-item">
-                    <div class="right-icon">
-                        <i class="fas fa-edit"></i>
-                    </div>
-                    <h4>Right to Correction</h4>
-                    <p>Request correction of inaccurate or incomplete personal information.</p>
-                </div>
-                
-                <div class="right-item">
-                    <div class="right-icon">
-                        <i class="fas fa-trash-alt"></i>
-                    </div>
-                    <h4>Right to Erasure</h4>
-                    <p>Request deletion of your personal information under certain circumstances.</p>
-                </div>
-                
-                <div class="right-item">
-                    <div class="right-icon">
-                        <i class="fas fa-ban"></i>
-                    </div>
-                    <h4>Right to Object</h4>
-                    <p>Object to the processing of your personal information for specific purposes.</p>
-                </div>
-                
-                <div class="right-item">
-                    <div class="right-icon">
-                        <i class="fas fa-pause"></i>
-                    </div>
-                    <h4>Right to Restrict</h4>
-                    <p>Request restriction of processing your personal information in certain situations.</p>
-                </div>
-                
-                <div class="right-item">
-                    <div class="right-icon">
-                        <i class="fas fa-download"></i>
-                    </div>
-                    <h4>Right to Portability</h4>
-                    <p>Receive your personal information in a structured, commonly used format.</p>
-                </div>
-            </div>
-            
-            <div class="rights-cta">
-                <p>To exercise any of these rights, please contact us using the information below. We will respond to your request within 30 days.</p>
-                <a href="/contact" class="btn btn-primary">
-                    <i class="fas fa-envelope"></i>
-                    Contact Us About Your Rights
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Cookies & Tracking -->
-    <section class="cookies-section">
-        <div class="container">
-            <div class="cookies-content">
-                <div class="cookies-icon">
-                    <i class="fas fa-cookie-bite"></i>
-                </div>
-                <div class="cookies-details">
-                    <h3>Cookies & Tracking Technologies</h3>
-                    <p>Our website uses cookies and similar tracking technologies to enhance your browsing experience:</p>
-                    
-                    <div class="cookies-types">
-                        <div class="cookie-type">
-                            <h5>Essential Cookies</h5>
-                            <p>Required for basic website functionality and cannot be disabled.</p>
-                        </div>
-                        <div class="cookie-type">
-                            <h5>Analytics Cookies</h5>
-                            <p>Help us understand how visitors interact with our website.</p>
-                        </div>
-                        <div class="cookie-type">
-                            <h5>Preference Cookies</h5>
-                            <p>Remember your settings and preferences for future visits.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="cookie-control">
-                        <p>You can control cookies through your browser settings. However, disabling certain cookies may affect website functionality.</p>
-                        <button id="cookieSettingsBtn" class="btn btn-secondary">
-                            <i class="fas fa-sliders-h"></i>
-                            Manage Cookie Preferences
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Information -->
-    
-
-    <!-- Policy Updates -->
-    <section class="updates-section">
-        <div class="container">
-            <div class="updates-content">
-                <div class="updates-icon">
-                    <i class="fas fa-history"></i>
-                </div>
-                <div class="updates-details">
-                    <h3>Changes to This Privacy Policy</h3>
-                    <p>We may update this Privacy Policy from time to time to reflect changes in our practices, services, or legal requirements. We will notify you of any significant changes by:</p>
-                    
-                    <div class="update-methods">
-                        <div class="method">
-                            <i class="fas fa-bullhorn"></i>
-                            <p>Posting a notice on our website</p>
-                        </div>
-                        <div class="method">
-                            <i class="fas fa-envelope-open-text"></i>
-                            <p>Sending email notifications to registered users</p>
-                        </div>
-                        <div class="method">
-                            <i class="fas fa-calendar-check"></i>
-                            <p>Updating the "Last Updated" date at the top of this page</p>
-                        </div>
-                    </div>
-                    
-                    <div class="policy-note">
-                        <p><strong>Note:</strong> We encourage you to review this Privacy Policy periodically to stay informed about how we are protecting your information.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Consent Section -->
-    <section class="consent-section">
-        <div class="container">
-            <div class="consent-content">
-                <h3>Your Consent</h3>
-                <p>By using our website and services, you consent to the collection, use, and disclosure of your personal information as described in this Privacy Policy.</p>
-                
-                <div class="consent-actions">
-                    <p>If you do not agree with any part of this Privacy Policy, please do not use our website or services.</p>
-                    <div class="consent-buttons">
-                        <button id="printPolicyBtn" class="btn btn-secondary">
-                            <i class="fas fa-print"></i>
-                            Print Policy
-                        </button>
-                        <button id="downloadPolicyBtn" class="btn btn-secondary">
-                            <i class="fas fa-download"></i>
-                            Download PDF
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Footer -->
-<footer style="background-color: #1a1a1a; color: #ffffff; padding: 40px 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;">
-        
-        <div style="flex: 1; min-width: 250px;">
-            <h3 style="color: white; margin-bottom: 15px;">KP RegTech</h3>
-            <p style="font-size: 14px; line-height: 1.6; color: #cccccc;">
-                Providing quality services with transparency and integrity. Follow us on our journey to excellence.
-            </p>
-        </div>
-
-        <div style="flex: 1; min-width: 150px;">
-            <h4 style="margin-bottom: 15px; font-size: 18px;">Quick Links</h4>
-            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
-                <li><a href="/" style="color: #cccccc; text-decoration: none;">Home</a></li>
-                <li><a href="/about" style="color: #cccccc; text-decoration: none;">About Us</a></li>
-                <li><a href="/services" style="color: #cccccc; text-decoration: none;">Services</a></li>
-                <li><a href="/contact" style="color: #cccccc; text-decoration: none;">Contact</a></li>
-            </ul>
-        </div>
-
-        <div style="flex: 1; min-width: 150px;">
-            <h4 style="margin-bottom: 15px; font-size: 18px;">Legal Support</h4>
-            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
-                <li><a href="/privacy-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Privacy Policy</a></li>
-                <li><a href="/terms and conditions" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Terms & Conditions</a></li>
-                <li><a href="/refund-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Refund Policy</a></li>
-                <li><a href="/disclaimer" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Disclaimer</a></li>
-            </ul>
-        </div>
-    </div>
-
-    <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0;">
-
-    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 13px; color: #888;">
-        <p>&copy; 2025 KP RegTech. All Rights Reserved.</p>
-        
-    </div>
-</footer>
-    <!-- Cookie Settings Modal -->
-    <div id="cookieModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Cookie Preferences</h3>
-                <button class="modal-close">&times;</button>
+    <footer style="background-color: #1a1a1a; color: #ffffff; padding: 40px 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;">
+            
+            <div style="flex: 1; min-width: 250px;">
+                <h3 style="color: #ffffff; margin-bottom: 15px;">KP RegTech</h3>
+                <p style="font-size: 14px; line-height: 1.6; color: #cccccc;">
+                    Providing quality services with transparency and integrity. Follow us on our journey to excellence.
+                </p>
             </div>
-            <div class="modal-body">
-                <p>Manage your cookie preferences for this website:</p>
-                
-                <div class="cookie-option">
-                    <div class="cookie-toggle">
-                        <input type="checkbox" id="essentialCookies" checked disabled>
-                        <label for="essentialCookies">Essential Cookies</label>
-                    </div>
-                    <p class="cookie-desc">Required for basic website functionality. Cannot be disabled.</p>
-                </div>
-                
-                <div class="cookie-option">
-                    <div class="cookie-toggle">
-                        <input type="checkbox" id="analyticsCookies" checked>
-                        <label for="analyticsCookies">Analytics Cookies</label>
-                    </div>
-                    <p class="cookie-desc">Help us understand how visitors use our website.</p>
-                </div>
-                
-                <div class="cookie-option">
-                    <div class="cookie-toggle">
-                        <input type="checkbox" id="preferenceCookies" checked>
-                        <label for="preferenceCookies">Preference Cookies</label>
-                    </div>
-                    <p class="cookie-desc">Remember your settings and preferences.</p>
-                </div>
-                
-                <div class="cookie-actions">
-                    <button id="acceptAllCookies" class="btn btn-primary">Accept All</button>
-                    <button id="saveCookiePreferences" class="btn btn-secondary">Save Preferences</button>
-                    <button id="rejectAllCookies" class="btn btn-outline">Reject All</button>
-                </div>
+
+            <div style="flex: 1; min-width: 150px;">
+                <h4 style="margin-bottom: 15px; font-size: 18px;">Quick Links</h4>
+                <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                    <li><a href="/" style="color: #cccccc; text-decoration: none;">Home</a></li>
+                    <li><a href="/about" style="color: #cccccc; text-decoration: none;">About Us</a></li>
+                    <li><a href="/services" style="color: #cccccc; text-decoration: none;">Services</a></li>
+                    <li><a href="/contact" style="color: #cccccc; text-decoration: none;">Contact</a></li>
+                </ul>
+            </div>
+
+            <div style="flex: 1; min-width: 150px;">
+                <h4 style="margin-bottom: 15px; font-size: 18px;">Legal Support</h4>
+                <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                    <li><a href="/privacy-policy" style="color: #ffffff; text-decoration: none; transition: 0.3s;">Privacy Policy</a></li>
+                    <li><a href="/terms and conditions" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Terms & Conditions</a></li>
+                    <li><a href="/refund-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Refund Policy</a></li>
+                    <li><a href="/disclaimer" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Disclaimer</a></li>
+                </ul>
             </div>
         </div>
-    </div>
 
-    <script src="{% static 'js/privacy-policy.js' %}"></script>
-    <script src="{% static 'js/script.js' %}"></script>
+        <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0;">
+
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 13px; color: #888;">
+            <p>&copy; 2025 KP RegTech. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="{% static 'js/about.js' %}"></script>
+    <script>
+        // Enhanced print functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Print button functionality
+            const printButtons = document.querySelectorAll('.btn-print');
+            printButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    window.print();
+                });
+            });
+            
+            // Add keyboard shortcut for printing (Ctrl/Cmd + P)
+            document.addEventListener('keydown', function(e) {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+                    e.preventDefault();
+                    window.print();
+                }
+            });
+            
+            // Add print confirmation
+            window.addEventListener('beforeprint', function() {
+                console.log('Printing Privacy Policy...');
+            });
+            
+            window.addEventListener('afterprint', function() {
+                console.log('Print completed or cancelled');
+            });
+        });
+    </script>
 </body>
 </html>

@@ -121,7 +121,7 @@ class Migration(migrations.Migration):
             name='Payment',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('payment_id', models.CharField(default=pankaj.models.generate_payment_id, max_length=50, unique=True)),
+                
                 ('amount', models.DecimalField(decimal_places=2, max_digits=10)),
                 ('method', models.CharField(choices=[('upi', 'UPI'), ('card', 'Card'), ('netbanking', 'Net Banking'), ('wallet', 'Wallet'), ('cash', 'Cash/Offline')], max_length=20)),
                 ('status', models.CharField(choices=[('pending', 'Pending'), ('success', 'Success'), ('failed', 'Failed'), ('refunded', 'Refunded')], default='pending', max_length=20)),
@@ -142,7 +142,6 @@ class Migration(migrations.Migration):
             name='Refund',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('refund_id', models.CharField(default=pankaj.models.generate_payment_id, max_length=50, unique=True)),
                 ('amount', models.DecimalField(decimal_places=2, max_digits=10)),
                 ('reason', models.TextField()),
                 ('status', models.CharField(choices=[('requested', 'Requested'), ('approved', 'Approved'), ('rejected', 'Rejected'), ('processed', 'Processed')], default='requested', max_length=20)),

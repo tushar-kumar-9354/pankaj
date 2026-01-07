@@ -1,4 +1,4 @@
-// terms-and-conditions.js
+// terms and conditions.js
 // Terms & Conditions Page JavaScript
 
 // DOM Elements

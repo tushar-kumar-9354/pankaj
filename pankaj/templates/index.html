@@ -1,3 +1,4 @@
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -16,93 +17,91 @@
 </head>
 <body>
     <!-- Header -->
-  <header>
-    <div class="container header-container">
-        <button class="mobile-menu-btn" id="mobileMenuBtn">
-            <i class="fas fa-bars"></i>
-        </button>
-        
-        <div class="logo">
-            <img src="{% static 'images/kplogo.png' %}" alt="Company Logo" class="logo-image">
-            <div class="logo-text">
-                <h1>KP RegTech</h1>
-                <p></p>
+<header>
+        <div class="container header-container">
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="logo">
+                <img src="{% static 'images/kplogo.png' %}" alt="Company Logo" class="logo-image">
+                <div class="logo-text">
+                    <a href="/" class="logo-link" style="text-decoration: none;"><h1>KP RegTech</h1></a>
+                    <p></p>
+                </div>
             </div>
+            
+            <nav class="nav-menu" id="navMenu">
+                <ul>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/services">Expertise</a></li>
+                    <!-- Changed testimonials link to scroll to section on homepage -->
+                    <li><a href="/#testimonials">Testimonials</a></li>
+                    
+                    <li><a href="/blogs">Blogs</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </nav>
         </div>
-        
-        <nav class="nav-menu" id="navMenu">
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/our_expertise">Expertise</a></li>
-                <li><a href="/testimonials">Testimonials</a></li>
-                <li><a href="/blogs">Blogs</a></li>
-                <li><a href="/contact">Contact</a></li>
-            </ul>
-        </nav>
-    </div>
 </header>
+
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="container">
             <h2>KP RegTech</h2>
-            <p>Navigating the complex regulatory landscape with confidence. Our expertise ensures compliance, minimizes risks, and enables you to focus on achieving your strategic objectives.</p>
-            
+            <p>The Gold Standard in Research Analysts and Investment Advisers Compliances
+                    Your Path to Regulatory Excellence Starts Here</p>
+             <a href="/about" class="btn">Learn  More</a>
         </div>
     </section>
 
-    <!-- Expertise Section -->
+
     <section id="expertise">
-    <div class="container">
-        <div class="section-title">
-            <h2>OUR EXPERTISE</h2>
-        </div>
-        <div class="expertise-grid">
-            <div class="expertise-item">
-                <div class="expertise-icon">
-                    <i class="fas fa-globe-asia"></i>
-                </div>
-                <div class="expertise-bg" style="background-image: url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100');"></div>
-                <h3>FEMA Advisory & Compliance</h3>
-                <p>Expert guidance on Foreign Exchange Management Act regulations, RBI compliance, and cross-border transactions. We ensure your international financial operations are fully compliant and optimized.</p>
-                <ul class="expertise-features">
-                    <li>FEMA Advisory Services</li>
-                    <li>RBI Compliance & Reporting</li>
-                    <li>Cross-border Transaction Structuring</li>
-                    <li>Foreign Investment Guidance</li>
-                    <li>ECB & ODI Compliance</li>
-                </ul>
-                <!-- Updated link for FEMA -->
-                <a href="/our_expertise#fema-advisory" class="btn">Read More</a>
+        <div class="container">
+            <div class="section-title">
+                <h2>OUR EXPERTISE</h2>
             </div>
-            <div class="expertise-item">
-                <div class="expertise-icon">
-                    <i class="fas fa-chart-line"></i>
+            <div class="expertise-grid">
+                <div class="expertise-item">
+                    <div class="expertise-icon">
+                        <i class="fas fa-globe-asia"></i>
+                    </div>
+                    <div class="expertise-bg" style="background-image: url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100');"></div>
+                    <h3>Registration and Licensing Services</h3>
+<p>Single-window solution for professionals and entities seeking entry into India’s regulated financial ecosystem. Our advisory is grounded in current SEBI regulations, circulars, and interpretative guidance.</p>
+<ul class="expertise-features">
+    <li>SEBI Registration for Research Analysts (RA), Investment Advisers (IA) and Portfolio Managers (PMS)</li>
+    <li>Company incorporation, trademark filings, and allied statutory registrations</li>
+    <li>Website development with SEBI-compliant regulatory disclosures</li>
+    <li>End-to-end compliance framework setup</li>
+</ul>
+                    <a href="/our_expertise#fema-advisory" class="btn">Read More</a>
                 </div>
-                
-            <div class="expertise-item">
-                <div class="expertise-icon">
-                    <i class="fas fa-balance-scale"></i>
+                <div class="expertise-item">
+                    <div class="expertise-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    
+                <div class="expertise-item">
+                    <div class="expertise-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <div class="expertise-bg" style="background-image: url('https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100');"></div>
+                    <h3>Ongoing Compliance and Regulatory Support</h3>
+<p>Year-round compliance management for Research Analysts (RA), Investment Advisers (IA), and Portfolio Managers (PMS), ensuring continuous regulatory alignment and high compliance standards.</p>
+
+<ul class="expertise-features">
+    <li>Annual SEBI compliance audits & timely periodic filings</li>
+    <li>Full-service ongoing compliance monitoring & CaaS outsourcing</li>
+    <li>Advertisement Code review, advisory & prior approval support</li>
+    <li>Inspection readiness, gap analysis & regulatory advisory on latest SEBI guidelines</li>
+</ul>           
+                    <a href="/our_expertise#sebi-compliance" class="btn">Read More</a>
                 </div>
-                <div class="expertise-bg" style="background-image: url('https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100');"></div>
-                <h3>SEBI & Regulatory Compliance</h3>
-                <p>End-to-end SEBI registration and compliance services for investment advisors, portfolio managers, AIFs, and research analysts. We handle the complexities so you can focus on your business.</p>
-                <ul class="expertise-features">
-                    <li>SEBI Registration Services</li>
-                    <li>Investment Advisory Compliance</li>
-                    <li>AIF & Portfolio Management</li>
-                    <li>Annual Compliance & Audits</li>
-                    <li>Regulatory Reporting</li>
-                </ul>
-                <!-- Updated link for SEBI - points to the SEBI section in your image -->
-                <a href="/our_expertise#sebi-compliance" class="btn">Read More</a>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-
-    <!-- Articles Section -->
 <!-- Articles Section -->
 <section id="articles">
     <div class="container">
@@ -113,77 +112,92 @@
         <div class="articles-grid">
             {% for blog in latest_blogs %}
             <div class="article-card">
-                {% if blog.featured_image %}
-                <div class="article-img" style="background-image: url('{{ blog.featured_image.url }}')"></div>
-                {% else %}
-                <!-- Simple fallback without complex if-else -->
-                <div class="article-img" style="background-image: url('https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=100')"></div>
-                {% endif %}
-                
+                <div class="featured-image">
+                    {% if blog.featured_image %}
+                        <img src="{{ blog.featured_image.url }}" alt="{{ blog.title }}">
+                    {% elif blog.image_url %}
+                        <img src="{{ blog.image_url }}" alt="{{ blog.title }}">
+                    {% else %}
+                        <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=2070&q=100"
+                             alt="Default blog image">
+                    {% endif %}
+                </div>
+
                 <div class="article-content">
-                    <span class="article-date">{{ blog.date_published|date:"F d, Y" }}</span>
+                    <span class="article-date">
+                        {{ blog.date_published|date:"F d, Y" }}
+                    </span>
+
                     <h4>{{ blog.title }}</h4>
+
                     <p>{{ blog.excerpt|truncatechars:150 }}</p>
-                    <a href="{% url 'blog_detail' blog.slug %}" class="btn">Read More</a>
+
+                    <a href="{% url 'blog_detail' blog.slug %}" class="btn">
+                        Read More
+                    </a>
                 </div>
             </div>
             {% empty %}
-            <!-- Show fallback if no blogs exist -->
-            <p style="text-align: center; grid-column: 1 / -1; padding: 40px; color: #666;">
-                No blogs published yet. Check back soon!
-            </p>
+            <div class="no-blogs" style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+                <p style="color: #666; font-size: 1.1rem;">
+                    No blogs published yet. Check back soon!
+                </p>
+            </div>
             {% endfor %}
         </div>
-        
-        <div style="text-align: center; margin-top: 50px;">
-            <a href="/blogs" class="btn">View All Blogs</a>
+
+        {% if latest_blogs %}
+        <div style="text-align: center; margin-top: 60px;">
+            <a href="/blogs" class="btn1">View All Blogs</a>
         </div>
+        {% endif %}
     </div>
 </section>
     <!-- Testimonials Carousel -->
-<!-- Testimonials Carousel -->
-<section class="testimonials">
-    <div class="testimonial-bg"></div>
-    <div class="container">
-        <div class="section-title">
-            <h2>What our clients think...</h2>
-        </div>
-        
-        {% if testimonials %}
-        <div class="testimonial-carousel">
-            <div class="testimonial-track" id="testimonialTrack">
-                {% for testimonial in testimonials %}
-                <div class="testimonial-slide">
-                    <p>"{{ testimonial.content }}"</p>
-                    <div class="testimonial-author">{{ testimonial.client_name }}</div>
-                    <div class="testimonial-company">{{ testimonial.position }}, {{ testimonial.company }}</div>
-                </div>
-                {% endfor %}
+    <!-- ADDED ID="testimonials" for smooth scrolling -->
+    <section class="testimonials" id="testimonials">
+        <div class="testimonial-bg"></div>
+        <div class="container">
+            <div class="section-title">
+                <h2>Words From Our Community...</h2>
             </div>
-            <div class="carousel-nav">
-                <button class="carousel-btn prev-btn" id="prevBtn">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <div class="carousel-dots" id="carouselDots">
+            
+            {% if testimonials %}
+            <div class="testimonial-carousel">
+                <div class="testimonial-track" id="testimonialTrack">
                     {% for testimonial in testimonials %}
-                    <span class="carousel-dot {% if forloop.first %}active{% endif %}" data-index="{{ forloop.counter0 }}"></span>
+                    <div class="testimonial-slide">
+                        <p>"{{ testimonial.content }}"</p>
+                        <div class="testimonial-author">{{ testimonial.client_name }}</div>
+                        <div class="testimonial-company">
+                            {{ testimonial.position|default_if_none:"" }}{% if testimonial.position and testimonial.company %}, {% endif %}{{ testimonial.company|default_if_none:"" }}
+                        </div>
+                    </div>
                     {% endfor %}
                 </div>
-                <button class="carousel-btn next-btn" id="nextBtn">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-                <a href="/testimonials" class="btn">View All Testimonials</a>
+                <div class="carousel-nav">
+                    <button class="carousel-btn prev-btn" id="prevBtn">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="carousel-dots" id="carouselDots">
+                        {% for testimonial in testimonials %}
+                        <span class="carousel-dot {% if forloop.first %}active{% endif %}" data-index="{{ forloop.counter0 }}"></span>
+                        {% endfor %}
+                    </div>
+                    <button class="carousel-btn next-btn" id="nextBtn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <!-- REMOVED "View All Testimonials" button since testimonials page is hidden -->
+                </div>
             </div>
+            {% else %}
+            <p style="text-align: center; color: #666; padding: 40px;">
+                No testimonials available at the moment. Please check back later.
+            </p>
+            {% endif %}
         </div>
-        {% else %}
-        <!-- Fallback if no testimonials are available -->
-        <p style="text-align: center; color: #666; padding: 40px;">
-            No testimonials available at the moment. Please check back later.
-        </p>
-        {% endif %}
-        
-    </div>
-</section>
+    </section>
+
     <!-- Contact Section -->
     <section class="contact-section" id="contact">
         <div class="container">
@@ -191,95 +205,130 @@
                 <h2>Need more details? Contact us</h2>
             </div>
             <div class="contact-content">
-                <p>We are here to assist. Contact us by phone, and email.</p>
+                <p>Whether you are planning to register, already registered, or preparing for inspection — we are here to help.Contact us by phone or email.</p>
                 <div class="contact-info">
                     <div class="contact-item">
                         <i class="fas fa-phone-alt"></i>
-                        <span>+91 9148973085</span>
+                        <span>+91 1234567890</span>
                     </div>
                     <div class="contact-item">
                         <i class="fas fa-envelope"></i>
                         <span>kpregtech@gmail.com</span>
                     </div>
-                    
                 </div>
                 <div style="margin-top: 40px;">
                     <a href="/contact" class="btn">Contact Us</a>
                     <a href="{% url 'booking' duration='45-min' %}" class="btn">Book Consultation</a>
                 </div>
-
             </div>
         </div>
-        
     </section>
 
     <!-- Footer -->
-<footer style="background-color: #1a1a1a; color: #ffffff; padding: 40px 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;">
+    <footer style="background-color: #1a1a1a; color: #ffffff; padding: 40px 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 30px;">
+            
+            <div style="flex: 1; min-width: 250px;">
+                <h3 style="color: #ffffff; margin-bottom: 15px;">KP RegTech</h3>
+                <p style="font-size: 14px; line-height: 1.6; color: #cccccc;">
+                    Providing quality services with transparency and integrity. Follow us on our journey to excellence.
+                </p>
+            </div>
+
+            <div style="flex: 1; min-width: 150px;">
+                <h4 style="margin-bottom: 15px; font-size: 18px;">Quick Links</h4>
+                <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                    <li><a href="/" style="color: #cccccc; text-decoration: none;">Home</a></li>
+                    <li><a href="/about" style="color: #cccccc; text-decoration: none;">About Us</a></li>
+                    <li><a href="/services" style="color: #cccccc; text-decoration: none;">Services</a></li>
+                    <li><a href="/contact" style="color: #cccccc; text-decoration: none;">Contact</a></li>
+                </ul>
+            </div>
+
+            <div style="flex: 1; min-width: 150px;">
+                <h4 style="margin-bottom: 15px; font-size: 18px;">Legal Support</h4>
+                <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                    <li><a href="/privacy-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Privacy Policy</a></li>
+                    <li><a href="/terms and conditions" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Terms & Conditions</a></li>
+                    <li><a href="/refund-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Refund Policy</a></li>
+                    <li><a href="/disclaimer" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Disclaimer</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0;">
+
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 13px; color: #888;">
+            <p>&copy; 2025 KP RegTech. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+    // Mobile menu toggle
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.getElementById('navMenu');
         
-        <div style="flex: 1; min-width: 250px;">
-            <h3 style="color: #ffffff; margin-bottom: 15px;">KP RegTech</h3>
-            <p style="font-size: 14px; line-height: 1.6; color: #cccccc;">
-                Providing quality services with transparency and integrity. Follow us on our journey to excellence.
-            </p>
-        </div>
-
-        <div style="flex: 1; min-width: 150px;">
-            <h4 style="margin-bottom: 15px; font-size: 18px;">Quick Links</h4>
-            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
-                <li><a href="/" style="color: #cccccc; text-decoration: none;">Home</a></li>
-                <li><a href="/about" style="color: #cccccc; text-decoration: none;">About Us</a></li>
-                <li><a href="/services" style="color: #cccccc; text-decoration: none;">Services</a></li>
-                <li><a href="/contact" style="color: #cccccc; text-decoration: none;">Contact</a></li>
-            </ul>
-        </div>
-
-        <div style="flex: 1; min-width: 150px;">
-            <h4 style="margin-bottom: 15px; font-size: 18px;">Legal Support</h4>
-            <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;">
-                <li><a href="/privacy-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Privacy Policy</a></li>
-                <li><a href="/terms and conditions" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Terms & Conditions</a></li>
-                <li><a href="/refund-policy" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Refund Policy</a></li>
-                <li><a href="/disclaimer" style="color: #cccccc; text-decoration: none; transition: 0.3s;">Disclaimer</a></li>
-            </ul>
-        </div>
-    </div>
-
-    <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0;">
-
-    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 13px; color: #888;">
-        <p>&copy; 2025 KP RegTech. All Rights Reserved.</p>
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+            });
+        }
         
-    </div>
-</footer>
-</style>
+        // Mobile dropdown toggle
+        const dropdownToggles = document.querySelectorAll('.dropdown-toggle, .subdropdown-toggle');
+        
+        dropdownToggles.forEach(toggle => {
+            toggle.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    const parent = this.parentElement;
+                    parent.classList.toggle('active');
+                }
+            });
+        });
+    });
+    </script>
+    <script src="{% static 'js/script.js' %}"></script>
 
 <script>
-// Mobile menu toggle
-document.addEventListener('DOMContentLoaded', function() {
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const navMenu = document.getElementById('navMenu');
-    
-    if (mobileMenuBtn) {
-        mobileMenuBtn.addEventListener('click', function() {
-            navMenu.classList.toggle('active');
-        });
+document.addEventListener("DOMContentLoaded", function () {
+    const track = document.getElementById("testimonialTrack");
+    const slides = document.querySelectorAll(".testimonial-slide");
+    const nextBtn = document.getElementById("nextBtn");
+    const prevBtn = document.getElementById("prevBtn");
+    const dots = document.querySelectorAll(".carousel-dot");
+
+    let currentIndex = 0;
+    const totalSlides = slides.length;
+
+    if (!track || totalSlides === 0) return;
+
+    function updateCarousel(index) {
+        track.style.transform = `translateX(-${index * 100}%)`;
+
+        dots.forEach(dot => dot.classList.remove("active"));
+        if (dots[index]) dots[index].classList.add("active");
     }
-    
-    // Mobile dropdown toggle
-    const dropdownToggles = document.querySelectorAll('.dropdown-toggle, .subdropdown-toggle');
-    
-    dropdownToggles.forEach(toggle => {
-        toggle.addEventListener('click', function(e) {
-            if (window.innerWidth <= 768) {
-                e.preventDefault();
-                const parent = this.parentElement;
-                parent.classList.toggle('active');
-            }
+
+    nextBtn.addEventListener("click", function () {
+        currentIndex = (currentIndex + 1) % totalSlides;
+        updateCarousel(currentIndex);
+    });
+
+    prevBtn.addEventListener("click", function () {
+        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+        updateCarousel(currentIndex);
+    });
+
+    dots.forEach(dot => {
+        dot.addEventListener("click", function () {
+            currentIndex = parseInt(this.dataset.index);
+            updateCarousel(currentIndex);
         });
     });
 });
 </script>
-    <script src="{% static 'js/script.js' %}"></script>
+
 </body>
 </html>

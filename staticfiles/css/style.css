@@ -58,7 +58,32 @@ p {
     overflow: hidden;
     z-index: 1;
     right: -28px;
-    top: -23px;
+    top: -20px;
+    
+}
+
+
+.btn1 {
+    display: inline-block;
+    background: linear-gradient(135deg, #000 0%, #333 100%);
+    color: #fff;
+    padding: 14px 32px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.4s ease;
+    border: 2px solid #000;
+    cursor: pointer;
+   
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    right: -28px;
+   
+    
 }
 
 .btn::before {
@@ -250,7 +275,7 @@ nav ul li a:hover::after {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 100%);
+    /* background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 100%); */
     z-index: 2;
 }
 .hero-bg {
@@ -864,6 +889,7 @@ nav ul li a:hover::after {
     background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
     color: #000;
     border: 2px solid #fff;
+    margin: 20px auto 0;
 }
 
 .contact-section .btn::before {
@@ -1216,5 +1242,254 @@ body::after {
     
     .nav-menu a {
         font-size: 0.85rem;
+    }
+}
+
+/* Add these styles to your style.css file */
+
+/* Articles Section - Matching Expertise Section */
+#articles {
+    padding: 80px 20px;
+    background-color: #f9f9f9;
+}
+
+#articles .section-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+#articles .section-title h2 {
+    font-size: 2.2rem;
+    color: #000;
+    font-weight: 700;
+    letter-spacing: 1px;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+#articles .section-title h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(135deg, #000 0%, #333 100%);
+}
+
+/* Articles Grid - 3 columns like Expertise */
+.articles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.article-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    transition: all 0.4s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: 1px solid #f0f0f0;
+}
+
+.article-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+}
+
+.article-card .featured-image {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.article-card .featured-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.article-card:hover .featured-image img {
+    transform: scale(1.05);
+}
+
+.article-content {
+    padding: 25px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.article-date {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
+.article-content h4 {
+    font-size: 1.3rem;
+    color: #000;
+    margin-bottom: 15px;
+    line-height: 1.4;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+    flex-shrink: 0;
+}
+
+.article-content p {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    flex: 1;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+}
+
+.article-content .btn {
+    align-self: flex-start;
+    margin-top: auto;
+    background: linear-gradient(135deg, #000 0%, #333 100%);
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.4s ease;
+    border: 2px solid #000;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.article-content .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.article-content .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #333 0%, #000 100%);
+    transition: all 0.4s ease;
+    z-index: -1;
+}
+
+.article-content .btn:hover::before {
+    left: 0;
+}
+
+/* View All Blogs Button - Matches other buttons */
+#articles .btn1 {
+    display: inline-block;
+    background: linear-gradient(135deg, #000 0%, #333 100%);
+    color: #fff;
+    padding: 16px 36px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.4s ease;
+    border: 2px solid #000;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    margin-top: 20px;
+}
+
+#articles .btn1:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+#articles .btn1::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #333 0%, #000 100%);
+    transition: all 0.4s ease;
+    z-index: -1;
+}
+
+#articles .btn1:hover::before {
+    left: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .articles-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    #articles {
+        padding: 60px 15px;
+    }
+    
+    .articles-grid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+        gap: 25px;
+    }
+    
+    #articles .section-title h2 {
+        font-size: 1.8rem;
+    }
+    
+    .article-card .featured-image {
+        height: 180px;
+    }
+    
+    .article-content h4 {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .article-card .featured-image {
+        height: 160px;
+    }
+    
+    .article-content {
+        padding: 20px;
+    }
+    
+    .article-content h4 {
+        font-size: 1.1rem;
+    }
+    
+    .article-content .btn {
+        padding: 10px 24px;
+        font-size: 0.85rem;
+    }
+    
+    #articles .btn1 {
+        padding: 14px 30px;
+        font-size: 0.9rem;
     }
 }

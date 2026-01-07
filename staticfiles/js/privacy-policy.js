@@ -464,3 +464,58 @@ function showNotification(message, type = 'info') {
         }
     }, 5000);
 }
+// Print functionality
+function initPrintFunctionality() {
+    // Create print button if not exists
+    if (!document.getElementById('printBtn')) {
+        const printBtn = document.createElement('button');
+        printBtn.id = 'printBtn';
+        printBtn.className = 'print-btn';
+        printBtn.innerHTML = '<i class="fas fa-print"></i> Print Terms';
+        printBtn.style.cssText = `
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent);
+            color: var(--white);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        `;
+        
+        printBtn.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-3px)';
+            this.style.boxShadow = '0 8px 25px rgba(0,0,0,0.2)';
+        });
+        
+        printBtn.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = 'var(--shadow-lg)';
+        });
+        
+        printBtn.addEventListener('click', function() {
+            window.print();
+        });
+        
+        document.body.appendChild(printBtn);
+        
+        // Hide on print
+        const printStyle = document.createElement('style');
+        printStyle.textContent = `
+            @media print {
+                .print-btn {
+                    display: none !important;
+                }
+            }
+        `;
+        document.head.appendChild(printStyle);
+    }
+}

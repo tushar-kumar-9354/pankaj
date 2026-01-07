@@ -437,17 +437,17 @@
             <div class="logo">
                 <img src="{% static 'images/kplogo.png' %}" alt="Company Logo" class="logo-image">
                 <div class="logo-text">
-                    <h1>KP RegTech</h1>
+                    <a href="/" class="logo-link" style="text-decoration: none;"><h1>KP RegTech</h1></a>
                     <p></p>
                 </div>
             </div>
             
             <nav class="nav-menu" id="navMenu">
                 <ul>
-                    <li><a href="/">Home</a></li>
+                    
                     <li><a href="/about">About</a></li>
-                    <li><a href="/our_expertise">Expertise</a></li>
-                    <li><a href="/testimonials">Testimonials</a></li>
+                    <li><a href="/services">Expertise</a></li>
+                    <li><a href="/#testimonials">Testimonials</a></li>
                     <li><a href="/blogs">Blogs</a></li>
                     <li><a href="/contact">Contact</a></li>
                 </ul>
@@ -561,45 +561,62 @@
                             </div>
                         </div>
                     </div>
+<div class="mb-5">
+    <h3 class="form-section-title">
+        <i class="fas fa-briefcase"></i> Professional Information
+    </h3>
 
-                    <!-- Professional Information -->
-                    <div class="mb-5">
-                        <h3 class="form-section-title">
-                            <i class="fas fa-briefcase"></i> Professional Information
-                        </h3>
-                        
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label required">Company Name</label>
-                                    <h5 style="color: #2a4365;">Write NA if user doesn't have a company*</h5>
-                                    {{ form.company_name }}
-                                    {% if form.company_name.errors %}
-                                    <div class="text-danger small mt-1">{{ form.company_name.errors }}</div>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label required">Your Position</label>
-                                    <h5 style="color: #2a4365;">Write NA if user doesn't have a position*</h5>
-                                    {{ form.position }}
-                                    {% if form.position.errors %}
-                                    <div class="text-danger small mt-1">{{ form.position.errors }}</div>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label required">Industry</label>
-                            {{ form.industry }}
-                            {% if form.industry.errors %}
-                            <div class="text-danger small mt-1">{{ form.industry.errors }}</div>
-                            {% endif %}
-                        </div>
-                    </div>
+    <div class="row">
+        <!-- Company -->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="form-label">Company Name (Optional)</label>
+                {{ form.company }}
+                {% if form.company.errors %}
+                <div class="text-danger small mt-1">
+                    {{ form.company.errors }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Position + State -->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="form-label">Your Position and State (Optional)</label>
+                <input
+                    type="text"
+                    name="position"
+                    class="form-control"
+                    placeholder="e.g. CEO | Maharashtra"
+                    value="{{ form.position.value|default:'' }}"
+                >
+                {% if form.position.errors %}
+                <div class="text-danger small mt-1">
+                    {{ form.position.errors }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Industry -->
+    <div class="form-group">
+        <label class="form-label">Industry (Optional)</label>
+        <input
+            type="text"
+            name="industry"
+            class="form-control"
+            placeholder="e.g. Tech, Finance, Healthcare"
+            value="{{ form.industry.value|default:'' }}"
+        >
+        {% if form.industry.errors %}
+        <div class="text-danger small mt-1">
+            {{ form.industry.errors }}
+        </div>
+        {% endif %}
+    </div>
+</div>
 
                     <!-- Services Used -->
                     <!-- Services Used -->
@@ -622,7 +639,7 @@
 </div>
 
 <!-- Video Testimonial Section -->
-<div class="mb-5">
+<!-- <div class="mb-5">
     <h3 class="form-section-title">
         <i class="fas fa-video"></i> Video Testimonial (Optional)
     </h3>
@@ -668,7 +685,7 @@
             </ul>
         </div>
     </div>
-</div>
+</div> -->
 
                     <!-- Rating -->
                     <div class="mb-5">

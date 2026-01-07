@@ -10,3 +10,8 @@ psycopg2-binary
 jsonschema
 razorpay
 logging
+chromadb
+langchain
+langchain-community
+sentence-transformers
+openai
